@@ -14,3 +14,5 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/andrew/{name1?}/{name2?}', 'LoveController@chikiPiki');
