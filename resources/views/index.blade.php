@@ -5,44 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/social-icons.css">
     <title>Laravel</title>
-    <style>
-        .social-login.fa {
-            padding: 14px;
-            font-size: 1.5rem;
-            width: 50px;
-            height: 50px;
-            text-align: center;
-            text-decoration: none;
-        }
 
-        .social-login.fa-facebook:hover{
-            border: 1px solid #3B5998;
-            background: white;
-            color: #3B5998;
-        }
-        .social-login.fa-facebook {
-            border: 1px solid #3B5998;
-            background: #3B5998;
-            color: white;
-        }
-
-        .social-login.fa-google:hover{
-            border: 1px solid #dd4b39;
-            background: white;
-            color: #dd4b39;
-        }
-        .social-login.fa-google {
-            border: 1px solid #dd4b39;
-            background: #dd4b39;
-            color: white;
-        }
-
-        .social-login.fa{
-            transition: color .5s, background-color .5s;
-        }
-
-    </style>
 </head>
 <body>
     <nav class="navbar navbar-expand-sm navbar-light bg-light">
