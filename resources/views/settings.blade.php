@@ -1,5 +1,6 @@
 @extends("layout")
-
+@section("style")
+@endsection
 @section("content")
 
 <div class="container">
@@ -20,7 +21,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="card-body">
+                <div class="card-body px-0 pb-0">
                     <div class="accordion" id="accordion-settings">
                         <div class="card">
                             <div class="card-header" id="personal-info-header">
@@ -218,13 +219,15 @@
     </div>
 </div>
 
-<script>
-    $(document).ready(function(){
-        $("select").select2({
-            theme : "bootstrap"
-        });
-    });
-</script>
+@endsection
 
+@section("scripts")
+    <script>
+        $(document).ready(function(){
+            $("select").select2({
+                theme : "bootstrap"
+            });
+        });
+    </script>
 @endsection
 

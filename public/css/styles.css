@@ -58,4 +58,14 @@
     background-color: lightgrey;
     cursor: pointer;
 }
+.card-body .accordion .card{
+    border-radius: 0;
+    border-right: 0;
+    border-left: 0;
+}
+.card-body .accordion .card:last-child{
+    border-bottom: 0;
+    border-bottom-left-radius: .25rem;
+    border-bottom-right-radius: .25rem;
+}
 /*</editor-fold>*/

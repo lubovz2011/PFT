@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="css/select2-bootstrap.css">
     <link rel="stylesheet" href="css/font-awesome.min.css">
     <link rel="stylesheet" href="css/styles.css">
+    @yield("style")
     <title>Laravel</title>
 </head>
 <body>
@@ -43,6 +44,7 @@
 <script src="js/popper.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script src="js/select2.full.min.js"></script>
+@yield("scripts")
 
 </body>
 </html>
