@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/select2.min.css">
     <link rel="stylesheet" href="css/select2-bootstrap.css">
-    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link href="css/font-awesome-5-all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
     @yield("style")
     <title>Laravel</title>
@@ -25,9 +25,8 @@
             <a class="nav-item nav-link" href="#">Accounts</a>
             <a class="nav-item nav-link" href="#">Categories</a>
             <div class="dropdown">
-                <span class="fa-stack fa-lg border border-success rounded-circle text-success content-box" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="fa fa-circle fa-stack-2x"></i>
-                    <i class="fa fa-user-circle-o fa-stack-2x fa-inverse"></i>
+                <span class="round-user-icon-container border border-success rounded-circle text-success content-box" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fa fa-user-circle"></i>
                 </span>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
                     <a class="dropdown-item" href="#">Settings</a>
@@ -44,6 +43,7 @@
 <script src="js/popper.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script src="js/select2.full.min.js"></script>
+<script defer src="js/font-awesome-5-all.min.js"></script> <!--load all styles -->
 @yield("scripts")
 
 </body>

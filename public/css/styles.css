@@ -48,6 +48,15 @@
 .content-box {
     box-sizing: content-box;
 }
+
+.round-user-icon-container {
+    display: inline-block;
+    font-size: 2rem;
+    height: auto;
+    width: auto;
+    padding: 2px;
+    line-height: .75em;
+}
 /*</editor-fold>*/
 
 /*<editor-fold desc="settings-page">*/

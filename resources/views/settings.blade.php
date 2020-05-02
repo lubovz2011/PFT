@@ -12,16 +12,15 @@
                 </div>
                 <div class="card-body">
                     <div class="media">
-                        <span class="fa-stack fa-lg border border-success rounded-circle text-success content-box mr-3">
-                            <i class="fa fa-circle fa-stack-2x"></i>
-                            <i class="fa fa-user-circle-o fa-stack-2x fa-inverse"></i>
+                        <span class="round-user-icon-container border border-success rounded-circle text-success content-box mr-3">
+                            <i class="fa fa-user-circle"></i>
                         </span>
                         <div class="media-body">
                             <h5 class="uname-header">User name</h5>
                         </div>
                     </div>
                 </div>
-                <div class="card-body px-0 pb-0">
+                <div class="card-body p-0">
                     <div class="accordion" id="accordion-settings">
                         <div class="card">
                             <div class="card-header" id="personal-info-header">
