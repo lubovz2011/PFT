@@ -19,3 +19,9 @@ Route::get('settings', function(){
    return view('settings');
 });
 
+Route::get('categories', function(){
+   return view('categories');
+});
+
+
+
