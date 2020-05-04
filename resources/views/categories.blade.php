@@ -22,16 +22,27 @@
                                 <label class="" for="parent-category-select">Parent Category</label>
                                 <select class="form-control" id="parent-category-select">
                                     <option value="0" selected>Without parent category</option>
-                                    <option value="1">Education</option>
+                                    <option value="1">Bills</option>
                                     <option value="2">Tax & Fees</option>
+                                    <option value="3">Income</option>
+                                    <option value="4">Home</option>
+                                    <option value="5">Health & Fitness</option>
+                                    <option value="6">Pets</option>
+                                    <option value="7">Education</option>
                                 </select>
                             </div>
                             <div class="col-auto">
-                                <label for="icon-category-select"><i class="far fa-handshake"></i></label>
+                                <label for="icon-category-select">Icon</label>
                                 <select class="form-control" id="icon-category-select">
-                                    <option value="0" selected></option>
-                                    <option value="1"></option>
-                                    <option value="2"></option>
+                                    <option value="fas fa-anchor" selected>No Icon</option>
+                                    <option value="fas fa-ice-cream">ice-cream</option>
+                                    <option value="fas fa-gas-pump">Gas-Pump</option>
+                                    <option value="fas fa-tools">Tools</option>
+                                    <option value="fas fa-book">Book</option>
+                                    <option value="fas fa-bus-alt">Bus</option>
+                                    <option value="fas fa-swimmer">Swimmer</option>
+                                    <option value="fas fa-umbrella-beach">Umbrella Beach</option>
+                                    <option value="fas fa-dumbbell">Dumbbell</option>
                                 </select>
                             </div>
 
@@ -39,6 +50,10 @@
                                 <label>&nbsp;</label>
                                 <button type="submit" class="btn btn-primary form-control">Add</button>
                             </div>
+                            {{--<div class="col-auto">
+                                <label>&nbsp;</label>
+                                <button type="submit" class="btn btn-primary form-control">Delete</button>
+                            </div>--}}
                         </div>
                     </form>
                 </div>
@@ -90,9 +105,9 @@
                                     <i class="fas fa-coins mr-2 category-icon text-secondary"></i> Tax & Fees
                                 </div>
                                 <div class="col">
-                                    <div class="custom-control custom-switch float-right">
+                                    <div class="switch-danger custom-control custom-switch float-right">
                                         <input type="checkbox" class="custom-control-input" id="tax-category-toggle" checked>
-                                        <label class="custom-control-label " for="tax-category-toggle"></label>
+                                        <label class="custom-control-label" for="tax-category-toggle"></label>
                                     </div>
                                 </div>
                             </div>
@@ -204,7 +219,119 @@
                                 </div>
                             </div>
                         </div>
-
+                        <div class="card">
+                            <div class="card-header row py-3" id="category-health" data-toggle="collapse" data-target="#sub-category-health" aria-expanded="true" aria-controls="collapseOne">
+                                <div class="col">
+                                    <i class="fas fa-heartbeat mr-2 category-icon text-secondary"></i> Health & Fitness
+                                </div>
+                                <div class="col">
+                                    <div class="custom-control custom-switch float-right">
+                                        <input type="checkbox" class="custom-control-input" id="health-category-toggle" checked>
+                                        <label class="custom-control-label " for="health-category-toggle"></label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="sub-category-health" class="collapse" aria-labelledby="category-health" data-parent="#accordion-categories">
+                                <div class="card-body p-0">
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                            Fitness & Sport
+                                            <div class="custom-control custom-switch float-right">
+                                                <input type="checkbox" class="custom-control-input" id="sport-category-toggle" checked>
+                                                <label class="custom-control-label " for="sport-category-toggle"></label>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                            Healthcare
+                                            <div class="custom-control custom-switch float-right">
+                                                <input type="checkbox" class="custom-control-input" id="healthcare-category-toggle" checked>
+                                                <label class="custom-control-label " for="healthcare-category-toggle"></label>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                            Personal Care
+                                            <div class="custom-control custom-switch float-right">
+                                                <input type="checkbox" class="custom-control-input" id="personal-category-toggle" checked>
+                                                <label class="custom-control-label " for="personal-category-toggle"></label>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header row py-3" id="category-pets" data-toggle="collapse" data-target="#sub-category-pets" aria-expanded="true" aria-controls="collapseOne">
+                                <div class="col">
+                                    <i class="fas fa-paw mr-2 category-icon text-secondary"></i> Pets
+                                </div>
+                                <div class="col">
+                                    <div class="custom-control custom-switch float-right">
+                                        <input type="checkbox" class="custom-control-input" id="pets-category-toggle" checked>
+                                        <label class="custom-control-label " for="pets-category-toggle"></label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="sub-category-pets" class="collapse" aria-labelledby="category-pets" data-parent="#accordion-categories">
+                                <div class="card-body p-0">
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                            Food
+                                            <div class="custom-control custom-switch float-right">
+                                                <input type="checkbox" class="custom-control-input" id="food-category-toggle" checked>
+                                                <label class="custom-control-label " for="food-category-toggle"></label>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                            Vet & Healthcare
+                                            <div class="custom-control custom-switch float-right">
+                                                <input type="checkbox" class="custom-control-input" id="vet-category-toggle" checked>
+                                                <label class="custom-control-label " for="vet-category-toggle"></label>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                            Toys
+                                            <div class="custom-control custom-switch float-right">
+                                                <input type="checkbox" class="custom-control-input" id="toys-category-toggle" checked>
+                                                <label class="custom-control-label " for="toys-category-toggle"></label>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header row py-3" id="category-education" data-toggle="collapse" data-target="#sub-category-education" aria-expanded="true" aria-controls="collapseOne">
+                                <div class="col">
+                                    <i class="fas fa-user-graduate mr-2 category-icon text-secondary"></i> Education
+                                </div>
+                                <div class="col">
+                                    <div class="custom-control custom-switch float-right">
+                                        <input type="checkbox" class="custom-control-input" id="education-category-toggle" checked>
+                                        <label class="custom-control-label " for="education-category-toggle"></label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="sub-category-education" class="collapse" aria-labelledby="category-education" data-parent="#accordion-categories">
+                                <div class="card-body p-0">
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                            Tuition
+                                            <div class="custom-control custom-switch float-right">
+                                                <input type="checkbox" class="custom-control-input" id="tuition-category-toggle" checked>
+                                                <label class="custom-control-label " for="tuition-category-toggle"></label>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                            Books & Supplies
+                                            <div class="custom-control custom-switch float-right">
+                                                <input type="checkbox" class="custom-control-input" id="books-category-toggle" checked>
+                                                <label class="custom-control-label " for="books-category-toggle"></label>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

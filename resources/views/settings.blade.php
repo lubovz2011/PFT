@@ -47,8 +47,8 @@
                                         </div>
                                         <div class="form-group row justify-content-end">
                                             <div class="col-sm-10">
-                                                <button type="submit" class="btn btn-primary pull-right">Save</button>
-                                                <button type="button" class="btn btn-secondary pull-right mr-2">Delete profile</button>
+                                                <button type="submit" class="btn btn-primary float-right">Save</button>
+                                                <button type="button" class="btn btn-secondary float-right mr-2">Delete profile</button>
                                             </div>
                                         </div>
                                     </form>
@@ -148,7 +148,7 @@
 
                                         <div class="form-group row justify-content-end">
                                             <div class="col-sm-10">
-                                                <button type="submit" class="btn btn-primary pull-right">Save</button>
+                                                <button type="submit" class="btn btn-primary float-right">Save</button>
                                             </div>
                                         </div>
                                     </form>
@@ -180,7 +180,7 @@
                                         </div>
                                         <div class="form-group row justify-content-end">
                                             <div class="col-sm-10">
-                                                <button type="submit" class="btn btn-primary pull-right">Save</button>
+                                                <button type="submit" class="btn btn-primary float-right">Save</button>
                                             </div>
                                         </div>
                                     </form>
@@ -204,7 +204,7 @@
                                         </div>
                                         <div class="form-group row justify-content-end">
                                             <div class="col-sm-10">
-                                                <button type="submit" class="btn btn-primary pull-right">Save</button>
+                                                <button type="submit" class="btn btn-primary float-right">Save</button>
                                             </div>
                                         </div>
                                     </form>
