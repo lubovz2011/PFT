@@ -23,5 +23,9 @@ Route::get('categories', function(){
    return view('categories');
 });
 
+Route::get('accounts', function(){
+   return view('accounts');
+});
+
 
 
