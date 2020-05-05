@@ -12,7 +12,7 @@
     <title>Laravel</title>
 </head>
 
-<body>
+<body class="pb-4">
     <nav class="navbar navbar-expand-sm navbar-light bg-light mb-4">
         <a class="navbar-brand" href="#">PFT</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -40,6 +40,11 @@
 
 @yield("content")
 
+    <footer class="footer">
+        <div class="container text-center">
+            <span class="text-muted">&copy; {{date("Y")}} Lubov Langleben</span>
+        </div>
+    </footer>
 
 
 <script src="js/jquery-3.4.1.slim.min.js"></script>
