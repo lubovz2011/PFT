@@ -23,15 +23,15 @@
                 <a class="nav-item nav-link" href="#">Overview</a>
                 <a class="nav-item nav-link" href="#">Transactions</a>
                 <a class="nav-item nav-link" href="#">Reports</a>
-                <a class="nav-item nav-link" href="#">Accounts</a>
-                <a class="nav-item nav-link" href="#">Categories</a>
+                <a class="nav-item nav-link {{Route::currentRouteName() == 'accounts' ? 'active' : ''}}" href="{{route('accounts')}}">Accounts</a>
+                <a class="nav-item nav-link {{Route::currentRouteName() == 'categories' ? 'active' : ''}}" href="{{route('categories')}}">Categories</a>
                 <div class="dropdown">
                     <span class="round-user-icon-container border border-success rounded-circle text-success content-box" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="fa fa-user-circle"></i>
                     </span>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" href="#">Settings</a>
-                        <a class="dropdown-item" href="#">Log out</a>
+                        <a class="dropdown-item" href="{{route('settings')}}">Settings</a>
+                        <a class="dropdown-item" href="{{route('welcome')}}">Log out</a>
                     </div>
                 </div>
             </div>
