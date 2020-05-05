@@ -84,3 +84,19 @@
     font-size: 1.5rem;
 }
 /*</editor-fold>*/
+
+
+body {
+    background: #cdd0d2;
+}
+
+.shadow-card{
+    box-shadow: 0px 0px 15px 5px #aeaeaf;
+}
+
+/*<editor-fold desc="accounts-page">*/
+.account-mini-headers{
+    font-size: 0.85rem;
+}
+
+/*</editor-fold>*/
