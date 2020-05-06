@@ -64,11 +64,12 @@
                                 <div class="col">
                                     <i class="fas fa-file-invoice-dollar mr-2 category-icon text-secondary"></i> Bills
                                 </div>
-                                <div class="col">
-                                    <div class="custom-control custom-switch float-right">
+                                <div class="col d-flex justify-content-end">
+                                    <div class="custom-control custom-switch mr-2">
                                         <input type="checkbox" class="custom-control-input" id="bills-category-toggle" checked>
                                         <label class="custom-control-label " for="bills-category-toggle"></label>
                                     </div>
+                                    <div class="text-secondary"><i class="far fa-trash-alt"></i></div>
                                 </div>
                             </div>
                             <div id="sub-category-bills" class="collapse" aria-labelledby="category-bills" data-parent="#accordion-categories">
@@ -76,23 +77,32 @@
                                     <ul class="list-group list-group-flush">
                                         <li class="list-group-item d-flex justify-content-between align-items-center">
                                             Internet
-                                            <div class="custom-control custom-switch float-right">
-                                                <input type="checkbox" class="custom-control-input" id="internet-category-toggle" checked>
-                                                <label class="custom-control-label " for="internet-category-toggle"></label>
+                                            <div class="d-flex justify-content-end">
+                                                <div class="custom-control custom-switch mr-2">
+                                                    <input type="checkbox" class="custom-control-input" id="internet-category-toggle" checked>
+                                                    <label class="custom-control-label " for="internet-category-toggle"></label>
+                                                </div>
+                                                <div class="text-secondary"><i class="far fa-trash-alt"></i></div>
                                             </div>
                                         </li>
                                         <li class="list-group-item d-flex justify-content-between align-items-center">
                                             Phone
-                                            <div class="custom-control custom-switch float-right">
-                                                <input type="checkbox" class="custom-control-input" id="phone-category-toggle" checked>
-                                                <label class="custom-control-label " for="phone-category-toggle"></label>
+                                            <div class="d-flex justify-content-end">
+                                                <div class="custom-control custom-switch mr-2">
+                                                    <input type="checkbox" class="custom-control-input" id="phone-category-toggle" checked>
+                                                    <label class="custom-control-label " for="phone-category-toggle"></label>
+                                                </div>
+                                                <div class="text-secondary"><i class="far fa-trash-alt"></i></div>
                                             </div>
                                         </li>
                                         <li class="list-group-item d-flex justify-content-between align-items-center">
                                             Rent
-                                            <div class="custom-control custom-switch float-right">
-                                                <input type="checkbox" class="custom-control-input" id="rent-category-toggle" checked>
-                                                <label class="custom-control-label " for="rent-category-toggle"></label>
+                                            <div class="d-flex justify-content-end">
+                                                <div class="custom-control custom-switch mr-2">
+                                                    <input type="checkbox" class="custom-control-input" id="rent-category-toggle" checked>
+                                                    <label class="custom-control-label " for="rent-category-toggle"></label>
+                                                </div>
+                                                <div class="text-secondary"><i class="far fa-trash-alt"></i></div>
                                             </div>
                                         </li>
                                     </ul>
@@ -104,11 +114,12 @@
                                 <div class="col">
                                     <i class="fas fa-coins mr-2 category-icon text-secondary"></i> Tax & Fees
                                 </div>
-                                <div class="col">
-                                    <div class="switch-danger custom-control custom-switch float-right">
+                                <div class="col d-flex justify-content-end">
+                                    <div class="custom-control custom-switch mr-2">
                                         <input type="checkbox" class="custom-control-input" id="tax-category-toggle" checked>
                                         <label class="custom-control-label" for="tax-category-toggle"></label>
                                     </div>
+                                    <div class="text-secondary"><i class="far fa-trash-alt"></i></div>
                                 </div>
                             </div>
                             <div id="sub-category-tax" class="collapse" aria-labelledby="category-tax" data-parent="#accordion-categories">
@@ -144,11 +155,12 @@
                                 <div class="col">
                                     <i class="fas fa-hand-holding-usd mr-2 category-icon text-secondary"></i> Income
                                 </div>
-                                <div class="col">
-                                    <div class="custom-control custom-switch float-right">
+                                <div class="col d-flex justify-content-end">
+                                    <div class="custom-control custom-switch mr-2">
                                         <input type="checkbox" class="custom-control-input" id="income-category-toggle" checked>
                                         <label class="custom-control-label " for="income-category-toggle"></label>
                                     </div>
+                                    <div class="text-secondary"><i class="far fa-trash-alt"></i></div>
                                 </div>
                             </div>
                             <div id="sub-category-income" class="collapse" aria-labelledby="category-income" data-parent="#accordion-categories">
@@ -184,11 +196,12 @@
                                 <div class="col">
                                     <i class="fas fa-home mr-2 category-icon text-secondary"></i> Home
                                 </div>
-                                <div class="col">
-                                    <div class="custom-control custom-switch float-right">
+                                <div class="col d-flex justify-content-end">
+                                    <div class="custom-control custom-switch mr-2">
                                         <input type="checkbox" class="custom-control-input" id="home-category-toggle" checked>
                                         <label class="custom-control-label " for="home-category-toggle"></label>
                                     </div>
+                                    <div class="text-secondary"><i class="far fa-trash-alt"></i></div>
                                 </div>
                             </div>
                             <div id="sub-category-home" class="collapse" aria-labelledby="category-home" data-parent="#accordion-categories">
@@ -224,11 +237,12 @@
                                 <div class="col">
                                     <i class="fas fa-heartbeat mr-2 category-icon text-secondary"></i> Health & Fitness
                                 </div>
-                                <div class="col">
-                                    <div class="custom-control custom-switch float-right">
+                                <div class="col d-flex justify-content-end">
+                                    <div class="custom-control custom-switch mr-2">
                                         <input type="checkbox" class="custom-control-input" id="health-category-toggle" checked>
                                         <label class="custom-control-label " for="health-category-toggle"></label>
                                     </div>
+                                    <div class="text-secondary"><i class="far fa-trash-alt"></i></div>
                                 </div>
                             </div>
                             <div id="sub-category-health" class="collapse" aria-labelledby="category-health" data-parent="#accordion-categories">
@@ -264,11 +278,12 @@
                                 <div class="col">
                                     <i class="fas fa-paw mr-2 category-icon text-secondary"></i> Pets
                                 </div>
-                                <div class="col">
-                                    <div class="custom-control custom-switch float-right">
+                                <div class="col d-flex justify-content-end">
+                                    <div class="custom-control custom-switch mr-2">
                                         <input type="checkbox" class="custom-control-input" id="pets-category-toggle" checked>
                                         <label class="custom-control-label " for="pets-category-toggle"></label>
                                     </div>
+                                    <div class="text-secondary"><i class="far fa-trash-alt"></i></div>
                                 </div>
                             </div>
                             <div id="sub-category-pets" class="collapse" aria-labelledby="category-pets" data-parent="#accordion-categories">
@@ -304,11 +319,12 @@
                                 <div class="col">
                                     <i class="fas fa-user-graduate mr-2 category-icon text-secondary"></i> Education
                                 </div>
-                                <div class="col">
-                                    <div class="custom-control custom-switch float-right">
+                                <div class="col d-flex justify-content-end">
+                                    <div class="custom-control custom-switch mr-2">
                                         <input type="checkbox" class="custom-control-input" id="education-category-toggle" checked>
                                         <label class="custom-control-label " for="education-category-toggle"></label>
                                     </div>
+                                    <div class="text-secondary"><i class="far fa-trash-alt"></i></div>
                                 </div>
                             </div>
                             <div id="sub-category-education" class="collapse" aria-labelledby="category-education" data-parent="#accordion-categories">
