@@ -21,7 +21,7 @@
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav ml-auto">
                 <a class="nav-item nav-link" href="#">Overview</a>
-                <a class="nav-item nav-link" href="#">Transactions</a>
+                <a class="nav-item nav-link {{Route::currentRouteName() == 'transactions' ? 'active' : ''}}" href="{{route('transactions')}}">Transactions</a>
                 <a class="nav-item nav-link" href="#">Reports</a>
                 <a class="nav-item nav-link {{Route::currentRouteName() == 'accounts' ? 'active' : ''}}" href="{{route('accounts')}}">Accounts</a>
                 <a class="nav-item nav-link {{Route::currentRouteName() == 'categories' ? 'active' : ''}}" href="{{route('categories')}}">Categories</a>

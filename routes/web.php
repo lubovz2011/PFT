@@ -27,5 +27,8 @@ Route::get('accounts', function(){
    return view('accounts');
 })->name('accounts');
 
+Route::get('transactions', function(){
+    return view('transactions');
+})->name('transactions');
 
 
