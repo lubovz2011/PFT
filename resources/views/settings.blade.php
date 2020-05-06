@@ -6,7 +6,7 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col col-md-10 col-lg-8">
-            <div class="card shadow-card">
+            <div class="card shadow-card border-0">
                 <div class="card-header">
                     <h5 class="card-title mb-0">Settings</h5>
                 </div>

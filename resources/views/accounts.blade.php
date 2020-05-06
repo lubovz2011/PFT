@@ -6,7 +6,7 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col col-md-10 col-lg-8">
-            <div class="card shadow-card">
+            <div class="card shadow-card border-0">
                 <div class="card-header">
                     <h5 class="card-title mb-0">Accounts</h5>
                 </div>
@@ -42,23 +42,12 @@
                             </div>
                             <div class="card-body p-0">
                                 <ul class="list-group list-group-flush">
-                                    @include('accounts.account-manage-item', ["id" => 1,
-                                                                              "amount" => 25,
-                                                                              "currency" => "ILS",
-                                                                              "initialAmount" => 25,
-                                                                              "accountType" => "cash",
-                                                                              "accountName" => "Wallet"])
-                                    @include('accounts.account-manage-item', ["id" => 2,
-                                                                              "amount" => 75.10,
-                                                                              "currency" => "ILS",
-                                                                              "initialAmount" => 30,
-                                                                              "accountType" => "cash",
-                                                                              "accountName" => "Piggy Bank"])
+                                    @include('accounts.account-manage-item', ["id" => 1, "amount" => 25, "currency" => "ILS", "initialAmount" => 25, "accountType" => "cash", "accountName" => "Wallet"])
+                                    @include('accounts.account-manage-item', ["id" => 2, "amount" => 75.10, "currency" => "ILS", "initialAmount" => 30, "accountType" => "cash", "accountName" => "Piggy Bank"])
                                 </ul>
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
