@@ -36,6 +36,14 @@
                 <input type="text" class="form-control text-right" id="initial-balance-Input" value="{{$amount}} {{$currency}}" readonly>
             </div>
         </div>
+        <div class="row">
+            <div class="col">
+                <div class="custom-control custom-switch">
+                    <input type="checkbox" class="custom-control-input" id="report-account-switch">
+                    <label class="custom-control-label" for="report-account-switch">Include In Reports</label>
+                </div>
+            </div>
+        </div>
         <div class="row mt-3">
             <div class="col">
                 <button class="btn btn-secondary" type="submit">Delete</button>
