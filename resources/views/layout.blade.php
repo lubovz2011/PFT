@@ -22,10 +22,21 @@
             <div class="navbar-nav ml-auto">
                 <a class="nav-item nav-link" href="#">Overview</a>
                 <a class="nav-item nav-link {{Route::currentRouteName() == 'transactions' ? 'active' : ''}}" href="{{route('transactions')}}">Transactions</a>
-                <a class="nav-item nav-link {{Route::currentRouteName() == 'report' ? 'active' : ''}}" href="{{route('report')}}">Reports</a>
+
                 <a class="nav-item nav-link {{Route::currentRouteName() == 'accounts' ? 'active' : ''}}" href="{{route('accounts')}}">Accounts</a>
                 <a class="nav-item nav-link {{Route::currentRouteName() == 'categories' ? 'active' : ''}}" href="{{route('categories')}}">Categories</a>
-                <div class="dropdown">
+                <div class="nav-item dropdown {{in_array(Route::currentRouteName(), ['report', 'about-us']) ? 'active' : ''}}">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        More
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="{{route('report')}}">Reports</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#contact-us-modal">Contact Us</a>
+                        <a class="dropdown-item" href="#">About Us</a>
+                    </div>
+                </div>
+                <div class="dropdown ml-2">
                     <span class="round-user-icon-container border border-success rounded-circle text-success content-box" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="fa fa-user-circle"></i>
                     </span>
@@ -54,6 +65,7 @@
 <script defer src="js/font-awesome-5-all.min.js"></script> <!--load all styles -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.js"></script>
 @yield("scripts")
+@include("modals.contact-us")
 
 </body>
 </html>
