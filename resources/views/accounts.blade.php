@@ -27,7 +27,7 @@
                 <div class="card-body p-0">
                     <div class="accordion" id="accordion-accounts">
                         <div class="card">
-                            <div class="card-header py-3" id="personal-info-header">
+                            <div class="card-header py-3 hover-disabled" id="personal-info-header">
                                 <div class="row">
                                     <div class="col text-uppercase"><i class="fas fa-wallet mr-3 category-icon text-secondary"></i>cash wallets</div>
                                     <div class="col"></div>

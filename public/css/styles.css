@@ -63,7 +63,7 @@
 .uname-header {
     margin-top: .6rem;
 }
-.accordion .card-header:hover {
+.accordion .card-header:not(.hover-disabled):hover {
     background-color: lightgrey;
     cursor: pointer;
 }
@@ -116,4 +116,12 @@ body {
     font-size: 0.85rem;
 }
 
+/*</editor-fold>*/
+
+/*<editor-fold desc="transactions-page">*/
+@media (min-width: 576px){
+    .modal-size-400{
+        max-width: 400px;
+    }
+}
 /*</editor-fold>*/
