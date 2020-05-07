@@ -13,7 +13,7 @@
                 <div class="card-body pb-2">
                     <div class="row justify-content-start">
                         <div class="col">
-                            <button type="submit" class="btn btn-primary mr-3">Connect Digital Account</button>
+                            <button type="submit" class="btn btn-primary mr-2">Connect Digital Account</button>
                             <button type="button" class="btn btn-secondary">Create Cash Wallet</button>
                         </div>
                     </div>

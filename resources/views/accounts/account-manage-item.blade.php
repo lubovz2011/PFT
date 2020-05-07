@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col">{{$accountName}}</div>
         <div class="col d-flex justify-content-center text-secondary">{{$accountType}}</div>
-        <div class="col d-flex justify-content-center">{{$amount}} {{$currency}}</div>
+        <div class="col d-flex justify-content-center">{{number_format($amount, 2, '.', ',')}} {{$currency}}</div>
         <div class="col d-flex justify-content-center">
             <div class="custom-control custom-switch">
                 <input type="checkbox" class="custom-control-input" id="bank-category-toggle" checked>
@@ -19,21 +19,31 @@
             </div>
         </div>
         <div class="row">
-            <div class="col">
-                <div class="input-group mb-2">
-                    <div class="input-group-prepend">
+            <div class="col-7">
+                <div class="input-group mb-3">
+                    {{--<div class="input-group-prepend">
                         <div class="input-group-text">
                             Initial Balance&nbsp;
                             <label class="form-check-label">Change
                                 <input type="checkbox" class="invisible js-visibility-toggle">
                             </label>
                         </div>
-                    </div>
-                    <input type="number" class="form-control text-right js-visibility-toggled" id="initial-balance-Input" value="{{$initialAmount}} {{$currency}}" readonly>
+                    </div>--}}
+
+                            <label class="form-control border-right-0 col-4">Initial Balance</label>
+                            <input type="text" class="form-control col-6" readonly placeholder="13.00                     ILS" aria-label="Recipient's username" aria-describedby="button-addon2">
+
+                        <div class="input-group-append">
+                            <button class="btn btn-secondary" type="button" id="button-addon2">Change</button>
+                        </div>
+
+{{--                    <input type="number" class="form-control text-right js-visibility-toggled" id="initial-balance-Input" value="{{$initialAmount}} {{$currency}}" readonly>--}}
                 </div>
             </div>
-            <div class="col-4 form-group">
-                <input type="text" class="form-control text-right" id="initial-balance-Input" value="{{$amount}} {{$currency}}" readonly>
+
+            <div class="col input-group">
+                <label class="form-control border-right-0 col">Current Balance</label>
+                <input type="text" class="form-control text-right col-5" id="initial-balance-Input" value="{{number_format($amount, 2, '.', ',')}}      {{$currency}}" readonly>
             </div>
         </div>
         <div class="row">
