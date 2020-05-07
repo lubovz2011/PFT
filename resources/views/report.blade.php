@@ -20,13 +20,13 @@
                                     <div class="row py-1">
                                         <div class="col">
                                             <div class="btn-group btn-group-toggle d-flex justify-content-center" data-toggle="buttons">
-                                                <label class="btn btn-primary mr-1">
+                                                <label class="btn btn-primary border-0 m-0">
                                                     <input type="radio" name="options" id="option1"> All Types
                                                 </label>
-                                                <label class="btn btn-secondary mr-1">
+                                                <label class="btn btn-secondary border-white border-top-0 border-bottom-0 m-0">
                                                     <input type="radio" name="options" id="option2"> Expense
                                                 </label>
-                                                <label class="btn btn-secondary">
+                                                <label class="btn btn-secondary border-0 m-0">
                                                     <input type="radio" name="options" id="option3"> Income
                                                 </label>
 

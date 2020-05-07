@@ -45,10 +45,13 @@
                                                 <input type="email" class="form-control" id="inputEmail3" placeholder="email@example.com">
                                             </div>
                                         </div>
-                                        <div class="form-group row justify-content-end">
-                                            <div class="col-sm-10">
-                                                <button type="submit" class="btn btn-primary float-right">Save</button>
-                                                <button type="button" class="btn btn-secondary float-right mr-2">Delete profile</button>
+                                        <div class="row mt-4">
+                                            <div class="col">
+                                                <button class="btn btn-secondary" type="submit">Delete Profile</button>
+                                            </div>
+                                            <div class="col d-flex justify-content-end">
+                                                <button class="btn btn-secondary mr-2" type="submit">Cancel</button>
+                                                <button class="btn btn-primary" type="submit">Save</button>
                                             </div>
                                         </div>
                                     </form>
@@ -145,10 +148,10 @@
                                                 </select>
                                             </div>
                                         </div>
-
-                                        <div class="form-group row justify-content-end">
-                                            <div class="col-sm-10">
-                                                <button type="submit" class="btn btn-primary float-right">Save</button>
+                                        <div class="row mt-4">
+                                            <div class="col d-flex justify-content-end">
+                                                <button class="btn btn-secondary mr-2" type="submit">Cancel</button>
+                                                <button class="btn btn-primary" type="submit">Save</button>
                                             </div>
                                         </div>
                                     </form>
@@ -178,9 +181,10 @@
                                                 <input type="password" class="form-control" id="inputPasswordConfirmation">
                                             </div>
                                         </div>
-                                        <div class="form-group row justify-content-end">
-                                            <div class="col-sm-10">
-                                                <button type="submit" class="btn btn-primary float-right">Save</button>
+                                        <div class="row mt-4">
+                                            <div class="col d-flex justify-content-end">
+                                                <button class="btn btn-secondary mr-2" type="submit">Cancel</button>
+                                                <button class="btn btn-primary" type="submit">Save</button>
                                             </div>
                                         </div>
                                     </form>
@@ -202,9 +206,10 @@
                                             <input type="checkbox" class="custom-control-input" id="monthly-report" checked>
                                             <label class="custom-control-label" for="monthly-report">Send monthly report</label>
                                         </div>
-                                        <div class="form-group row justify-content-end">
-                                            <div class="col-sm-10">
-                                                <button type="submit" class="btn btn-primary float-right">Save</button>
+                                        <div class="row mt-4">
+                                            <div class="col d-flex justify-content-end">
+                                                <button class="btn btn-secondary mr-2" type="submit">Cancel</button>
+                                                <button class="btn btn-primary" type="submit">Save</button>
                                             </div>
                                         </div>
                                     </form>
