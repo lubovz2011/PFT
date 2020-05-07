@@ -38,4 +38,6 @@ Route::get('transactions', function(){
     return view('transactions', ["transactionsByDate" => $transactionsByDate]);
 })->name('transactions');
 
-
+Route::get('report', function(){
+    return view('report');
+})->name('report');

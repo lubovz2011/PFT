@@ -6,7 +6,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-3 bg-dark filters-form">
-                @include('transactions.filters-form', ["showTypeSelect" => true])
+                @include('side-bar.filters-form', ["showTypeSelect" => true])
             </div>
             <div class="col-9">
                 <div class="card shadow-card border-0">
@@ -30,12 +30,12 @@
                                             </div>
                                         </div>
                                         <div class="col d-flex justify-content-end align-items-center">
-                                            1 - 1 of 1
+                                            1 - 3 of 1
                                             <div class="btn-group btn-group-sm ml-2" role="group">
                                                 <button type="button" class="btn btn-secondary border-white border-right-0">
                                                     <i class="mx-1 fas fa-chevron-left"></i>
                                                 </button>
-                                                <button type="button" class="btn btn-secondary border-white">
+                                                <button type="button" class="btn btn-secondary border-white" disabled>
                                                     <i class="mx-1 fas fa-chevron-right"></i>
                                                 </button>
                                             </div>

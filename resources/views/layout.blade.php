@@ -22,7 +22,7 @@
             <div class="navbar-nav ml-auto">
                 <a class="nav-item nav-link" href="#">Overview</a>
                 <a class="nav-item nav-link {{Route::currentRouteName() == 'transactions' ? 'active' : ''}}" href="{{route('transactions')}}">Transactions</a>
-                <a class="nav-item nav-link" href="#">Reports</a>
+                <a class="nav-item nav-link {{Route::currentRouteName() == 'report' ? 'active' : ''}}" href="{{route('report')}}">Reports</a>
                 <a class="nav-item nav-link {{Route::currentRouteName() == 'accounts' ? 'active' : ''}}" href="{{route('accounts')}}">Accounts</a>
                 <a class="nav-item nav-link {{Route::currentRouteName() == 'categories' ? 'active' : ''}}" href="{{route('categories')}}">Categories</a>
                 <div class="dropdown">
@@ -52,6 +52,7 @@
 <script src="js/bootstrap.min.js"></script>
 <script src="js/select2.full.min.js"></script>
 <script defer src="js/font-awesome-5-all.min.js"></script> <!--load all styles -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.js"></script>
 @yield("scripts")
 
 </body>

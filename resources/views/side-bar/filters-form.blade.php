@@ -53,7 +53,7 @@
             </select>
         </div>
     </div>
-    <div class="col d-flex justify-content-center">
+    <div class="col mt-2 d-flex justify-content-center">
         <button class="btn btn-primary mr-2 px-3" type="submit">Apply filters</button>
     </div>
 </form>
