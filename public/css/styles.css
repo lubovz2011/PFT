@@ -124,4 +124,9 @@ body {
         max-width: 400px;
     }
 }
+
+.filters-form{
+    margin-bottom: calc(-1.5rem - 20px);
+    margin-top: -1.5rem;
+}
 /*</editor-fold>*/

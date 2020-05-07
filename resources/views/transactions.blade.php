@@ -3,70 +3,76 @@
 @endsection
 @section("content")
 
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col col-md-10 col-lg-8">
-                <div class="card shadow-card">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-3 bg-dark filters-form">
+                @include('transactions.filters-form', ["showTypeSelect" => true])
+            </div>
+            <div class="col-9">
+                <div class="card shadow-card border-0">
                     <div class="card-header">
-                        <h5 class="card-title mb-0">Accounts</h5>
+                        <h5 class="card-title mb-0">Transactions</h5>
                     </div>
-                    <div class="card-body pb-2">
-                        <div class="row justify-content-start">
-                            <div class="col">
-                                <button type="submit" class="btn btn-primary mr-3">Connect Digital Account</button>
-                                <button type="button" class="btn btn-secondary">Create Cash Wallet</button>
-                            </div>
-                        </div>
-                        <div class="row mt-5 text-secondary text-center account-mini-headers">
-                            <div class="col">ACCOUNT NAME</div>
-                            <div class="col">ACCOUNT TYPE</div>
-                            <div class="col">CURRENT BALANCE</div>
-                            <div class="col">TURN ON/OFF</div>
+                    <div class="card-body p-0">
+                        <div>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">
+                                    <div class="row py-1">
+                                        <div class="col">
+                                            <div class="row">
+                                                <div class="col text-uppercase text-secondary account-mini-headers">Current Balance</div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col d-flex justify-content-start">
+                                                    <div class="text-success mr-2 font-weight-bold">1000.90</div>
+                                                    <div class="text-secondary">ILS</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col d-flex justify-content-end align-items-center">
+                                            1 - 1 of 1
+                                            <div class="btn-group btn-group-sm ml-2" role="group">
+                                                <button type="button" class="btn btn-secondary border-white border-right-0">
+                                                    <i class="mx-1 fas fa-chevron-left"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-secondary border-white">
+                                                    <i class="mx-1 fas fa-chevron-right"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="row">
+                                        <div class="col my-2">
+                                            <button type="button" class="btn btn-primary" aria-pressed="false" data-toggle="modal" data-target="#add-transaction-modal">
+                                                Add Transaction
+                                            </button>
+                                        </div>
+                                        <div class="col d-flex justify-content-end">
+                                            <form class="form-inline my-2">
+                                                <input class="form-control mr-sm-2" type="search" placeholder="Search for transactions">
+                                                <button class="btn btn-outline-primary" type="submit">Search</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                     <div class="card-body p-0">
                         <div class="accordion" id="accordion-accounts">
-                            <div class="card">
-                                <div class="card-header py-3" id="personal-info-header">
-                                    <div class="row">
-                                        <div class="col text-uppercase"><i class="fas fa-wallet mr-3 category-icon text-secondary"></i>cash wallets</div>
-                                        <div class="col"></div>
-                                        <div class="col d-flex justify-content-center">100.10 ILS</div>
-                                        <div class="col d-flex justify-content-center">
-                                            <div class="custom-control custom-switch">
-                                                <input type="checkbox" class="custom-control-input" id="bank-category-toggle" checked>
-                                                <label class="custom-control-label " for="bank-category-toggle"></label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card-body p-0">
-                                    <ul class="list-group list-group-flush">
-                                        @include('accounts.account-manage-item', ["id" => 1,
-                                                                                  "amount" => 25,
-                                                                                  "currency" => "ILS",
-                                                                                  "initialAmount" => 25,
-                                                                                  "accountType" => "cash",
-                                                                                  "accountName" => "Wallet"])
-                                        @include('accounts.account-manage-item', ["id" => 2,
-                                                                                  "amount" => 75.10,
-                                                                                  "currency" => "ILS",
-                                                                                  "initialAmount" => 30,
-                                                                                  "accountType" => "cash",
-                                                                                  "accountName" => "Piggy Bank"])
-                                    </ul>
-                                </div>
-                            </div>
+                            @foreach($transactionsByDate as $date => $transactions)
+                                @include('transactions.transactions-manage-date', ["date" => $date, "transactions" => $transactions])
+                            @endforeach
                         </div>
-
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
+    @include("modals.addTransaction")
 @endsection
-
 @section("scripts")
     <script>
         $(document).ready(function(){
@@ -74,18 +80,5 @@
                 theme : "bootstrap"
             });
         });
-
-        $(".js-visibility-toggle").change(function(){
-            $(this).closest(".input-group").find('.js-visibility-toggled').attr('readonly', function(_, attr){ return !attr}).focus();
-            $(this).closest(".input-group-prepend").hide();
-        })
-
-        $(".js-visibility-toggled").blur(function(){
-            $(this).closest(".input-group").find('.input-group-prepend').show();
-            $(this).attr('readonly', function(_, attr){ return !attr});
-        })
     </script>
 @endsection
-
-
-
