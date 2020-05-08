@@ -1,11 +1,13 @@
 /*<editor-fold desc="social-login">*/
-.social-login.fa, .profile-rounded {
+.social-login.rounded-circle, .profile-rounded {
     padding: 14px;
     font-size: 1.5rem;
-    width: 50px;
-    height: 50px;
+    width: 3rem;
+    height: 3rem;
+    padding: .5rem;
     text-align: center;
     text-decoration: none;
+    transition: color .5s, background-color .5s;
 }
 .profile-rounded {
     width: 35px;
@@ -14,12 +16,12 @@
     font-weight: 600;
     font-size: 1.5rem;
 }
-.social-login.fa-facebook:hover{
+.social-login.fa-facebook-f:hover{
     border: 1px solid #3B5998;
     background: white;
     color: #3B5998;
 }
-.social-login.fa-facebook {
+.social-login.fa-facebook-f {
     border: 1px solid #3B5998;
     background: #3B5998;
     color: white;
@@ -33,9 +35,6 @@
     border: 1px solid #dd4b39;
     background: #dd4b39;
     color: white;
-}
-.social-login.fa{
-    transition: color .5s, background-color .5s;
 }
 /*</editor-fold>*/
 

@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link href="css/font-awesome-5-all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
     <title>Laravel</title>
 
@@ -30,6 +30,7 @@
     <script src="js/jquery-3.4.1.slim.min.js"></script>
     <script src="js/popper.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
+    <script defer src="js/font-awesome-5-all.min.js"></script> <!--load all styles -->
     <script>
         $(document).ready(function(){
        //     $('#sign-up-modal').modal();
