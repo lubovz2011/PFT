@@ -47,7 +47,7 @@
                     </div>
                     <div class="col d-flex justify-content-center">
                         <button class="btn btn-secondary mr-2 px-3" type="submit">Cancel</button>
-                        <button class="btn btn-primary px-4" type="submit">Save</button>
+                        <button class="btn btn-primary px-4" type="submit">Add</button>
                     </div>
                 </form>
             </div>
