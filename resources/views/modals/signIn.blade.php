@@ -8,25 +8,30 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form class="px-4 py-3">
+                <form class="px-4 py-3" method="POST" action="{{ route('login') }}">
+                    @csrf
                     <div class="form-group">
-                        <input type="email" class="form-control" id="exampleDropdownFormEmail1" placeholder="email@example.com">
+                        <input type="email" class="form-control" name="email" placeholder="email@example.com" required>
                     </div>
                     <div class="form-group">
-                        <input type="password" class="form-control" placeholder="Password">
+                        <input type="password" class="form-control" name="password" placeholder="Password" required>
                     </div>
                     <div class="row">
                         <div class="form-group col">
                             <div class="form-check">
-                                <input type="checkbox" class="form-check-input" id="dropdownCheck">
+                                <input type="checkbox" class="form-check-input" name="remember" id="dropdownCheck">
                                 <label class="form-check-label" for="dropdownCheck">
                                     Remember me
                                 </label>
                             </div>
                         </div>
-                        <div class="col text-right">
-                            <a href="#">Forgot your password?</a>
-                        </div>
+                        @if (Route::has('password.request'))
+                            <div class="col text-right">
+                                <a class="btn btn-link" href="{{ route('password.request') }}">
+                                    Forgot Your Password?
+                                </a>
+                            </div>
+                        @endif
                     </div>
 
                     <button type="submit" class="btn btn-primary btn-block">Sign in</button>
