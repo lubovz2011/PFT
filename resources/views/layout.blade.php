@@ -45,7 +45,11 @@
                     </span>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
                         <a class="dropdown-item" href="{{route('settings')}}">Settings</a>
-                        <a class="dropdown-item" href="{{route('welcome')}}">Log out</a>
+                        <a class="dropdown-item" href="#"
+                           onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Log out</a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
                     </div>
                 </div>
             </div>

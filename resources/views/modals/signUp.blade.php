@@ -8,15 +8,16 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form class="px-4 py-3">
+                <form class="px-4 py-3" method="POST" action="{{ route('register') }}">
+                    @csrf
                     <div class="form-group">
-                        <input type="email" class="form-control" id="exampleDropdownFormEmail1" placeholder="email@example.com">
+                        <input type="email" class="form-control" name="email" placeholder="email@example.com" required>
                     </div>
                     <div class="form-group">
-                        <input type="password" class="form-control" placeholder="Password">
+                        <input type="password" class="form-control" name="password" placeholder="Password" required>
                     </div>
                     <div class="form-group">
-                        <input type="password" class="form-control" placeholder="Confirm Password">
+                        <input type="password" class="form-control" name="password_confirmation" placeholder="Confirm Password" required>
                     </div>
                     <div class="form-group">
                         <div class="form-check">
