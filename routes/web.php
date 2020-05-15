@@ -23,3 +23,7 @@ Route::get('accounts', 'AccountsController@displayAccountsPage')->name('accounts
 Route::get('transactions','TransactionsController@displayTransactionsPage')->name('transactions');
 /** reports page */
 Route::get('reports', 'ReportsController@displayReportsPage')->name('reports');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
