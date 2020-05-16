@@ -11,7 +11,7 @@
                 <form class="px-4 py-3" method="POST" action="{{ route('login') }}">
                     @csrf
                     <div class="form-group">
-                        <input type="email" class="form-control" name="email" placeholder="email@example.com" required>
+                        <input type="email" class="form-control" name="login" placeholder="email@example.com" required>
                     </div>
                     <div class="form-group">
                         <input type="password" class="form-control" name="password" placeholder="Password" required>
