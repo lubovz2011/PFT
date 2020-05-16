@@ -13,8 +13,7 @@
 
 /** index page */
 Route::get('/', 'PagesController@displayWelcomePage')->name('welcome');
-/** user settings */
-Route::get('settings', 'UserController@displaySettingsPage')->name('settings');
+
 /** categories page */
 Route::get('categories', 'CategoriesController@displayCategoriesPage')->name('categories');
 /** accounts page */
@@ -27,3 +26,18 @@ Route::get('reports', 'ReportsController@displayReportsPage')->name('reports');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::group(['prefix' => 'settings', 'as' => 'settings'], function()
+{
+    /** user settings */
+    Route::get('/', 'UserController@displaySettingsPage');
+
+    Route::post('personal-info', 'UserController@editPersonalInfo')->name(':personal-info');
+
+    Route::post('interface', 'UserController@editInterface')->name(':interface');
+
+    Route::post('security', 'UserController@editSecurity')->name(':security');
+
+    Route::post('email-notifications', 'UserController@editEmailNotifications')->name(':email-notifications');
+});
+
