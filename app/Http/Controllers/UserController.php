@@ -14,7 +14,7 @@ class UserController extends Controller
      * method returns settings page
      * @return \Illuminate\View\View
      */
-    public function displaySettingsPage(){
+    public function displaySettingsPage(Request $request){
         $user = auth()->user();
         $params = [
             "login" => $user->login,
@@ -28,17 +28,30 @@ class UserController extends Controller
             "currencies" => explode(',', $user->currencies ?: ""),
             "monthlyReport" => (bool)$user->monthly_report
         ];
-        dump($params);
+        dump([
+            "params" => $params,
+            "session" => $request->session()->all()
+        ]);
         return view('settings', $params);
     }
 
-    public function editPersonalInfo(Request $request){
+    public function editPersonalInfo(Request $request)
+    {
         $user = auth()->user();
+        $additionalLoginValidation = '';
+        if($user->login != $request->input('login'))
+        {
+            $additionalLoginValidation = '|unique:users,login';
+        }
+        $this->validate($request, [
+            'name' => 'max:255',
+            'login' => 'bail|required|email|max:255'.$additionalLoginValidation
+        ]);
 
         $user->name = $request->input("name");
         $user->login = $request->input("login");
-
         $user->save();
+
         return redirect()->route("settings");
     }
 

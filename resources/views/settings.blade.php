@@ -30,20 +30,43 @@
                                     </button>
                                 </h2>
                             </div>
-                            <div id="section-personal-info" class="collapse" aria-labelledby="personal-info-header" data-parent="#accordion-settings">
+                            <div id="section-personal-info"
+                                 class="collapse @if($errors->has('name') || $errors->has('login')) show @endif"
+                                 aria-labelledby="personal-info-header"
+                                 data-parent="#accordion-settings">
                                 <div class="card-body">
                                     <form method="POST" action="{{route("settings:personal-info")}}">
                                         @csrf
                                         <div class="form-group row">
                                             <label for="inputName" class="col-sm-2 col-form-label">Name</label>
                                             <div class="col-sm-10">
-                                                <input type="text" class="form-control" id="inputName" placeholder="user name" name="name" value="{{$name}}">
+                                                <input type="text"
+                                                       class="form-control @error('name') is-invalid @enderror"
+                                                       id="inputName"
+                                                       placeholder="user name"
+                                                       name="name"
+                                                       value="{{ old('name', $name) }}">
+                                                @error('name')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                @enderror
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label for="inputEmail3" class="col-sm-2 col-form-label">Email</label>
                                             <div class="col-sm-10">
-                                                <input type="email" class="form-control" id="inputEmail3" placeholder="email@example.com" name="login" value="{{$login}}">
+                                                <input type="text"
+                                                       class="form-control @error('login') is-invalid @enderror"
+                                                       id="inputEmail3"
+                                                       placeholder="email@example.com"
+                                                       name="login"
+                                                       value="{{ old('login', $login) }}">
+                                                @error('login')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                @enderror
                                             </div>
                                         </div>
                                         <div class="row mt-4">
