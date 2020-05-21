@@ -17,19 +17,19 @@ class UserController extends Controller
     public function displaySettingsPage(Request $request){
         $user = auth()->user();
         $params = [
-            "login" => $user->login,
-            "name" => $user->name,
-            "userName" => $user->name ?: $user->login,
-            "dateFormat" => $user->date_format,
-            "timeFormat" => $user->time_format,
-            "weekStart" => $user->week_start,
-            "limit" => $user->limit,
-            "mainCurrency" => $user->currency,
-            "currencies" => explode(',', $user->currencies ?: ""),
+            "login"         => $user->login,
+            "name"          => $user->name,
+            "userName"      => $user->name ?: $user->login,
+            "dateFormat"    => $user->date_format,
+            "timeFormat"    => $user->time_format,
+            "weekStart"     => $user->week_start,
+            "limit"         => $user->limit,
+            "mainCurrency"  => $user->currency,
+            "currencies"    => explode(',', $user->currencies ?: ""),
             "monthlyReport" => (bool)$user->monthly_report
         ];
         dump([
-            "params" => $params,
+            "params"  => $params,
             "session" => $request->session()->all()
         ]);
         return view('settings', $params);
@@ -44,7 +44,7 @@ class UserController extends Controller
             $additionalLoginValidation = '|unique:users,login';
         }
         $this->validate($request, [
-            'name' => 'max:255',
+            'name'  => 'max:255',
             'login' => 'bail|required|email|max:255'.$additionalLoginValidation
         ]);
 
@@ -57,7 +57,14 @@ class UserController extends Controller
 
     public function editInterface(Request $request){
         $user = auth()->user();
-
+        $this->validate($request, [
+            'date_format'   => 'bail|required|in:Y/m/d,m/d/Y,d/m/Y,d.m.Y,d-m-Y',
+            'time_format'    => 'bail|required|in:H:i,h:i A',
+            'week_start'    => 'bail|required|in:0,1,2,3,4,5,6',
+            'limit'         => 'bail|required|in:10,20,25,50,100',
+            'main_currency' => 'bail|required|in:ILS,USD,EUR,GBP,JPY',
+            'currencies.*'    => 'bail|required|in:ILS,USD,EUR,GBP,JPY'
+        ]);
         $user->date_format = $request->input("date_format");
         $user->time_format = $request->input("time_format");
         $user->week_start = $request->input("week_start");
