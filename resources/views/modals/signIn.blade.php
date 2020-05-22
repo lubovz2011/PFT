@@ -11,10 +11,21 @@
                 <form class="px-4 py-3" method="POST" action="{{ route('login') }}">
                     @csrf
                     <div class="form-group">
-                        <input type="email" class="form-control" name="login" placeholder="email@example.com" required>
+                        <input type="email"
+                               class="form-control @error('login') is-invalid @enderror"
+                               name="login"
+                               placeholder="email@example.com"
+                               value="{{old('login')}}"
+                               required>
+                        @include('utils.error-invalid-feedback', ["errorField" => 'login'])
                     </div>
                     <div class="form-group">
-                        <input type="password" class="form-control" name="password" placeholder="Password" required>
+                        <input type="password"
+                               class="form-control @error('password') is-invalid @enderror"
+                               name="password"
+                               placeholder="Password"
+                               required>
+                        @include('utils.error-invalid-feedback', ["errorField" => 'password'])
                     </div>
                     <div class="row">
                         <div class="form-group col">

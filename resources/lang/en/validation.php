@@ -145,6 +145,10 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        "login" => "email",
+        "signup_login" => "email",
+        "signup_password" => "password"
+    ],
 
 ];

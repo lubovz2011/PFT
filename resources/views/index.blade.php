@@ -33,7 +33,15 @@
     <script defer src="js/font-awesome-5-all.min.js"></script> <!--load all styles -->
     <script>
         $(document).ready(function(){
-       //     $('#sign-up-modal').modal();
+            let signInError = {{($errors->has('login') || $errors->has('password')) ? 1 : 0}};
+            let signUpError = {{($errors->has('signup_login') || $errors->has('signup_password')) ? 1 : 0}};
+
+            if(signInError){
+                $('#sign-in-modal').modal();
+            }
+            if(signUpError){
+                $('#sign-up-modal').modal();
+            }
         });
     </script>
 </body>
