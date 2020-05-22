@@ -32,7 +32,7 @@ class UserController extends Controller
             "params"  => $params,
             "session" => $request->session()->all()
         ]);
-        return view('settings', $params);
+        return view('settings.settings', $params);
     }
 
     public function editPersonalInfo(Request $request)
