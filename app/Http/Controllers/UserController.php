@@ -44,7 +44,7 @@ class UserController extends Controller
             $additionalLoginValidation = '|unique:users,login';
         }
         $this->validate($request, [
-            'name'  => 'max:255',
+            'name'  => 'string|max:255',
             'login' => 'bail|required|email|max:255'.$additionalLoginValidation
         ]);
 
@@ -78,7 +78,9 @@ class UserController extends Controller
 
     public function editSecurity(Request $request){
         $user = auth()->user();
-
+        $this->validate($request, [
+            'password'  => 'bail|required|min:8|string|confirmed'
+        ]);
         $user->password = Hash::make($request->input("password"));
 
         $user->save();
