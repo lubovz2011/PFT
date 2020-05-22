@@ -34,6 +34,8 @@ Route::group(['prefix' => 'settings', 'as' => 'settings'], function()
 
     Route::post('personal-info', 'UserController@editPersonalInfo')->name(':personal-info');
 
+    Route::post('delete-profile', 'UserController@deleteProfile')->name(':delete-profile');
+
     Route::post('interface', 'UserController@editInterface')->name(':interface');
 
     Route::post('security', 'UserController@editSecurity')->name(':security');
