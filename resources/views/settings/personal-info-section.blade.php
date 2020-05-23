@@ -21,7 +21,8 @@
                                id="inputName"
                                placeholder="user name"
                                name="name"
-                               value="{{ old('name', $name) }}">
+                               value="{{ old('name', $name) }}"
+                               default-value="{{$name}}">
                         @include('utils.error-invalid-feedback', ["errorField" => 'name'])
                     </div>
                 </div>
@@ -33,7 +34,8 @@
                                id="inputEmail3"
                                placeholder="email@example.com"
                                name="login"
-                               value="{{ old('login', $login) }}">
+                               value="{{ old('login', $login) }}"
+                               default-value="{{$login}}">
                         @include('utils.error-invalid-feedback', ["errorField" => 'login'])
                     </div>
                 </div>
@@ -47,7 +49,7 @@
                         </button>
                     </div>
                     <div class="col d-flex justify-content-end">
-                        <button class="btn btn-secondary mr-2" type="button">Cancel</button>
+                        <button class="btn btn-secondary mr-2" type="reset">Cancel</button>
                         <button class="btn btn-primary" type="submit">Save</button>
                     </div>
                 </div>

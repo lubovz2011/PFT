@@ -19,19 +19,24 @@
                     <input type="password"
                            class="form-control @error('password') is-invalid @enderror"
                            id="inputPassword"
-                           name="password">
+                           name="password"
+                           default-value="">
                     @include('utils.error-invalid-feedback', ["errorField" => 'password'])
                 </div>
             </div>
             <div class="form-group row">
                 <label for="inputPasswordConfirmation" class="col-md-4 col-lg-4 col-form-label">Password confirmation</label>
                 <div class="col-md-8 col-lg-8">
-                    <input type="password" class="form-control" id="inputPasswordConfirmation" name="password_confirmation">
+                    <input type="password"
+                           class="form-control"
+                           id="inputPasswordConfirmation"
+                           name="password_confirmation"
+                           default-value="">
                 </div>
             </div>
             <div class="row mt-4">
                 <div class="col d-flex justify-content-end">
-                    <button class="btn btn-secondary mr-2" type="button">Cancel</button>
+                    <button class="btn btn-secondary mr-2" type="reset">Cancel</button>
                     <button class="btn btn-primary" type="submit">Save</button>
                 </div>
             </div>

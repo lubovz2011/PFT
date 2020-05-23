@@ -24,7 +24,8 @@
                 <div class="col-md-8 col-lg-8">
                     <select class="form-control @error('date_format') is-invalid @enderror"
                             id="date-format-select"
-                            name="date_format">
+                            name="date_format"
+                            default-value="{{$dateFormat}}">
                         <option value="Y/m/d" @if(old('date_format', $dateFormat) == "Y/m/d") selected @endif>YYYY/MM/DD ({{date("Y/m/d")}})</option>
                         <option value="m/d/Y" @if(old('date_format', $dateFormat) == "m/d/Y") selected @endif>MM/DD/YYYY ({{date("m/d/Y")}})</option>
                         <option value="d/m/Y" @if(old('date_format', $dateFormat) == "d/m/Y") selected @endif>DD/MM/YYYY ({{date("d/m/Y")}})</option>
@@ -39,7 +40,8 @@
                 <div class="col-md-8 col-lg-8">
                     <select class="form-control @error('time_format') is-invalid @enderror"
                             id="time-format-select"
-                            name="time_format">
+                            name="time_format"
+                            default-value="{{$timeFormat}}">
                         <option value="H:i" @if(old('time_format', $timeFormat) == "H:i") selected @endif>HH:MM ({{date("H:i")}})</option>
                         <option value="h:i A" @if(old('time_format', $timeFormat) == "h:i A") selected @endif>hh:mm A ({{date("h:i A")}})</option>
                     </select>
@@ -51,7 +53,8 @@
                 <div class="col-md-8 col-lg-8">
                     <select class="form-control @error('week_start') is-invalid @enderror"
                             id="week-start-select"
-                            name="week_start">
+                            name="week_start"
+                            default-value="{{$weekStart}}">
                         <option value="0" @if(old('week_start', $weekStart) == 0) selected @endif>Sunday</option>
                         <option value="1" @if(old('week_start', $weekStart) == 1) selected @endif>Monday</option>
                         <option value="2" @if(old('week_start', $weekStart) == 2) selected @endif>Tuesday</option>
@@ -68,7 +71,8 @@
                 <div class="col-md-8 col-lg-8">
                     <select class="form-control @error('limit') is-invalid @enderror"
                             id="entries-per-page-select"
-                            name="limit">
+                            name="limit"
+                            default-value="{{$limit}}">
                         <option value="10" @if(old('limit', $limit) == 10) selected @endif>10</option>
                         <option value="20" @if(old('limit', $limit) == 20) selected @endif>20</option>
                         <option value="25" @if(old('limit', $limit) == 25) selected @endif>25</option>
@@ -83,7 +87,8 @@
                 <div class="col-md-8 col-lg-8">
                     <select class="form-control @error('main_currency') is-invalid @enderror"
                             id="main-currency-select"
-                            name="main_currency">
+                            name="main_currency"
+                            default-value="{{$mainCurrency}}">
                         <option value="ILS" @if(old('main_currency', $mainCurrency) == "ILS") selected @endif>ILS Israeli new shekel</option>
                         <option value="USD" @if(old('main_currency', $mainCurrency) == "USD") selected @endif>USD United States Dollar</option>
                         <option value="EUR" @if(old('main_currency', $mainCurrency) == "EUR") selected @endif>EUR Euro</option>
@@ -98,7 +103,9 @@
                 <div class="col-md-8 col-lg-8">
                     <select class="form-control @error('currencies.*') is-invalid @enderror"
                             id="additional-currencies-select"
-                            name="currencies[]" multiple>
+                            name="currencies[]"
+                            default-value="{{implode(",", $currencies)}}"
+                            multiple>
                         <option value="ILS" @if(in_array("ILS", old('currencies', $currencies))) selected @endif>ILS Israeli new shekel</option>
                         <option value="USD" @if(in_array("USD", old('currencies', $currencies))) selected @endif>USD United States Dollar</option>
                         <option value="EUR" @if(in_array("EUR", old('currencies', $currencies))) selected @endif>EUR Euro</option>
@@ -110,7 +117,7 @@
             </div>
             <div class="row mt-4">
                 <div class="col d-flex justify-content-end">
-                    <button class="btn btn-secondary mr-2" type="button">Cancel</button>
+                    <button class="btn btn-secondary mr-2" type="reset">Cancel</button>
                     <button class="btn btn-primary" type="submit">Save</button>
                 </div>
             </div>

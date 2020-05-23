@@ -39,6 +39,32 @@
             $("select").select2({
                 theme : "bootstrap"
             });
+
+            $("form").on("reset", function()
+            {
+                $(this).parent().parent().collapse('hide');
+
+                $("input[type=text], input[type=email], input[type=password]", $(this)).each(function()
+                {
+                    let value = $(this).attr("default-value");
+                    $(this).val(value);
+
+                });
+                
+                $("input[type=checkbox]", $(this)).each(function()
+                {
+                   let value = $(this).attr("default-value");
+                   $(this).prop("checked", value == "1");
+                });
+
+                $("select", $(this)).each(function ()
+                {
+                    let value = $(this).attr("default-value");
+                    $(this).val(value.split(",")).promise().then(function(){
+                        $(this).trigger("change");
+                    });
+                });
+            });
         });
     </script>
 @endsection

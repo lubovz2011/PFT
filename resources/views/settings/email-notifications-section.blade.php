@@ -14,12 +14,16 @@
             <form method="POST" action="{{route("settings:email-notifications")}}">
             @csrf
             <div class="custom-control custom-switch">
-                <input type="checkbox" class="custom-control-input" id="monthly-report" name="monthly_report" @if($monthlyReport) checked @endif>
+                <input type="checkbox" class="custom-control-input"
+                       id="monthly-report"
+                       name="monthly_report"
+                       default-value="{{$monthlyReport}}"
+                       @if($monthlyReport) checked @endif>
                 <label class="custom-control-label" for="monthly-report">Send monthly report</label>
             </div>
             <div class="row mt-4">
                 <div class="col d-flex justify-content-end">
-                    <button class="btn btn-secondary mr-2" type="button">Cancel</button>
+                    <button class="btn btn-secondary mr-2" type="reset">Cancel</button>
                     <button class="btn btn-primary" type="submit">Save</button>
                 </div>
             </div>
