@@ -14,32 +14,38 @@
 /** index page */
 Route::get('/', 'PagesController@displayWelcomePage')->name('welcome');
 
-/** categories page */
-Route::get('categories', 'CategoriesController@displayCategoriesPage')->name('categories');
-/** accounts page */
-Route::get('accounts', 'AccountsController@displayAccountsPage')->name('accounts');
-/** transactions page */
-Route::get('transactions','TransactionsController@displayTransactionsPage')->name('transactions');
-/** reports page */
-Route::get('reports', 'ReportsController@displayReportsPage')->name('reports');
+
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::group(['prefix' => 'settings', 'as' => 'settings'], function()
-{
-    /** user settings */
-    Route::get('/', 'UserController@displaySettingsPage');
 
-    Route::post('personal-info', 'UserController@editPersonalInfo')->name(':personal-info');
 
-    Route::post('delete-profile', 'UserController@deleteProfile')->name(':delete-profile');
+Route::group(['middleware' => 'auth'], function(){
 
-    Route::post('interface', 'UserController@editInterface')->name(':interface');
+    /** categories page */
+    Route::get('categories', 'CategoriesController@displayCategoriesPage')->name('categories');
+    /** accounts page */
+    Route::get('accounts', 'AccountsController@displayAccountsPage')->name('accounts');
+    /** transactions page */
+    Route::get('transactions','TransactionsController@displayTransactionsPage')->name('transactions');
+    /** reports page */
+    Route::get('reports', 'ReportsController@displayReportsPage')->name('reports');
 
-    Route::post('security', 'UserController@editSecurity')->name(':security');
+    /** user settings routes */
+    Route::group(['prefix' => 'settings', 'as' => 'settings'], function()
+    {
+        Route::get('/', 'UserController@displaySettingsPage');
 
-    Route::post('email-notifications', 'UserController@editEmailNotifications')->name(':email-notifications');
+        Route::post('personal-info', 'UserController@editPersonalInfo')->name(':personal-info');
+
+        Route::post('delete-profile', 'UserController@deleteProfile')->name(':delete-profile');
+
+        Route::post('interface', 'UserController@editInterface')->name(':interface');
+
+        Route::post('security', 'UserController@editSecurity')->name(':security');
+
+        Route::post('email-notifications', 'UserController@editEmailNotifications')->name(':email-notifications');
+    });
 });
-

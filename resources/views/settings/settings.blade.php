@@ -50,7 +50,7 @@
                     $(this).val(value);
 
                 });
-                
+
                 $("input[type=checkbox]", $(this)).each(function()
                 {
                    let value = $(this).attr("default-value");
