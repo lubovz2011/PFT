@@ -1,5 +1,6 @@
 @extends("layout")
-@section("style")
+@section("title")
+    Accounts
 @endsection
 @section("content")
 

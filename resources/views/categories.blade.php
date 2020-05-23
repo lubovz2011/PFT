@@ -1,6 +1,6 @@
 @extends("layout")
-@section("style")
-
+@section("title")
+    Categories
 @endsection
 @section("content")
 

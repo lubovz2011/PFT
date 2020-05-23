@@ -9,7 +9,7 @@
     <link href="css/font-awesome-5-all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
     @yield("style")
-    <title>Laravel</title>
+    <title>PFT - @yield('title')</title>
 </head>
 
 <body class="pb-4">
