@@ -100,8 +100,8 @@ class UserController extends Controller
     public function deleteProfile(){
         /** @var User $user */
         $user = auth()->user();
-        $user->delete();
         auth()->logout();
+        $user->delete();
         return redirect()->route('welcome');
     }
 }
