@@ -46,10 +46,10 @@
                     <button type="submit" class="btn btn-primary btn-block">Sign up</button>
                     <p class="text-center m-3">or</p>
                     <div class="row">
-                        <a href="#" class="col text-right">
+                        <a href="{{ route('social-login', ['provider' => 'google']) }}" class="col text-right">
                             <i class="social-login fab fa-google rounded-circle" aria-hidden="true"></i>
                         </a>
-                        <a href="#" class="col text-left">
+                        <a href="{{ route('social-login', ['provider' => 'facebook']) }}" class="col text-left">
                             <i class="social-login fab fa-facebook-f rounded-circle" aria-hidden="true"></i>
                         </a>
                     </div>

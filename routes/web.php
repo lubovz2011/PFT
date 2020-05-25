@@ -49,3 +49,6 @@ Route::group(['middleware' => 'auth'], function(){
         Route::post('email-notifications', 'UserController@editEmailNotifications')->name(':email-notifications');
     });
 });
+
+Route::get('login/{provider}', 'Auth\LoginController@redirectToProvider')->name('social-login');
+Route::get('login/{provider}/callback', 'Auth\LoginController@handleProviderCallback')->name('social-login-callback');
