@@ -15,18 +15,14 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $fillable = [
-        'login', 'password', 'name', 'login_type'
-    ];
+    protected $fillable = ['login', 'password', 'name', 'login_type'];
 
     /**
      * The attributes that should be hidden for arrays.
      *
      * @var array
      */
-    protected $hidden = [
-        'password', 'remember_token',
-    ];
+    protected $hidden = ['password', 'remember_token'];
 
     /**
      * The attributes that should be cast to native types.
