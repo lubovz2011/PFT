@@ -6,6 +6,25 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
+/**
+ * Class User
+ *
+ * @property integer $id
+ * @property string $name
+ * @property string $login
+ * @property \DateTime|null $status
+ * @property string $password
+ * @property string $login_type
+ * @property string $time_format
+ * @property string $date_format
+ * @property integer $week_start
+ * @property integer $limit
+ * @property string $currency
+ * @property string[]|null $currencies
+ * @property bool $monthly_report
+ * @property \DateTime|null $last_activity
+ * @package App\Models
+ */
 class User extends Authenticatable
 {
     use Notifiable;
@@ -32,4 +51,8 @@ class User extends Authenticatable
     protected $casts = [
         'status' => 'datetime',
     ];
+
+    public function accounts(){
+        return $this->hasMany(Account::class);
+    }
 }
