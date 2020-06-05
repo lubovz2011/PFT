@@ -14,13 +14,12 @@
 /** index page */
 Route::get('/', 'PagesController@displayWelcomePage')->name('welcome');
 
-
-
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-
+Route::get('login/{provider}', 'Auth\LoginController@redirectToProvider')->name('social-login');
+Route::get('login/{provider}/callback', 'Auth\LoginController@handleProviderCallback')->name('social-login-callback');
 
 Route::group(['middleware' => 'auth'], function(){
 
@@ -50,5 +49,3 @@ Route::group(['middleware' => 'auth'], function(){
     });
 });
 
-Route::get('login/{provider}', 'Auth\LoginController@redirectToProvider')->name('social-login');
-Route::get('login/{provider}/callback', 'Auth\LoginController@handleProviderCallback')->name('social-login-callback');

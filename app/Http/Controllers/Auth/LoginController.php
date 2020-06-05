@@ -24,6 +24,9 @@ class LoginController extends Controller
     |
     */
 
+    /**
+     * This trait gives us user authorization functionality
+     */
     use AuthenticatesUsers;
 
     /**
@@ -34,7 +37,7 @@ class LoginController extends Controller
     protected $redirectTo = '/settings';
 
     /**
-     * Create a new controller instance.
+     * Create a new controller instance(object).
      *
      * @return void
      */
@@ -44,7 +47,7 @@ class LoginController extends Controller
     }
 
     /**
-     * Get the login username to be used by the controller.
+     * Get the login username(email) to be used by the controller.
      *
      * @return string
      */
@@ -55,6 +58,9 @@ class LoginController extends Controller
 
     /**
      * Validate the user login request.
+     *
+     * @link https://laravel.ru/docs/v5/validation#%D0%BD%D0%B0%D0%BF%D0%B8%D1%81%D0%B0%D0%BD%D0%B8%D0%B5
+     * @link https://laravel.com/docs/5.8/validation#quick-writing-the-validation-logic
      *
      * @param  \Illuminate\Http\Request  $request
      * @return void
@@ -70,7 +76,7 @@ class LoginController extends Controller
     }
 
     /**
-     * Redirect the user to the Provider authentication page.
+     * Redirect the user to the Provider authentication page(Facebook/Google).
      *
      * @return \Illuminate\Http\Response
      */

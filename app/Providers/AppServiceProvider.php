@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\DefaultData\DefaultAccount;
+use App\DefaultData\DefaultCategories;
 use App\Models\Account;
 use App\Models\Category;
 use App\Models\User;
@@ -29,21 +31,9 @@ class AppServiceProvider extends ServiceProvider
         User::created(function($user){
             /** @var User $user */
 
-            /* default account for new user */
-            $account = new Account();
-            $account->title = 'Wallet';
-            $user->accounts()->save($account);
+            DefaultAccount::generate($user);
+            DefaultCategories::generate($user);
 
-            /* default categories for new user */
-            $category = new Category();
-            $category->name = 'Bills';
-            $category->icon = 'fas fa-file-invoice-dollar';
-            $user->categories()->save($category);
-
-            $category = new Category();
-            $category->name = 'Tax & Fees';
-            $category->icon = 'fas fa-coins';
-            $user->categories()->save($category);
         });
 
     }
