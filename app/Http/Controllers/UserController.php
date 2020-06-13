@@ -17,6 +17,7 @@ class UserController extends Controller
      */
     public function displaySettingsPage(Request $request){
         $user = auth()->user();
+
         $params = [
             "login"         => $user->login,
             "name"          => $user->name,
@@ -29,10 +30,6 @@ class UserController extends Controller
             "currencies"    => explode(',', $user->currencies ?: ""),
             "monthlyReport" => (bool)$user->monthly_report
         ];
-        dump([
-            "params"  => $params,
-            "session" => $request->session()->all()
-        ]);
         return view('settings.settings', $params);
     }
 

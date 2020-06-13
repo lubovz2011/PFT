@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\DefaultData;
+namespace App\Classes;
 
 
 use App\Models\User;

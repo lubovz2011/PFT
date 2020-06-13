@@ -2,10 +2,9 @@
 
 namespace App\Providers;
 
-use App\DefaultData\DefaultAccount;
-use App\DefaultData\DefaultCategories;
-use App\Models\Account;
-use App\Models\Category;
+
+use App\Classes\Account\DefaultAccount;
+use App\Classes\Category\DefaultCategories;
 use App\Models\User;
 use Illuminate\Support\ServiceProvider;
 

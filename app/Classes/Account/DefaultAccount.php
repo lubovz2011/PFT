@@ -1,9 +1,10 @@
 <?php
 
 
-namespace App\DefaultData;
+namespace App\Classes\Account;
 
 
+use App\Classes\Defaults;
 use App\Models\Account;
 use App\Models\User;
 
