@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -23,6 +24,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  * @property string[]|null $currencies
  * @property bool $monthly_report
  * @property \DateTime|null $last_activity
+ * @property Account[]|Collection $accounts
  * @package App\Models
  */
 class User extends Authenticatable
@@ -53,10 +55,10 @@ class User extends Authenticatable
     ];
 
     public function accounts(){
-        return $this->hasMany(Account::class);
+        return $this->hasMany("App\Models\Account");
     }
 
     public function categories(){
-        return $this->hasMany(Category::class);
+        return $this->hasMany("App\Models\Category");
     }
 }

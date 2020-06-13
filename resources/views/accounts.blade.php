@@ -19,35 +19,55 @@
                         </div>
                     </div>
                     <div class="row mt-5 text-secondary text-center account-mini-headers">
-                        <div class="col">ACCOUNT NAME</div>
-                        <div class="col">ACCOUNT TYPE</div>
+                        <div class="col-6 text-left">ACCOUNT NAME</div>
+{{--                        <div class="col">ACCOUNT TYPE</div>--}}
                         <div class="col">CURRENT BALANCE</div>
                         <div class="col">TURN ON/OFF</div>
                     </div>
                 </div>
                 <div class="card-body p-0">
                     <div class="accordion" id="accordion-accounts">
-                        <div class="card">
-                            <div class="card-header py-3 hover-disabled" id="personal-info-header">
-                                <div class="row">
-                                    <div class="col text-uppercase"><i class="fas fa-wallet mr-3 category-icon text-secondary"></i>cash wallets</div>
-                                    <div class="col"></div>
-                                    <div class="col d-flex justify-content-center">100.10 ILS</div>
-                                    <div class="col d-flex justify-content-center">
-                                        <div class="custom-control custom-switch">
-                                            <input type="checkbox" class="custom-control-input" id="bank-category-toggle" checked>
-                                            <label class="custom-control-label " for="bank-category-toggle"></label>
-                                        </div>
+                        @foreach($groups as $key => $group)
+                            <div class="card">
+                                <div class="card-header py-3 hover-disabled">
+                                    <div class="row">
+                                        @if($key == \App\Models\Account::TYPE_CASH)
+                                            <div class="col text-uppercase">
+                                                <i class="fas fa-wallet mr-3 category-icon text-secondary"></i>cash wallets
+                                            </div>
+
+                                        @elseif($key == \App\Models\Account::TYPE_CARD)
+                                            <div class="col text-uppercase">
+                                                <i class="fas fa-wallet mr-3 category-icon text-secondary"></i>cards
+                                            </div>
+                                        @endif
+                                            <div class="col"></div>
+                                            <div class="col d-flex justify-content-center"> ILS</div>
+                                            <div class="col d-flex justify-content-center">
+                                                <div class="custom-control custom-switch">
+                                                    <input type="checkbox" class="custom-control-input" id="bank-category-toggle" checked>
+                                                    <label class="custom-control-label " for="bank-category-toggle"></label>
+                                                </div>
+                                            </div>
                                     </div>
                                 </div>
+                                <div class="card-body p-0">
+                                    <ul class="list-group list-group-flush">
+                                        @foreach($group as $account)
+                                            @php /** @var \App\Models\Account $account */ @endphp
+                                            @include('accounts.account-manage-item', [
+                                                                                "id" => $account->id,
+                                                                                "balance" => $account->balance,
+                                                                                "currency" => $account->currency,
+                                                                                "initialAmount" => "0 to do",
+                                                                                "accountType" => $account->type,
+                                                                                "accountName" => $account->title
+                                                                                ])
+                                        @endforeach
+                                    </ul>
+                                </div>
                             </div>
-                            <div class="card-body p-0">
-                                <ul class="list-group list-group-flush">
-                                    @include('accounts.account-manage-item', ["id" => 1, "amount" => 25, "currency" => "ILS", "initialAmount" => 25, "accountType" => "cash", "accountName" => "Wallet"])
-                                    @include('accounts.account-manage-item', ["id" => 2, "amount" => 75.10, "currency" => "ILS", "initialAmount" => 30, "accountType" => "cash", "accountName" => "Piggy Bank"])
-                                </ul>
-                            </div>
-                        </div>
+                        @endforeach
                     </div>
                 </div>
             </div>

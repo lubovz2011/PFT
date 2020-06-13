@@ -23,6 +23,6 @@ class Account extends Model
     const TYPE_CARD = 'card';
 
     public function user(){
-        return $this->belongsTo(User::class);
+        return $this->belongsTo("App\Models\User");
     }
 }
