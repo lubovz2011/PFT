@@ -16,10 +16,10 @@ class AccountsController extends Controller
      * method returns accounts page
      * @return \Illuminate\View\View
      */
-    public function displayAccountsPage(){
+    public function displayAccountsPage()
+    {
         /** @var User $user */
         $user = auth()->user();
-
         /** @var Account[] $accounts */
         $accounts = $user->accounts->all();
         $groups = [Account::TYPE_CASH => [], Account::TYPE_CARD => []];
@@ -39,7 +39,8 @@ class AccountsController extends Controller
      * @return \Illuminate\Http\RedirectResponse
      * @throws \Exception
      */
-    public function deleteAccount(Request $request){
+    public function deleteAccount(Request $request)
+    {
         /** @var User $user */
         $user = auth()->user();
         $accountId = $request->input('id');
@@ -48,7 +49,8 @@ class AccountsController extends Controller
         return redirect()->route('accounts');
     }
 
-    public function createCashAccount(Request $request){
+    public function createCashAccount(Request $request)
+    {
         /** @var User $user */
         $user = auth()->user();
         $this->validate($request, [
