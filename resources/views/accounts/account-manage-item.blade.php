@@ -44,7 +44,12 @@
         </div>
         <div class="row mt-3">
             <div class="col">
-                <button class="btn btn-secondary" type="submit">Delete</button>
+                <button class="btn btn-secondary"
+                        type="button"
+                        data-toggle="modal"
+                        data-target="#delete-account-modal-{{$id}}">
+                        Delete
+                </button>
             </div>
             <div class="col d-flex justify-content-end">
                 <button class="btn btn-secondary mr-2" type="submit">Cancel</button>
@@ -53,3 +58,26 @@
         </div>
     </form>
 </li>
+
+<div class="modal fade" id="delete-account-modal-{{$id}}" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-body">
+                <p>
+                    Are you sure you want to delete {{$accountName}} account?
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                <a href="#"
+                   onclick="event.preventDefault(); document.getElementById('delete-account-form-{{$id}}').submit();"
+                   class="btn btn-primary">Yes</a>
+                <form id="delete-account-form-{{$id}}" action="{{ route('delete-account') }}" method="POST" style="display: none;">
+                    @csrf
+                    <input type="hidden" name="id" value="{{$id}}">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+

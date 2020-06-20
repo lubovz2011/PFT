@@ -11,15 +11,20 @@
 |
 */
 
-/** index page */
-Route::get('/', 'PagesController@displayWelcomePage')->name('welcome');
+
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('login/{provider}', 'Auth\LoginController@redirectToProvider')->name('social-login');
-Route::get('login/{provider}/callback', 'Auth\LoginController@handleProviderCallback')->name('social-login-callback');
+
+
+Route::group(['middleware' => 'guest'], function(){
+    /** index page */
+    Route::get('/', 'PagesController@displayWelcomePage')->name('welcome');
+    Route::get('login/{provider}', 'Auth\LoginController@redirectToProvider')->name('social-login');
+    Route::get('login/{provider}/callback', 'Auth\LoginController@handleProviderCallback')->name('social-login-callback');
+});
 
 Route::group(['middleware' => 'auth'], function(){
 
@@ -31,6 +36,8 @@ Route::group(['middleware' => 'auth'], function(){
     Route::get('transactions','TransactionsController@displayTransactionsPage')->name('transactions');
     /** reports page */
     Route::get('reports', 'ReportsController@displayReportsPage')->name('reports');
+
+    Route::post('accounts/delete-account', 'AccountsController@deleteAccount')->name('delete-account');
 
     /** user settings routes */
     Route::group(['prefix' => 'settings', 'as' => 'settings'], function()

@@ -6,10 +6,13 @@ namespace App\Http\Controllers;
 
 use App\Models\Account;
 use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class AccountsController extends Controller
 {
     /**
+     * ToDo: empty table for empty accounts
      * method returns accounts page
      * @return \Illuminate\View\View
      */
@@ -28,5 +31,20 @@ class AccountsController extends Controller
                 $groups[Account::TYPE_CARD][] = $account;
         }
         return view('accounts', ['groups' => array_filter($groups)]);
+    }
+
+    /**
+     * ToDo: validate request
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
+     */
+    public function deleteAccount(Request $request){
+        /** @var User $user */
+        $user = auth()->user();
+        $accountId = $request->input('id');
+        $account = $user->accounts()->where('id', '=', $accountId)->first();
+        $account->delete();
+        return redirect()->route('accounts');
     }
 }
