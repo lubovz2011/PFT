@@ -47,4 +47,21 @@ class AccountsController extends Controller
         $account->delete();
         return redirect()->route('accounts');
     }
+
+    public function createCashAccount(Request $request){
+        /** @var User $user */
+        $user = auth()->user();
+        $this->validate($request, [
+           'title'    => 'bail|required|string|max:255',
+           'balance'  => 'bail|required|numeric',
+           'currency' => 'bail|required|in:ILS,USD,EUR,GBP,JPY'
+        ]);
+        $account = new Account();
+        $account->title = $request->input('title');
+        $account->balance = $request->input('balance');
+        $account->currency = $request->input('currency');
+        $user->accounts()->save($account);
+        return redirect()->route('accounts');
+    }
+
 }

@@ -39,6 +39,8 @@ Route::group(['middleware' => 'auth'], function(){
 
     Route::post('accounts/delete-account', 'AccountsController@deleteAccount')->name('delete-account');
 
+    Route::post('accounts/create-cash-account', 'AccountsController@createCashAccount')->name('create-cash-account');
+
     /** user settings routes */
     Route::group(['prefix' => 'settings', 'as' => 'settings'], function()
     {

@@ -15,7 +15,13 @@
                     <div class="row justify-content-start">
                         <div class="col">
                             <button type="submit" class="btn btn-primary mr-2">Connect Digital Account</button>
-                            <button type="button" class="btn btn-secondary">Create Cash Wallet</button>
+                            <button type="button"
+                                    class="btn btn-secondary"
+                                    data-target="#create-wallet-modal"
+                                    data-toggle="modal">
+                                Create Cash Wallet
+                            </button>
+                            @include('modals.createCashAccount')
                         </div>
                     </div>
                     <div class="row mt-5 text-secondary text-center account-mini-headers">
@@ -83,17 +89,13 @@
             $("select").select2({
                 theme : "bootstrap"
             });
+
+            @if($errors->has('title') || $errors->has('balance') || $errors->has('currency'))
+                $('#create-wallet-modal').modal();
+            @endif
         });
 
-        $(".js-visibility-toggle").change(function(){
-            $(this).closest(".input-group").find('.js-visibility-toggled').attr('readonly', function(_, attr){ return !attr}).focus();
-            $(this).closest(".input-group-prepend").hide();
-        })
 
-        $(".js-visibility-toggled").blur(function(){
-            $(this).closest(".input-group").find('.input-group-prepend').show();
-            $(this).attr('readonly', function(_, attr){ return !attr});
-        })
     </script>
 @endsection
 

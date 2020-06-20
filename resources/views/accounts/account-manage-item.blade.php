@@ -1,4 +1,4 @@
-<li class="list-group-item py-3" data-toggle="collapse" data-target="#collapse-{{$id}}">
+<li class="list-group-item border-top-0 py-3" data-toggle="collapse" data-target="#collapse-{{$id}}">
     <div class="row">
         <div class="col-6">{{$accountName}}</div>
 {{--        <div class="col d-flex justify-content-center text-secondary">{{$accountType}}</div>--}}
