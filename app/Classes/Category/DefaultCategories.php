@@ -31,7 +31,7 @@ class DefaultCategories extends Defaults
         self::generateCategory($user, 'Bonus', '', $parent_id);
         self::generateCategory($user, 'Investment Income', '', $parent_id);
 
-        $parent_id = self::generateCategory($user, 'Home', 'as fa-home');
+        $parent_id = self::generateCategory($user, 'Home', 'fas fa-home');
         self::generateCategory($user, 'Home Services', '', $parent_id);
         self::generateCategory($user, 'Decoration', '', $parent_id);
         self::generateCategory($user, 'Home Supplies', '', $parent_id);
@@ -50,7 +50,7 @@ class DefaultCategories extends Defaults
         self::generateCategory($user, 'Tuition', '', $parent_id);
         self::generateCategory($user, 'Books & Supplies', '', $parent_id);
 
-        $parent_id = self::generateCategory($user, 'Dining Out', 'fas fa-pizza-slice');
+        $parent_id = self::generateCategory($user, 'Dining Out', 'fas fa-glass-cheers');
         self::generateCategory($user, 'Alcohol & Bars', '', $parent_id);
         self::generateCategory($user, 'Cafes & Restaurants', '', $parent_id);
         self::generateCategory($user, 'Fast Food', '', $parent_id);
@@ -68,11 +68,11 @@ class DefaultCategories extends Defaults
         self::generateCategory($user, 'Service & Parts', '', $parent_id);
 
         $parent_id = self::generateCategory($user, 'Travel', 'fas fa-plane');
-        self::generateCategory($user, 'Hotel', '', $parent_id);
+        self::generateCategory($user, 'Hotels', '', $parent_id);
         self::generateCategory($user, 'Transportation', '', $parent_id);
         self::generateCategory($user, 'Vacation', '', $parent_id);
 
-        $parent_id = self::generateCategory($user, 'Entertainments', 'fas fa-video');
+        $parent_id = self::generateCategory($user, 'Entertainments', 'fas fa-gamepad');
         self::generateCategory($user, 'Games & Apps', '', $parent_id);
         self::generateCategory($user, 'Movies & Music', '', $parent_id);
 

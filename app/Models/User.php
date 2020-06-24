@@ -25,6 +25,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  * @property bool $monthly_report
  * @property \DateTime|null $last_activity
  * @property Account[]|Collection $accounts
+ * @property Category[]|Collection $categories
  * @package App\Models
  */
 class User extends Authenticatable
