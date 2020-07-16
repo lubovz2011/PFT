@@ -22,7 +22,9 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::group(['middleware' => 'guest'], function(){
     /** index page */
     Route::get('/', 'PagesController@displayWelcomePage')->name('welcome');
+    /** url for login user using social network login (Oath)*/
     Route::get('login/{provider}', 'Auth\LoginController@redirectToProvider')->name('social-login');
+    /** Oath callback from social network */
     Route::get('login/{provider}/callback', 'Auth\LoginController@handleProviderCallback')->name('social-login-callback');
 });
 
@@ -30,6 +32,8 @@ Route::group(['middleware' => 'auth'], function(){
 
     /** categories page */
     Route::get('categories', 'CategoriesController@displayCategoriesPage')->name('categories');
+
+    Route::post('categories/change-status', 'CategoriesController@changeStatus')->name('change-status');
     /** accounts page */
     Route::get('accounts', 'AccountsController@displayAccountsPage')->name('accounts');
     /** transactions page */
@@ -40,6 +44,8 @@ Route::group(['middleware' => 'auth'], function(){
     Route::post('accounts/delete-account', 'AccountsController@deleteAccount')->name('delete-account');
 
     Route::post('accounts/create-cash-account', 'AccountsController@createCashAccount')->name('create-cash-account');
+
+    Route::post('categories/create-category', 'CategoriesController@createCategory')->name('create-category');
 
     /** user settings routes */
     Route::group(['prefix' => 'settings', 'as' => 'settings'], function()

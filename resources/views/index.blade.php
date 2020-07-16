@@ -1,48 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link href="css/font-awesome-5-all.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/styles.css">
-    <title>Laravel</title>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link href="css/font-awesome-5-all.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="css/styles.css">
+        <title>Laravel</title>
 
-</head>
-<body>
-    <nav class="navbar navbar-expand-sm navbar-light bg-light">
-        <a class="navbar-brand" href="#">PFT</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-            <form class="form-inline ml-auto">
-                <button class="btn btn-outline-success my-2 my-sm-0 mr-sm-2" type="button" data-toggle="modal" data-target="#sign-in-modal">Sign in</button>
-                <button class="btn btn-outline-success my-2 my-sm-0" type="button" data-toggle="modal" data-target="#sign-up-modal">Sign up</button>
-            </form>
-        </div>
-    </nav>
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-sm navbar-light bg-light">
+            <a class="navbar-brand" href="#">PFT</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <form class="form-inline ml-auto">
+                    <button class="btn btn-outline-success my-2 my-sm-0 mr-sm-2" type="button" data-toggle="modal" data-target="#sign-in-modal">Sign in</button>
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="button" data-toggle="modal" data-target="#sign-up-modal">Sign up</button>
+                </form>
+            </div>
+        </nav>
 
-    @include("modals.signIn")
-    @include("modals.signUp")
+        @include("modals.signIn")
+        @include("modals.signUp")
 
 
-    <script src="js/jquery-3.4.1.slim.min.js"></script>
-    <script src="js/popper.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script defer src="js/font-awesome-5-all.min.js"></script> <!--load all styles -->
-    <script>
-        $(document).ready(function(){
-            let signInError = {{($errors->has('login') || $errors->has('password')) ? 1 : 0}};
-            let signUpError = {{($errors->has('signup_login') || $errors->has('signup_password')) ? 1 : 0}};
+        <script src="js/jquery-3.5.1.min.js"></script>
+        <script src="js/popper.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script defer src="js/font-awesome-5-all.min.js"></script> <!--load all styles -->
+        <script>
+            $(document).ready(function(){
+                let signInError = {{($errors->has('login') || $errors->has('password')) ? 1 : 0}};
+                let signUpError = {{($errors->has('signup_login') || $errors->has('signup_password')) ? 1 : 0}};
 
-            if(signInError){
-                $('#sign-in-modal').modal();
-            }
-            if(signUpError){
-                $('#sign-up-modal').modal();
-            }
-        });
-    </script>
-</body>
+                if(signInError){
+                    $('#sign-in-modal').modal();
+                }
+                if(signUpError){
+                    $('#sign-up-modal').modal();
+                }
+            });
+        </script>
+    </body>
 </html>

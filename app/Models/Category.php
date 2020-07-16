@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property boolean $status
  * @property string $icon
  * @property integer $user_id
+ * @property Category[] $categories
  *
  * @package App\Models
  */
