@@ -120,6 +120,33 @@
                     }
                 });
             }
+
+            let deleteButton = $('.js-delete-category');
+
+            deleteButton.on('click', function (e) {
+                // on click we prevent 'bubbling'
+                e.preventDefault();
+                e.stopPropagation();
+
+                deleteCategory($(this).data('id'));
+            });
+
+            function deleteCategory(id){
+                $.ajax(
+                    {
+                        method: "POST",
+                        url: '{{route('delete-category')}}',
+                        data: {
+                            "categoryId" : id
+                        }
+                    }
+                ).done(function (data) {
+                    if(data.status === "success")
+                        $('.js-category-' + id + '-container').remove();
+                    else
+                        alert("Ops, something went wrong. Try again.");
+                });
+            }
         });
     </script>
 @endsection

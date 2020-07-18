@@ -1,4 +1,4 @@
-<div class="card">
+<div class="card js-category-{{$id}}-container">
     {{--  Parent category --}}
     <div class="card-header row py-3" id="category-{{$id}}" data-toggle="collapse" data-target="#sub-category-{{$id}}">
         <div class="col">
@@ -16,7 +16,13 @@
                        @if($status) checked @endif>
                 <label class="custom-control-label " for="{{$id}}-category-toggle"></label>
             </div>
-            <div class="text-secondary"><i class="far fa-trash-alt"></i></div>
+            <div>
+                <a href="#"
+                    class="js-delete-category text-decoration-none text-secondary"
+                    data-id="{{$id}}">
+                    <i class="far fa-trash-alt"></i>
+                </a>
+            </div>
         </div>
     </div>
     {{--  Sub-Categories list  --}}
@@ -25,7 +31,7 @@
             <ul class="list-group list-group-flush">
                 @foreach($categories as $category)
                     {{--  sub category  --}}
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <li class="list-group-item d-flex justify-content-between align-items-center js-category-{{$category['id']}}-container">
                         {{--  category name  --}}
                         {{$category['name']}}
                         {{--  category edit controls  --}}
@@ -40,7 +46,13 @@
                                 <label class="custom-control-label "
                                        for="{{$category['id']}}-category-toggle"></label>
                             </div>
-                            <div class="text-secondary"><i class="far fa-trash-alt"></i></div>
+                            <div>
+                                <a href="#"
+                                    class="js-delete-category text-decoration-none text-secondary"
+                                    data-id="{{$category['id']}}">
+                                    <i class="far fa-trash-alt"></i>
+                                </a>
+                            </div>
                         </div>
                     </li>
                 @endforeach

@@ -52,7 +52,7 @@ class CategoriesController extends Controller
                 return response()->json($category);
             }
         }
-        
+
         $category->status = $request->input('status');
         $category->save();
 
@@ -62,5 +62,22 @@ class CategoriesController extends Controller
         }
         return response()->json($category);
     }
+
+    public function deleteCategory(Request $request)
+    {
+        $this->validate($request, [
+            'categoryId'   => 'bail|integer|required'
+        ]);
+        /** @var User $user */
+        $user = auth()->user();
+
+        $category = $user->categories()
+            ->where('id', '=', $request->input('categoryId'))->first();
+
+
+        return response()->json([
+            "status" => $category->delete() ? "success" : "error"
+        ]);
+   }
 
 }
