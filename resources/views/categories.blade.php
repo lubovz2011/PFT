@@ -99,27 +99,27 @@
                  */
                 let checkbox = $('#' + $(this).prop('for'));
                 // Change checkbox state for checked\unchecked
-                checkbox.prop('checked', !checkbox.prop('checked')).trigger('change');
+                changeStatus(checkbox.data('id'), +!checkbox.prop('checked'))
             });
 
-            $('.js-status-toggle').on('change', function(){
+            function changeStatus(id, status)
+            {
                 $.ajax(
                     {
                         method: "POST",
                         url: '{{route('change-status')}}',
                         data: {
-                            "categoryId" : $(this).data('id'),
-                            "status" : +($(this).prop('checked'))
+                            "categoryId" : id,
+                            "status" : status
                         }
                     }
                 ).done(function(data){
                     $("#" + data.id + "-category-toggle").prop('checked', data.status === "1");
                     for(let category of data.categories) {
-                        console.log(category);
                         $("#" + category.id + "-category-toggle").prop('checked', category.status === "1");
                     }
                 });
-            });
+            }
         });
     </script>
 @endsection

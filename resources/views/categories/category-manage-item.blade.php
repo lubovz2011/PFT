@@ -9,7 +9,7 @@
         <div class="col d-flex justify-content-end">
             <div class="custom-control custom-switch mr-2">
                 <input type="checkbox"
-                       class="custom-control-input js-status-toggle"
+                       class="custom-control-input"
                        id="{{$id}}-category-toggle"
                        name="status"
                        data-id="{{$id}}"
@@ -32,12 +32,13 @@
                         <div class="d-flex justify-content-end">
                             <div class="custom-control custom-switch mr-2">
                                 <input type="checkbox"
-                                       class="custom-control-input js-status-toggle"
+                                       class="custom-control-input"
                                        id="{{$category['id']}}-category-toggle"
                                        name="status"
                                        data-id="{{$category['id']}}"
                                        @if($category['status']) checked @endif>
-                                <label class="custom-control-label " for="{{$category['id']}}-category-toggle"></label>
+                                <label class="custom-control-label "
+                                       for="{{$category['id']}}-category-toggle"></label>
                             </div>
                             <div class="text-secondary"><i class="far fa-trash-alt"></i></div>
                         </div>
