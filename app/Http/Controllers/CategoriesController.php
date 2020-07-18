@@ -46,8 +46,16 @@ class CategoriesController extends Controller
         $category = $user->categories()
             ->where('id', '=', $request->input('categoryId'))
             ->with('categories')->first();
+
+        if(isset($category->parent_id)){
+            if(!$category->category->status){
+                return response()->json($category);
+            }
+        }
+        
         $category->status = $request->input('status');
         $category->save();
+
         foreach ($category->categories ?? [] as $subCategory){
             $subCategory->status = $request->input('status');
             $subCategory->save();
