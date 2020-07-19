@@ -45,9 +45,9 @@ Route::group(['middleware' => 'auth'], function(){
 
     Route::post('accounts/create-cash-account', 'AccountsController@createCashAccount')->name('create-cash-account');
 
-    Route::post('categories/create-category', 'CategoriesController@createCategory')->name('create-category');
-
     Route::post('categories/delete-category', 'CategoriesController@deleteCategory')->name('delete-category');
+
+    Route::post('categories/add-category', 'CategoriesController@addCategory')->name('add-category');
 
     /** user settings routes */
     Route::group(['prefix' => 'settings', 'as' => 'settings'], function()

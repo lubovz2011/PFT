@@ -13,33 +13,41 @@
                 </div>
                 {{--  Add new category  --}}
                 <div class="card-body">
-                    <form>
+                    <form method="POST" action="{{route('add-category')}}">
+                        @csrf
                         <div class="form-row align-items-center">
                             <div class="col-auto">
-                                <label class="" for="category-input">Name</label>
-                                <input type="text" class="form-control" id="category-input" placeholder="">
+                                <label for="category-input">Name</label>
+                                <input
+                                    name="name"
+                                    type="text"
+                                    class="form-control @error('name') is-invalid @enderror"
+                                    id="category-input"
+                                    value="{{old('name')}}">
                             </div>
                             <div class="col-auto">
                                 <label class="" for="parent-category-select">Parent Category</label>
-                                <select class="form-control" id="parent-category-select">
+                                <select class="form-control @error('parent') is-invalid @enderror"
+                                        id="parent-category-select" name="parent">
                                     <option value="" selected>Without parent category</option>
                                     @foreach($categories as $category)
-                                        <option value="{{$category['id']}}">{{$category['name']}}</option>
+                                        <option
+                                            value="{{$category['id']}}"
+                                            @if(old('parent') == $category['id']) selected @endif
+                                        >{{$category['name']}}</option>
                                     @endforeach
                                 </select>
                             </div>
                             <div class="col-auto">
                                 <label for="icon-category-select">Icon</label>
-                                <select class="form-control" id="icon-category-select">
-                                    <option value="fas fa-anchor" selected>No Icon</option>
-                                    <option value="fas fa-ice-cream">Ice-cream</option>
-                                    <option value="fas fa-gas-pump">Gas-Pump</option>
-                                    <option value="fas fa-tools">Tools</option>
-                                    <option value="fas fa-book">Book</option>
-                                    <option value="fas fa-bus-alt">Bus</option>
-                                    <option value="fas fa-swimmer">Swimmer</option>
-                                    <option value="fas fa-umbrella-beach">Umbrella Beach</option>
-                                    <option value="fas fa-dumbbell">Dumbbell</option>
+                                <select class="form-control @error('icon') is-invalid @enderror"
+                                        id="icon-category-select" name="icon">
+                                    <option value="" selected>No Icon</option>
+                                    @foreach($icons as $icon)
+                                        <option value="{{$icon['class']}}"
+                                                @if(old('icon') == $icon['class']) selected @endif
+                                        >{{$icon['name']}}</option>
+                                    @endforeach
                                 </select>
                             </div>
 

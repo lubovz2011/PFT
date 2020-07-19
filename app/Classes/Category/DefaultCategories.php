@@ -88,7 +88,7 @@ class DefaultCategories extends Defaults
         $parent_id = self::generateCategory($user, 'Miscellaneous', 'fas fa-list');
     }
 
-    private static function generateCategory(User $user, string $name, string $icon, int $parent_id = null)
+    public static function generateCategory(User $user, string $name, string $icon, int $parent_id = null)
     {
         $category = new Category();
         $category->name = $name;

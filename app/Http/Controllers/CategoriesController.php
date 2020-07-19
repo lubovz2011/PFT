@@ -4,6 +4,7 @@
 namespace App\Http\Controllers;
 
 
+use App\Classes\Category\DefaultCategories;
 use App\Models\Category;
 use App\Models\Icon;
 use App\Models\User;
@@ -74,6 +75,22 @@ class CategoriesController extends Controller
         return response()->json([
             "status" => $category->delete() ? "success" : "error"
         ]);
-   }
+    }
+
+    public function addCategory(Request $request)
+    {
+        $this->validate($request, [
+            'name'    => 'bail|string|max:255|required',
+            'parent'  => 'bail|nullable|integer|exists:categories,id',
+            'icon'    => 'bail|nullable|string|exists:icons,class'
+        ]);
+
+        /** @var User $user */
+        $user = auth()->user();
+
+        DefaultCategories::generateCategory($user, $request->input('name'), $request->input('icon'), $request->input('parent'));
+
+        return redirect()->route('categories');
+    }
 
 }
