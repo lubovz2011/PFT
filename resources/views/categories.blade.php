@@ -88,6 +88,15 @@
                 theme : "bootstrap"
             });
 
+
+            $('select[name="icon"]').select2({
+               theme : "bootstrap",
+                templateResult: function(data) {
+                   console.log(data);
+                    return $(`<span><i class="${data.id}"></i> ${data.text}</span>`);
+                }
+            });
+
             /**
              *  Find all labels for custom checkboxes
              *
