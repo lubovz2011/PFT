@@ -46,7 +46,11 @@
                                 <li class="list-group-item">
                                     <div class="row">
                                         <div class="col my-2">
-                                            <button type="button" class="btn btn-primary" aria-pressed="false" data-toggle="modal" data-target="#add-transaction-modal">
+                                            <button type="button"
+                                                    class="btn btn-primary"
+                                                    aria-pressed="false"
+                                                    data-toggle="modal"
+                                                    data-target="#add-transaction-modal">
                                                 Add Transaction
                                             </button>
                                         </div>
@@ -80,6 +84,17 @@
             $("select").select2({
                 theme : "bootstrap"
             });
+
+            @if(
+               $errors->has('type') ||
+               $errors->has('account') ||
+               $errors->has('category') ||
+               $errors->has('date') ||
+               $errors->has('amount') ||
+               $errors->has('description')
+            )
+                $('#add-transaction-modal').modal();
+            @endif
         });
     </script>
 @endsection

@@ -32,22 +32,31 @@ Route::group(['middleware' => 'auth'], function(){
 
     /** categories page */
     Route::get('categories', 'CategoriesController@displayCategoriesPage')->name('categories');
-
+    /** change status of category (on/off) */
     Route::post('categories/change-status', 'CategoriesController@changeStatus')->name('change-status');
+    /** delete category */
+    Route::post('categories/delete-category', 'CategoriesController@deleteCategory')->name('delete-category');
+    /** add new category */
+    Route::post('categories/add-category', 'CategoriesController@addCategory')->name('add-category');
+
+
     /** accounts page */
     Route::get('accounts', 'AccountsController@displayAccountsPage')->name('accounts');
+    /** delete account */
+    Route::post('accounts/delete-account', 'AccountsController@deleteAccount')->name('delete-account');
+    /** create new cash account */
+    Route::post('accounts/create-cash-account', 'AccountsController@createCashAccount')->name('create-cash-account');
+
+
     /** transactions page */
     Route::get('transactions','TransactionsController@displayTransactionsPage')->name('transactions');
+    /** add new transaction */
+    Route::post('transactions/add-transaction', 'TransactionsController@addTransaction')->name('add-transaction');
+
+
     /** reports page */
     Route::get('reports', 'ReportsController@displayReportsPage')->name('reports');
 
-    Route::post('accounts/delete-account', 'AccountsController@deleteAccount')->name('delete-account');
-
-    Route::post('accounts/create-cash-account', 'AccountsController@createCashAccount')->name('create-cash-account');
-
-    Route::post('categories/delete-category', 'CategoriesController@deleteCategory')->name('delete-category');
-
-    Route::post('categories/add-category', 'CategoriesController@addCategory')->name('add-category');
 
     /** user settings routes */
     Route::group(['prefix' => 'settings', 'as' => 'settings'], function()

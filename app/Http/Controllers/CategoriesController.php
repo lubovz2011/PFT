@@ -49,7 +49,6 @@ class CategoriesController extends Controller
                 return response()->json($category);
             }
         }
-
         $category->status = $request->input('status');
         $category->save();
 

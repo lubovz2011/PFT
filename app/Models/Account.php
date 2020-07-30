@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $type
  * @property string $credentials
  * @property integer $user_id
+ * @property Account[] $accounts
  *
  * @package App\Models
  */

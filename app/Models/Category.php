@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $icon
  * @property integer $user_id
  * @property Category[] $categories
- * @property Category[] $category
+ * @property Category $category
  *
  * @package App\Models
  */
