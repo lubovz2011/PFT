@@ -49,7 +49,7 @@ Route::group(['middleware' => 'auth'], function(){
 
 
     /** transactions page */
-    Route::get('transactions','TransactionsController@displayTransactionsPage')->name('transactions');
+    Route::get('transactions/{page?}','TransactionsController@displayTransactionsPage')->name('transactions');
     /** add new transaction */
     Route::post('transactions/add-transaction', 'TransactionsController@addTransaction')->name('add-transaction');
 

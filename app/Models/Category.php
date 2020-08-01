@@ -31,4 +31,10 @@ class Category extends Model
     public function category(){
         return $this->belongsTo(Category::class, 'parent_id', 'id');
     }
+
+    public function getIconAttribute($icon){
+        if(!empty($this->parent_id))
+            return $this->category->icon;
+        return $icon;
+    }
 }

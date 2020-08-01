@@ -7,7 +7,7 @@
     <div class="card-body p-0">
         <ul class="list-group list-group-flush">
             @foreach($transactions as $transaction)
-                @include('transactions.transactions-manage-item', $transaction)
+                @include('transactions.transactions-manage-item')
             @endforeach
         </ul>
     </div>

@@ -9,6 +9,7 @@ use App\Models\Category;
 use App\Models\Transaction;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class TransactionsController extends Controller
 {
@@ -16,33 +17,28 @@ class TransactionsController extends Controller
      * method returns transactions page
      * @return \Illuminate\View\View
      */
-    public function displayTransactionsPage()
+    public function displayTransactionsPage($page = 1)
     {
         /** @var User $user */
         $user = auth()->user();
-
         /** @var Account[] $accounts */
         $accounts = $user->accounts;
-
         /** @var Category[] $categories */
         $categories = $user->categories()->whereNull('parent_id')->with('categories')->get();
+        $transactions = $user->transactions()
+                             ->with('category')
+                             ->with('account')
+                             ->orderBy('date', 'desc')
+                             ->limit($user->limit)
+                             ->offset($user->limit * ($page - 1))
+                             ->get();
+        $transactions = $transactions->groupBy('date');
 
-        $transactionsByDate = $this->getTransactions();
         return view('transactions', [
-            "transactionsByDate" => $transactionsByDate,
+            "transactionsByDate" => $transactions,
             "accounts" => $accounts,
             "categories" => $categories
         ]);
-    }
-
-    private function getTransactions(){
-        return [
-            date("d/m/Y l") => [
-                ["id" => 1, "amount" => number_format(-25, 2, '.', ','), "currency" => "ILS", "categoryName" => "Books", "categoryIcon" => "fas fa-user-graduate"],
-                ["id" => 2, "amount" => number_format(-75.10, 2, '.', ','), "currency" => "ILS", "categoryName" => "Internet", "categoryIcon" => "fas fa-file-invoice-dollar"],
-                ["id" => 3, "amount" => number_format(5, 2, '.', ','), "currency" => "ILS", "categoryName" => "Bonus", "categoryIcon" => "fas fa-hand-holding-usd"]
-            ]
-        ];
     }
 
     public function addTransaction(Request $request)

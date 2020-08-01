@@ -32,9 +32,13 @@
                             @php /** @var \App\Models\Category[] $categories */ @endphp
                             @foreach($categories as $category)
                                 <optgroup label="{{$category->name}}">
-                                    <option value="{{$category->id}}" @if(old('category') == $category->id) selected @endif>{{$category->name}}</option>
+                                    <option value="{{$category->id}}" @if(old('category') == $category->id) selected @endif>
+                                        {{$category->name}}
+                                    </option>
                                     @foreach($category->categories as $subCategory)
-                                        <option value="{{$subCategory->id}}" @if(old('category') == $subCategory->id) selected @endif>{{$subCategory->name}}</option>
+                                        <option value="{{$subCategory->id}}" @if(old('category') == $subCategory->id) selected @endif>
+                                            {{$subCategory->name}}
+                                        </option>
                                     @endforeach
                                 </optgroup>
                             @endforeach

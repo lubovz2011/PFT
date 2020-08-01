@@ -1,34 +1,43 @@
-<li class="list-group-item py-3" data-toggle="collapse" data-target="#collapse-{{$id}}">
+<li class="list-group-item py-3" data-toggle="collapse" data-target="#collapse-{{$transaction->id}}">
     <div class="row">
         <div class="col">
-            <i class="{{$categoryIcon}} mr-2 category-icon text-secondary"></i> {{$categoryName}}
+            <i class="{{$transaction->category->icon}} mr-2 category-icon text-secondary"></i> {{$transaction->category->name}} {{$transaction->id}}
         </div>
         <div class="col d-flex justify-content-end">
-            <div class="font-weight-bold {{$amount > 0 ? 'text-success' : 'text-danger'}} mr-2">{{$amount}}</div>
-            <div class="text-secondary">{{$currency}}</div>
+            <div class="font-weight-bold {{$transaction->type == 'income' ? 'text-success' : 'text-danger'}} mr-2">{{$transaction->amount}}</div>
+            <div class="text-secondary">{{$transaction->currency}}</div>
         </div>
     </div>
 </li>
-<li class="list-group-item py-3 px-5 collapse bg-light" id="collapse-{{$id}}" data-parent="#accordion-accounts">
+<li class="list-group-item py-3 px-5 collapse bg-light" id="collapse-{{$transaction->id}}" data-parent="#accordion-accounts">
     <form>
+        @csrf
         <div class="row">
             <div class="form-group col">
-                <select class="form-control" id="wallet-select">
-                    <option value="wallets" disabled>WALLETS</option>
-                    <option value="1" selected>Wallet</option>
-                    <option value="2">Piggy Bank</option>
+                <select class="form-control" name="t-account">
+                    @php /** @var \App\Models\Account[] $accounts */ @endphp
+                    @foreach($accounts as $account)
+                        <option value="{{$account->id}}" @if(old('t-account', $transaction->account_id) == $account->id) selected @endif>
+                            {{$account->title}}
+                        </option>
+                    @endforeach
                 </select>
             </div>
             <div class="form-group col">
-                <select class="form-control" id="category-select">
-                    <option value="categories" disabled>CATEGORIES</option>
-                    <option value="1">Bills</option>
-                    <option value="2">Tax & Fees</option>
-                    <option value="3">Income</option>
-                    <option value="4">Home</option>
-                    <option value="5">Health & Fitness</option>
-                    <option value="6">Pets</option>
-                    <option value="7" selected>Education</option>
+                <select class="form-control" name="t-category">
+                    @php /** @var \App\Models\Category[] $categories */ @endphp
+                    @foreach($categories as $category)
+                        <optgroup label="{{$category->name}}">
+                            <option value="{{$category->id}}" @if(old('t-category', $transaction->category_id) == $category->id) selected @endif>
+                                {{$category->name}}
+                            </option>
+                            @foreach($category->categories as $subCategory)
+                                <option value="{{$subCategory->id}}" @if(old('t-category', $transaction->category_id) == $subCategory->id) selected @endif>
+                                    {{$subCategory->name}}
+                                </option>
+                            @endforeach
+                        </optgroup>
+                    @endforeach
                 </select>
             </div>
         </div>
@@ -36,23 +45,23 @@
             <div class="col-6">
                 <div class="row">
                     <div class="form-group col">
-                        <select class="form-control" id="type-select">
-                            <option value="1" selected>Expense</option>
-                            <option value="2">Income</option>
+                        <select class="form-control" name="t-type">
+                            <option value="expense" @if(old('t-type', $transaction->type) == "expense") selected @endif>Expense</option>
+                            <option value="income" @if(old('t-type', $transaction->type) == "income") selected @endif>Income</option>
                         </select>
                     </div>
                     <div class="form-group col">
-                        <input type="text" class="form-control text-right" value="" placeholder="-25  ILS">
+                        <input type="text" class="form-control text-right" name="t-amount" value="{{old('t-amount', $transaction->amount)}}">
                     </div>
                 </div>
                 <div class="row">
                     <div class="form-group col">
-                        <input type="date" class="form-control" value="" placeholder="">
+                        <input type="date" class="form-control" name="t-date" value="{{old('t-date', $transaction->getDateForInput())}}">
                     </div>
                 </div>
             </div>
             <div class="form-group col-6">
-                <textarea class="form-control h-100" id="description-input" placeholder="Description" rows="3"></textarea>
+                <textarea class="form-control h-100" rows="3" name="t-description">{{old('t-description', $transaction->description)}}</textarea>
             </div>
         </div>
 

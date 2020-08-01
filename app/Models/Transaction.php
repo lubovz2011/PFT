@@ -31,4 +31,19 @@ class Transaction extends Model
     public function account(){
         return $this->belongsTo(Account::class);
     }
+
+    public function getDateAttribute($date){
+        return date(auth()->user()->date_format . " l", strtotime($date));
+    }
+
+    public function getAmountAttribute($amount){
+        $mult = 1;
+        if($this->type == 'expense')
+            $mult = -1;
+        return number_format($mult * $amount, 2, '.', ',');
+    }
+
+    public function getDateForInput(){
+        return date("Y-m-d", strtotime($this->date));
+    }
 }

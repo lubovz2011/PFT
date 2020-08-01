@@ -4,11 +4,11 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/select2.min.css">
-    <link rel="stylesheet" href="css/select2-bootstrap.css">
-    <link href="css/font-awesome-5-all.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/select2.min.css">
+    <link rel="stylesheet" href="/css/select2-bootstrap.css">
+    <link href="/css/font-awesome-5-all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/styles.css">
     @yield("style")
     <title>PFT - @yield('title')</title>
 </head>
@@ -66,11 +66,11 @@
     </footer>
 
 
-<script src="js/jquery-3.5.1.min.js"></script>
-<script src="js/popper.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<script src="js/select2.full.min.js"></script>
-<script defer src="js/font-awesome-5-all.min.js"></script> <!--load all styles -->
+<script src="/js/jquery-3.5.1.min.js"></script>
+<script src="/js/popper.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/select2.full.min.js"></script>
+<script defer src="/js/font-awesome-5-all.min.js"></script> <!--load all styles -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.js"></script>
 <script>
     $.ajaxSetup({

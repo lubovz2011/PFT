@@ -68,7 +68,7 @@
                     <div class="card-body p-0">
                         <div class="accordion" id="accordion-accounts">
                             @foreach($transactionsByDate as $date => $transactions)
-                                @include('transactions.transactions-manage-date', ["date" => $date, "transactions" => $transactions])
+                                @include('transactions.transactions-manage-date')
                             @endforeach
                         </div>
                     </div>

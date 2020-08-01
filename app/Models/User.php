@@ -26,6 +26,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  * @property \DateTime|null $last_activity
  * @property Account[]|Collection $accounts
  * @property Category[]|Collection $categories
+ * @property Transaction[]|Collection $transactions
  * @package App\Models
  */
 class User extends Authenticatable
@@ -56,10 +57,14 @@ class User extends Authenticatable
     ];
 
     public function accounts(){
-        return $this->hasMany("App\Models\Account");
+        return $this->hasMany(Account::class);
     }
 
     public function categories(){
-        return $this->hasMany("App\Models\Category");
+        return $this->hasMany(Category::class);
+    }
+
+    public function transactions(){
+        return $this->hasManyThrough(Transaction::class, Account::class);
     }
 }
