@@ -52,6 +52,8 @@ Route::group(['middleware' => 'auth'], function(){
     Route::get('transactions/{page?}','TransactionsController@displayTransactionsPage')->name('transactions');
     /** add new transaction */
     Route::post('transactions/add-transaction', 'TransactionsController@addTransaction')->name('add-transaction');
+    /** delete transaction */
+    Route::post('transactions/delete-transaction', 'TransactionsController@deleteTransaction')->name('delete-transaction');
 
 
     /** reports page */

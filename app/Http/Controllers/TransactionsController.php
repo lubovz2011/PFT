@@ -67,8 +67,29 @@ class TransactionsController extends Controller
         $transaction->date = $request->input('date');
         $transaction->description = $request->input('description') ?? '';
         $transaction->save();
-        $account->balance += ($transaction->type == 'income' ? 1 : -1) * $transaction->amount;
+        $account->balance += $transaction->amount;
         $account->save();
         return redirect()->route('transactions');
+    }
+
+    /**
+     * ToDo: validate request
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
+     */
+    public function deleteTransaction(Request $request)
+    {
+        $this->validate($request, [
+            'id' => 'integer|exists:transactions,id'
+        ]);
+        /** @var User $user */
+        $user = auth()->user();
+        $transaction = $user->transactions()->where('transactions.id', '=', $request->input('id'))->first();
+        $account = $transaction->account;
+        $account->balance -= $transaction->amount;
+        $account->save();
+        $transaction->delete();
+        return redirect()->back();
     }
 }

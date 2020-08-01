@@ -67,16 +67,39 @@
 
         <div class="row mt-3">
             <div class="col">
-                <button class="btn btn-secondary" type="submit">Delete</button>
+                <button class="btn btn-secondary"
+                        type="button"
+                        data-toggle="modal"
+                        data-target="#delete-transaction-modal-{{$transaction->id}}">
+                    Delete
+                </button>
             </div>
             <div class="col d-flex justify-content-end">
-                <button class="btn btn-secondary mr-2" type="submit">Cancel</button>
+                <button class="btn btn-secondary mr-2" type="reset" data-toggle="collapse" data-target="#collapse-{{$transaction->id}}">Cancel</button>
                 <button class="btn btn-primary" type="submit">Save</button>
             </div>
         </div>
     </form>
-
-
 </li>
-
+<div class="modal fade" id="delete-transaction-modal-{{$transaction->id}}" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-body">
+                <p>
+                    Are you sure you want to delete this transaction?
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                <a href="#"
+                   onclick="event.preventDefault(); document.getElementById('delete-transaction-form-{{$transaction->id}}').submit();"
+                   class="btn btn-primary">Yes</a>
+                <form id="delete-transaction-form-{{$transaction->id}}" action="{{ route('delete-transaction') }}" method="POST" style="display: none;">
+                    @csrf
+                    <input type="hidden" name="id" value="{{$transaction->id}}">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
