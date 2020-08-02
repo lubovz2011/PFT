@@ -9,30 +9,39 @@
         </div>
     </div>
 </li>
-<li class="list-group-item py-3 px-5 collapse bg-light" id="collapse-{{$transaction->id}}" data-parent="#accordion-accounts">
-    <form>
+<li class="list-group-item py-3 px-5 collapse bg-light
+           @if($errors->hasAny(["id",
+                                "t-{$transaction->id}-type",
+                                "t-{$transaction->id}-account",
+                                "t-{$transaction->id}-category",
+                                "t-{$transaction->id}-amount",
+                                "t-{$transaction->id}-description",
+                                "t-{$transaction->id}-date"])) show @endif"
+    id="collapse-{{$transaction->id}}" data-parent="#accordion-accounts">
+    <form method="POST" action="{{route('update-transaction')}}">
         @csrf
+        <input type="hidden" name="id" value="{{$transaction->id}}">
         <div class="row">
             <div class="form-group col">
-                <select class="form-control" name="t-account">
+                <select class="form-control" name="t-{{$transaction->id}}-account">
                     @php /** @var \App\Models\Account[] $accounts */ @endphp
                     @foreach($accounts as $account)
-                        <option value="{{$account->id}}" @if(old('t-account', $transaction->account_id) == $account->id) selected @endif>
+                        <option value="{{$account->id}}" @if(old("t-{$transaction->id}-account", $transaction->account_id) == $account->id) selected @endif>
                             {{$account->title}}
                         </option>
                     @endforeach
                 </select>
             </div>
             <div class="form-group col">
-                <select class="form-control" name="t-category">
+                <select class="form-control" name="t-{{$transaction->id}}-category">
                     @php /** @var \App\Models\Category[] $categories */ @endphp
                     @foreach($categories as $category)
                         <optgroup label="{{$category->name}}">
-                            <option value="{{$category->id}}" @if(old('t-category', $transaction->category_id) == $category->id) selected @endif>
+                            <option value="{{$category->id}}" @if(old("t-{$transaction->id}-category", $transaction->category_id) == $category->id) selected @endif>
                                 {{$category->name}}
                             </option>
                             @foreach($category->categories as $subCategory)
-                                <option value="{{$subCategory->id}}" @if(old('t-category', $transaction->category_id) == $subCategory->id) selected @endif>
+                                <option value="{{$subCategory->id}}" @if(old("t-{$transaction->id}-category", $transaction->category_id) == $subCategory->id) selected @endif>
                                     {{$subCategory->name}}
                                 </option>
                             @endforeach
@@ -45,23 +54,23 @@
             <div class="col-6">
                 <div class="row">
                     <div class="form-group col">
-                        <select class="form-control" name="t-type">
-                            <option value="expense" @if(old('t-type', $transaction->type) == "expense") selected @endif>Expense</option>
-                            <option value="income" @if(old('t-type', $transaction->type) == "income") selected @endif>Income</option>
+                        <select class="form-control" name="t-{{$transaction->id}}-type">
+                            <option value="expense" @if(old("t-{$transaction->id}-type", $transaction->type) == "expense") selected @endif>Expense</option>
+                            <option value="income" @if(old("t-{$transaction->id}-type", $transaction->type) == "income") selected @endif>Income</option>
                         </select>
                     </div>
                     <div class="form-group col">
-                        <input type="text" class="form-control text-right" name="t-amount" value="{{old('t-amount', $transaction->amount)}}">
+                        <input type="text" class="form-control text-right" name="t-{{$transaction->id}}-amount" value="{{old("t-{$transaction->id}-amount", $transaction->amount)}}">
                     </div>
                 </div>
                 <div class="row">
                     <div class="form-group col">
-                        <input type="date" class="form-control" name="t-date" value="{{old('t-date', $transaction->getDateForInput())}}">
+                        <input type="date" class="form-control" name="t-{{$transaction->id}}-date" value="{{old("t-{$transaction->id}-date", $transaction->getDateForInput())}}">
                     </div>
                 </div>
             </div>
             <div class="form-group col-6">
-                <textarea class="form-control h-100" rows="3" name="t-description">{{old('t-description', $transaction->description)}}</textarea>
+                <textarea class="form-control h-100" rows="3" name="t-{{$transaction->id}}-description">{{old("t-{$transaction->id}-description", $transaction->description)}}</textarea>
             </div>
         </div>
 

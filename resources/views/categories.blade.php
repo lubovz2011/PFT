@@ -33,8 +33,9 @@
                                     @foreach($categories as $category)
                                         <option
                                             value="{{$category['id']}}"
-                                            @if(old('parent') == $category['id']) selected @endif
-                                        >{{$category['name']}}</option>
+                                            @if(old('parent') == $category['id']) selected @endif>
+                                            {{$category['name']}}
+                                        </option>
                                     @endforeach
                                 </select>
                             </div>
@@ -45,8 +46,8 @@
                                     <option value="" selected>No Icon</option>
                                     @foreach($icons as $icon)
                                         <option value="{{$icon['class']}}"
-                                                @if(old('icon') == $icon['class']) selected @endif
-                                        >{{$icon['name']}}</option>
+                                                @if(old('icon') == $icon['class']) selected @endif>
+                                            {{$icon['name']}}</option>
                                     @endforeach
                                 </select>
                             </div>

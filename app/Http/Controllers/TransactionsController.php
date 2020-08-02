@@ -49,7 +49,7 @@ class TransactionsController extends Controller
             'account'     => 'bail|required|integer',
             'category'    => 'bail|required|integer|exists:categories,id',
             'date'        => 'bail|required|date',
-            'amount'      => 'bail|numeric|min:0',
+            'amount'      => 'bail|numeric',
             'description' => 'bail|max:1024'
         ]);
         /** @var User $user */
@@ -63,7 +63,7 @@ class TransactionsController extends Controller
         $transaction->type = $request->input('type');
         $transaction->account_id = $request->input('account');
         $transaction->category_id = $request->input('category');
-        $transaction->amount = $request->input('amount');
+        $transaction->amount = abs($request->input('amount'));
         $transaction->currency = $account->currency;
         $transaction->date = $request->input('date');
         $transaction->description = $request->input('description') ?? '';
@@ -82,7 +82,7 @@ class TransactionsController extends Controller
     public function deleteTransaction(Request $request)
     {
         $this->validate($request, [
-            'id' => 'integer|exists:transactions,id'
+            'id' => 'bail|required|integer|exists:transactions,id'
         ]);
         /** @var User $user */
         $user = auth()->user();
@@ -93,4 +93,47 @@ class TransactionsController extends Controller
         $transaction->delete();
         return redirect()->back();
     }
+
+    public function updateTransaction(Request $request)
+    {
+        $this->validate($request, [
+            'id' => 'bail|required|integer|exists:transactions,id'
+        ]);
+        $id = $request->input('id');
+        $this->validate($request, [
+            "t-$id-type"        => 'bail|required|in:income,expense',
+            "t-$id-account"     => 'bail|required|integer',
+            "t-$id-category"    => 'bail|required|integer|exists:categories,id',
+            "t-$id-date"        => 'bail|required|date',
+            "t-$id-amount"      => 'bail|numeric',
+            "t-$id-description" => 'bail|max:1024'
+        ]);
+        /** @var User $user */
+        $user = auth()->user();
+        /** @var Transaction $transaction */
+        $transaction = $user->transactions()->where('transactions.id', '=', $id)->first();
+        try {
+            DB::beginTransaction();
+            $account = $transaction->account;
+            $account->balance -= $transaction->amount;
+            $account->save();
+            $transaction->type = $request->input("t-$id-type");
+            $transaction->account_id = $request->input("t-$id-account");
+            $transaction->category_id = $request->input("t-$id-category");
+            $transaction->date = $request->input("t-$id-date");
+            $transaction->amount = abs($request->input("t-$id-amount"));
+            $transaction->description = $request->input("t-$id-description") ?? '';
+            /** @var Account $account */
+            $account = $user->accounts()->where('accounts.id', '=', $transaction->account_id)->first();
+            $account->balance += $transaction->amount;
+            $account->save();
+            $transaction->save();
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+        }
+        return redirect()->back();
+    }
 }
+
+

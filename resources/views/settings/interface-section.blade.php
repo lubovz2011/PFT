@@ -7,13 +7,8 @@
         </h2>
     </div>
     <div id="section-interface"
-         class="collapse @if($errors->has('date_format')
-                                                  || $errors->has('time_format')
-                                                  || $errors->has('week_start')
-                                                  || $errors->has('limit')
-                                                  || $errors->has('main_currency')
-                                                  || $errors->has('currencies.*'))
-                                                  show @endif"
+         class="collapse @if($errors->hasAny(['date_format', 'time_format', 'week_start', 'limit', 'main_currency', 'currencies.*']))
+                              show @endif"
          aria-labelledby="interface-header"
          data-parent="#accordion-settings">
         <div class="card-body">
