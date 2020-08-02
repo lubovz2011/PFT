@@ -29,6 +29,7 @@ class TransactionsController extends Controller
                              ->with('category')
                              ->with('account')
                              ->orderBy('date', 'desc')
+                             ->orderBy('id', 'desc')
                              ->limit($user->limit)
                              ->offset($user->limit * ($page - 1))
                              ->get();
