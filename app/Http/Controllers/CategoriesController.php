@@ -84,10 +84,11 @@ class CategoriesController extends Controller
             'icon'    => 'bail|nullable|string|exists:icons,class'
         ]);
 
+        //dd($request->all());
         /** @var User $user */
         $user = auth()->user();
 
-        DefaultCategories::generateCategory($user, $request->input('name'), $request->input('icon'), $request->input('parent'));
+        DefaultCategories::generateCategory($user, $request->input('name'), $request->input('icon') ?? "", $request->input('parent'));
 
         return redirect()->route('categories');
     }
