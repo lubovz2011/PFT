@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Account;
 use App\Models\Category;
+use App\Models\Rate;
 use App\Models\Transaction;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -24,7 +25,10 @@ class TransactionsController extends Controller
         /** @var Account[] $accounts */
         $accounts = $user->accounts;
         /** @var Category[] $categories */
-        $categories = $user->categories()->whereNull('parent_id')->with('categories')->get();
+        $categories = $user->categories()->whereNull('parent_id')->where('status', 1)
+                                         ->with(['categories' => function($query){
+                                             $query->where('status', 1);
+                                         }])->get();
         $transactions = $user->transactions()
                              ->with('category')
                              ->with('account')
@@ -36,9 +40,11 @@ class TransactionsController extends Controller
         $transactions = $transactions->groupBy('date');
 
         return view('transactions', [
+            "totalBalance"       => $this->totalBalance($user->currency, $user->transactions),
+            "currency"           => $user->currency,
             "transactionsByDate" => $transactions,
-            "accounts" => $accounts,
-            "categories" => $categories
+            "accounts"           => $accounts,
+            "categories"         => $categories
         ]);
     }
 
@@ -133,6 +139,20 @@ class TransactionsController extends Controller
             DB::rollBack();
         }
         return redirect()->back();
+    }
+
+    public function totalBalance(string $userCurrency, $transactions = null)
+    {
+        $groupByCurrency = $transactions->groupBy('currency');
+        $totalByCurrency = 0;
+        $total = 0;
+        foreach ($groupByCurrency as $currency => $transactions){
+            foreach ($transactions as $transaction)
+                $totalByCurrency += $transaction->amount;
+            $total += Rate::convert($totalByCurrency, $currency, $userCurrency);
+        }
+       // dd($totalByCurrency);
+        return number_format($total, 2, '.', ',');
     }
 }
 

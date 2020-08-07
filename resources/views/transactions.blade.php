@@ -25,8 +25,8 @@
                                             </div>
                                             <div class="row">
                                                 <div class="col d-flex justify-content-start">
-                                                    <div class="text-success mr-2 font-weight-bold">1000.90</div>
-                                                    <div class="text-secondary">ILS</div>
+                                                    <div class=" @if ($totalBalance >= 0) text-success @else text-danger @endif  mr-2 font-weight-bold">{{$totalBalance}}</div>
+                                                    <div class="text-secondary">{{$currency}}</div>
                                                 </div>
                                             </div>
                                         </div>
