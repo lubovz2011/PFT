@@ -3,7 +3,7 @@
     Transactions
 @endsection
 @section("content")
-
+@php /** @var \Illuminate\Pagination\LengthAwarePaginator $paginator */ @endphp
     <div class="container-fluid">
         <div class="row">
             <div class="col-3 bg-dark filters-form">
@@ -31,14 +31,19 @@
                                             </div>
                                         </div>
                                         <div class="col d-flex justify-content-end align-items-center">
-                                            {{$first}} - {{$last}} of {{$transactionsCount}}
+                                            @if(empty($paginator->total()))
+                                                0 - 0
+                                            @else
+                                                {{$paginator->firstItem()}} - {{$paginator->lastItem()}}
+                                            @endif
+                                                of {{$paginator->total()}}
                                             <div class="btn-group btn-group-sm ml-2" role="group">
-                                                <a href="{{route('transactions', ['page' => $page - 1])}}"
-                                                   class="btn btn-secondary border-white border-right-0 @if($page < 2) disabled @endif">
+                                                <a href="{{$paginator->previousPageUrl()}}"
+                                                   class="btn btn-secondary border-white border-right-0 @if($paginator->previousPageUrl() == null) disabled @endif">
                                                     <i class="mx-1 fas fa-chevron-left"></i>
                                                 </a>
-                                                <a href="{{route('transactions', ['page' => $page + 1])}}"
-                                                   class="btn btn-secondary border-white @if($transactionsCount == $last) disabled @endif">
+                                                <a href="{{$paginator->nextPageUrl()}}"
+                                                   class="btn btn-secondary border-white @if($paginator->nextPageUrl() == null) disabled @endif">
                                                     <i class="mx-1 fas fa-chevron-right"></i>
                                                 </a>
                                             </div>
@@ -69,7 +74,7 @@
                     </div>
                     <div class="card-body p-0">
                         <div class="accordion" id="accordion-accounts">
-                            @foreach($transactionsByDate as $date => $transactions)
+                            @foreach($paginator->groupBy('date') as $date => $transactions)
                                 @include('transactions.transactions-manage-date')
                             @endforeach
                         </div>

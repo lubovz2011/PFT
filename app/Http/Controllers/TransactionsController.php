@@ -11,6 +11,7 @@ use App\Models\Transaction;
 use App\Models\User;
 use Carbon\Carbon;
 use Doctrine\DBAL\Query\QueryBuilder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -20,17 +21,11 @@ class TransactionsController extends Controller
      * method return transactions page
      * @return \Illuminate\View\View
      */
-    public function displayTransactionsPage(Request $request, $page = 1)
+    public function displayTransactionsPage(Request $request)
     {
         //dd($request->all());
         /** @var User $user */
         $user = auth()->user();
-        $offset = $user->limit * ($page - 1);
-        $transactionsCount = $user->transactions()->count();
-        if($offset < 0)
-            return redirect()->route('transactions', ["page" => 1]);
-        elseif ($offset > $transactionsCount)
-            return redirect()->route('transactions', ["page" => ceil($transactionsCount/$user->limit)]);
         /** @var Account[] $accounts */
         $accounts = $user->accounts;
         /** @var Category[] $categories */
@@ -67,19 +62,15 @@ class TransactionsController extends Controller
                              ->with('account')
                              ->orderBy('date', 'desc')
                              ->orderBy('id', 'desc')
-                             ->limit($user->limit)
-                             ->offset($offset)
-                             ->get();
-        $transactions = $transactions->groupBy('date');
+                             ->paginate($user->limit);
+        if($transactions->currentPage() > $transactions->lastPage())
+            return redirect()->route('transactions', ['page' => $transactions->lastPage()]);
+//        dd($transactions);
 
         return view('transactions', [
-            "totalBalance"       => $this->totalBalance($user->currency, $user->transactions),
+            'paginator'          => $transactions,
+            "totalBalance"       => $this->totalBalance($user->currency, $user->accounts),
             "currency"           => $user->currency,
-            "transactionsCount"  => $transactionsCount,
-            "first"              => min($offset + 1, $transactionsCount),
-            "last"               => min($offset + $user->limit, $transactionsCount),
-            "page"               => $page,
-            "transactionsByDate" => $transactions,
             "accounts"           => $accounts,
             "categories"         => $categories
         ]);
@@ -93,7 +84,7 @@ class TransactionsController extends Controller
     public function addTransaction(Request $request)
     {
         $this->validate($request, [
-            'type'      => 'required|in:income,expense',
+            'type'        => 'required|in:income,expense',
             'account'     => 'bail|required|integer',
             'category'    => 'bail|required|integer|exists:categories,id',
             'date'        => 'bail|required|date',
@@ -190,20 +181,21 @@ class TransactionsController extends Controller
 
     /**
      * Method return total balance of auth user
-     * by grouping transactions by currency, converting to user's main currency and sum all amounts
+     * by grouping accounts by currency, converting to user's main currency and sum all balances
      *
      * @param string $userCurrency - main user's currency
-     * @param null $transactions - all user's transactions
+     * @param Collection|Account[]|null $accounts - all user's accounts
      * @return string
      */
-    public function totalBalance(string $userCurrency, $transactions = null)
+    public function totalBalance(string $userCurrency, $accounts = null)
     {
-        $groupByCurrency = $transactions->groupBy('currency');
+        $groupByCurrency = $accounts->groupBy('currency');
         $totalByCurrency = 0;
         $total = 0;
-        foreach ($groupByCurrency as $currency => $transactions){
-            foreach ($transactions as $transaction)
-                $totalByCurrency += $transaction->amount;
+        foreach ($groupByCurrency as $currency => $accounts){
+            foreach ($accounts as $account)
+                /** @var Account $account */
+                $totalByCurrency += $account->balance;
             $total += Rate::convert($totalByCurrency, $currency, $userCurrency);
         }
         return number_format($total, 2, '.', ',');
