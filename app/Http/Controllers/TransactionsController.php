@@ -9,19 +9,28 @@ use App\Models\Category;
 use App\Models\Rate;
 use App\Models\Transaction;
 use App\Models\User;
+use Carbon\Carbon;
+use Doctrine\DBAL\Query\QueryBuilder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class TransactionsController extends Controller
 {
     /**
-     * method returns transactions page
+     * method return transactions page
      * @return \Illuminate\View\View
      */
-    public function displayTransactionsPage($page = 1)
+    public function displayTransactionsPage(Request $request, $page = 1)
     {
+        //dd($request->all());
         /** @var User $user */
         $user = auth()->user();
+        $offset = $user->limit * ($page - 1);
+        $transactionsCount = $user->transactions()->count();
+        if($offset < 0)
+            return redirect()->route('transactions', ["page" => 1]);
+        elseif ($offset > $transactionsCount)
+            return redirect()->route('transactions', ["page" => ceil($transactionsCount/$user->limit)]);
         /** @var Account[] $accounts */
         $accounts = $user->accounts;
         /** @var Category[] $categories */
@@ -30,24 +39,57 @@ class TransactionsController extends Controller
                                              $query->where('status', 1);
                                          }])->get();
         $transactions = $user->transactions()
+                             ->when(!empty($request->input('filter-times')), function($query) use ($request){
+                                    /** @var QueryBuilder $query */
+                                    switch ($request->input('filter-times')) {
+                                        case 1: $query->where('date', '=', Carbon::now()); break; //today
+                                        case 2: $query->where('date', '=', Carbon::now()->subDay()); break; //yesterday
+                                        case 3: $query->where('date', '>', Carbon::now()->subDays(7))
+                                                      ->where('date', '<=', Carbon::now()); break; //last 7 days
+                                        case 4: $query->where('date', '>', Carbon::now()->subDays(30))
+                                                      ->where('date', '<=', Carbon::now()); break; // Last 30 days
+                                        case 5: $query->where('date', '>=', Carbon::now()->firstOfMonth())
+                                                      ->where('date', '<=', Carbon::now()); break; // This Month
+                                        case 6: $query->where('date', '>=', Carbon::now()->subMonth()->firstOfMonth())
+                                                      ->where('date', '<=', Carbon::now()->subMonth()->lastOfMonth()); break; // Last Month
+                                    }
+                             })
+                             ->when(!empty($request->input('filter-types')), function($query) use ($request){
+                                 $query->where('transactions.type', $request->input('filter-types'));
+                             })
+                             ->when(!empty($request->input('filter-accounts')), function($query) use ($request){
+                                 $query->whereIn('account_id', $request->input('filter-accounts'));
+                             })
+                             ->when(!empty($request->input('filter-categories')), function ($query) use ($request){
+                                 $query->whereIn('category_id', $request->input('filter-categories'));
+                             })
                              ->with('category')
                              ->with('account')
                              ->orderBy('date', 'desc')
                              ->orderBy('id', 'desc')
                              ->limit($user->limit)
-                             ->offset($user->limit * ($page - 1))
+                             ->offset($offset)
                              ->get();
         $transactions = $transactions->groupBy('date');
 
         return view('transactions', [
             "totalBalance"       => $this->totalBalance($user->currency, $user->transactions),
             "currency"           => $user->currency,
+            "transactionsCount"  => $transactionsCount,
+            "first"              => min($offset + 1, $transactionsCount),
+            "last"               => min($offset + $user->limit, $transactionsCount),
+            "page"               => $page,
             "transactionsByDate" => $transactions,
             "accounts"           => $accounts,
             "categories"         => $categories
         ]);
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Validation\ValidationException
+     */
     public function addTransaction(Request $request)
     {
         $this->validate($request, [
@@ -100,6 +142,11 @@ class TransactionsController extends Controller
         return redirect()->back();
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Validation\ValidationException
+     */
     public function updateTransaction(Request $request)
     {
         $this->validate($request, [
@@ -141,6 +188,14 @@ class TransactionsController extends Controller
         return redirect()->back();
     }
 
+    /**
+     * Method return total balance of auth user
+     * by grouping transactions by currency, converting to user's main currency and sum all amounts
+     *
+     * @param string $userCurrency - main user's currency
+     * @param null $transactions - all user's transactions
+     * @return string
+     */
     public function totalBalance(string $userCurrency, $transactions = null)
     {
         $groupByCurrency = $transactions->groupBy('currency');
@@ -151,9 +206,10 @@ class TransactionsController extends Controller
                 $totalByCurrency += $transaction->amount;
             $total += Rate::convert($totalByCurrency, $currency, $userCurrency);
         }
-       // dd($totalByCurrency);
         return number_format($total, 2, '.', ',');
     }
+
+
 }
 
 

@@ -49,13 +49,14 @@ Route::group(['middleware' => 'auth'], function(){
 
 
     /** transactions page */
-    Route::get('transactions/{page?}','TransactionsController@displayTransactionsPage')->name('transactions');
+    Route::get('transactions/{page?}','TransactionsController@displayTransactionsPage')->name('transactions')->where('page', '[0-9]+');
     /** add new transaction */
     Route::post('transactions/add-transaction', 'TransactionsController@addTransaction')->name('add-transaction');
     /** delete transaction */
     Route::post('transactions/delete-transaction', 'TransactionsController@deleteTransaction')->name('delete-transaction');
     /** update transaction */
     Route::post('transactions/update-transaction', 'TransactionsController@updateTransaction')->name('update-transaction');
+
 
 
     /** reports page */

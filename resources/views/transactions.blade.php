@@ -31,14 +31,16 @@
                                             </div>
                                         </div>
                                         <div class="col d-flex justify-content-end align-items-center">
-                                            1 - 3 of 1
+                                            {{$first}} - {{$last}} of {{$transactionsCount}}
                                             <div class="btn-group btn-group-sm ml-2" role="group">
-                                                <button type="button" class="btn btn-secondary border-white border-right-0">
+                                                <a href="{{route('transactions', ['page' => $page - 1])}}"
+                                                   class="btn btn-secondary border-white border-right-0 @if($page < 2) disabled @endif">
                                                     <i class="mx-1 fas fa-chevron-left"></i>
-                                                </button>
-                                                <button type="button" class="btn btn-secondary border-white" disabled>
+                                                </a>
+                                                <a href="{{route('transactions', ['page' => $page + 1])}}"
+                                                   class="btn btn-secondary border-white @if($transactionsCount == $last) disabled @endif">
                                                     <i class="mx-1 fas fa-chevron-right"></i>
-                                                </button>
+                                                </a>
                                             </div>
                                         </div>
                                     </div>
@@ -82,6 +84,26 @@
     <script>
         $(document).ready(function(){
             $("select").select2({
+                theme : "bootstrap"
+            });
+
+            $('select[name="filter-times"]').select2({
+                "placeholder" : "Select time",
+                theme : "bootstrap"
+            });
+
+            $('select[name="filter-types"]').select2({
+                "placeholder" : "Select type",
+                theme : "bootstrap"
+            });
+
+            $('select[name="filter-accounts[]"]').select2({
+                "placeholder" : "Select account",
+                theme : "bootstrap"
+            });
+
+            $('select[name="filter-categories[]"]').select2({
+                "placeholder" : "Select category",
                 theme : "bootstrap"
             });
 

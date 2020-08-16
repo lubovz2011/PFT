@@ -1,4 +1,4 @@
-<form class="px-3">
+<form class="px-3" method="GET" action="{{Request::url()}}">
     <div class="row my-3">
         <div class="col">
             <h6 class="text-white text-center">FILTERS</h6>
@@ -7,49 +7,54 @@
 
     <div class="row">
         <div class="form-group col">
-            <select class="form-control" >
-                <option value="allDates" selected>All Time</option>
+            <select class="form-control" name="filter-times">
+                <option></option>
                 <option value="1" >Today</option>
                 <option value="2">Yesterday</option>
                 <option value="3">Last 7 days</option>
                 <option value="4">Last 30 days</option>
                 <option value="5">This Month</option>
                 <option value="6">Last Month</option>
-                <option value="7">Custom range</option>
             </select>
         </div>
     </div>
     @if($showTypeSelect)
     <div class="row">
         <div class="form-group col">
-            <select class="form-control" >
-                <option value="allTypes" selected>All Types</option>
-                <option value="1">Income</option>
-                <option value="2">Expense</option>
+            <select class="form-control" name="filter-types">
+                <option></option>
+                <option value="income">Income</option>
+                <option value="expense">Expense</option>
             </select>
         </div>
     </div>
     @endif
     <div class="row">
         <div class="form-group col">
-            <select class="form-control" >
-                <option value="allAccounts" selected>All Accounts</option>
-                <option value="1">Wallet</option>
-                <option value="2">Piggy Bank</option>
+            <select class="form-control" name="filter-accounts[]" multiple>
+                @php /** @var \App\Models\Account[] $accounts */ @endphp
+                @foreach($accounts as $account)
+                    <option value="{{$account->id}}">{{$account->title}}</option>
+                @endforeach
             </select>
         </div>
     </div>
     <div class="row">
         <div class="form-group col">
-            <select class="form-control" >
-                <option value="allCategories" selected>All Categories</option>
-                <option value="1">Bills</option>
-                <option value="2">Tax & Fees</option>
-                <option value="3">Income</option>
-                <option value="4">Home</option>
-                <option value="5">Health & Fitness</option>
-                <option value="6">Pets</option>
-                <option value="7">Education</option>
+            <select class="form-control" name="filter-categories[]" multiple>
+                @php /** @var \App\Models\Category[] $categories */ @endphp
+                @foreach($categories as $category)
+                    <optgroup label="{{$category->name}}">
+                        <option value="{{$category->id}}">
+                            {{$category->name}}
+                        </option>
+                        @foreach($category->categories as $subCategory)
+                            <option value="{{$subCategory->id}}">
+                                {{$subCategory->name}}
+                            </option>
+                        @endforeach
+                    </optgroup>
+                @endforeach
             </select>
         </div>
     </div>

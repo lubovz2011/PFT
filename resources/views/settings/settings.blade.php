@@ -1,4 +1,7 @@
 @extends("layout")
+@section("title")
+    Settings
+@endsection
 @section("content")
 
 <div class="container">
