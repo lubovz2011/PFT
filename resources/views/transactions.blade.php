@@ -7,7 +7,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-3 bg-dark filters-form">
-                @include('side-bar.filters-form', ["showTypeSelect" => true])
+                @include('side-bar.filters-form')
             </div>
             <div class="col-9">
                 <div class="card shadow-card border-0">
@@ -60,12 +60,6 @@
                                                     data-target="#add-transaction-modal">
                                                 Add Transaction
                                             </button>
-                                        </div>
-                                        <div class="col d-flex justify-content-end">
-                                            <form class="form-inline my-2">
-                                                <input class="form-control mr-sm-2" type="search" placeholder="Search for transactions">
-                                                <button class="btn btn-outline-primary" type="submit">Search</button>
-                                            </form>
                                         </div>
                                     </div>
                                 </li>

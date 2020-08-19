@@ -23,7 +23,7 @@ class TransactionsController extends Controller
      */
     public function displayTransactionsPage(Request $request)
     {
-        //dd($request->all());
+//        dd($request->session());
         /** @var User $user */
         $user = auth()->user();
         /** @var Account[] $accounts */
@@ -63,16 +63,19 @@ class TransactionsController extends Controller
                              ->orderBy('date', 'desc')
                              ->orderBy('id', 'desc')
                              ->paginate($user->limit);
+        $transactions->appends($request->all());
+
+//        dd($request->all());
+
         if($transactions->currentPage() > $transactions->lastPage())
             return redirect()->route('transactions', ['page' => $transactions->lastPage()]);
-//        dd($transactions);
 
         return view('transactions', [
             'paginator'          => $transactions,
-            "totalBalance"       => $this->totalBalance($user->currency, $user->accounts),
-            "currency"           => $user->currency,
-            "accounts"           => $accounts,
-            "categories"         => $categories
+            'totalBalance'       => $this->totalBalance($user->currency, $user->accounts),
+            'currency'           => $user->currency,
+            'accounts'           => $accounts,
+            'categories'         => $categories
         ]);
     }
 
@@ -190,9 +193,9 @@ class TransactionsController extends Controller
     public function totalBalance(string $userCurrency, $accounts = null)
     {
         $groupByCurrency = $accounts->groupBy('currency');
-        $totalByCurrency = 0;
         $total = 0;
         foreach ($groupByCurrency as $currency => $accounts){
+            $totalByCurrency = 0;
             foreach ($accounts as $account)
                 /** @var Account $account */
                 $totalByCurrency += $account->balance;

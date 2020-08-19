@@ -9,32 +9,28 @@
         <div class="form-group col">
             <select class="form-control" name="filter-times">
                 <option></option>
-                <option value="1" >Today</option>
-                <option value="2">Yesterday</option>
-                <option value="3">Last 7 days</option>
-                <option value="4">Last 30 days</option>
-                <option value="5">This Month</option>
-                <option value="6">Last Month</option>
+                @foreach(\App\Classes\Utils\DataSets::getDateOptions() as $key => $option)
+                    <option value="{{$key}}" @if(request()->get('filter-times') == $key) selected @endif>{{$option}}</option>
+                @endforeach
             </select>
         </div>
     </div>
-    @if($showTypeSelect)
     <div class="row">
         <div class="form-group col">
             <select class="form-control" name="filter-types">
                 <option></option>
-                <option value="income">Income</option>
-                <option value="expense">Expense</option>
+                @foreach(\App\Classes\Utils\DataSets::getTypeOptions() as $key => $option)
+                    <option value="{{$key}}" @if(request()->get('filter-types') == $key) selected @endif>{{$option}}</option>
+                @endforeach
             </select>
         </div>
     </div>
-    @endif
     <div class="row">
         <div class="form-group col">
             <select class="form-control" name="filter-accounts[]" multiple>
                 @php /** @var \App\Models\Account[] $accounts */ @endphp
                 @foreach($accounts as $account)
-                    <option value="{{$account->id}}">{{$account->title}}</option>
+                    <option value="{{$account->id}}" @if(in_array($account->id, request()->get('filter-accounts') ?? [])) selected @endif>{{$account->title}}</option>
                 @endforeach
             </select>
         </div>
@@ -45,11 +41,11 @@
                 @php /** @var \App\Models\Category[] $categories */ @endphp
                 @foreach($categories as $category)
                     <optgroup label="{{$category->name}}">
-                        <option value="{{$category->id}}">
+                        <option value="{{$category->id}}" @if(in_array($category->id, request()->get('filter-categories') ?? [])) selected @endif>
                             {{$category->name}}
                         </option>
                         @foreach($category->categories as $subCategory)
-                            <option value="{{$subCategory->id}}">
+                            <option value="{{$subCategory->id}}" @if(in_array($subCategory->id, request()->get('filter-categories') ?? [])) selected @endif>
                                 {{$subCategory->name}}
                             </option>
                         @endforeach
@@ -58,7 +54,8 @@
             </select>
         </div>
     </div>
-    <div class="col mt-2 d-flex justify-content-center">
+    <div class="row mt-2 d-flex justify-content-center">
         <button class="btn btn-primary mr-2 px-3" type="submit">Apply filters</button>
+        <a href="{{Request::url()}}" class="btn btn-secondary mr-2 px-3" type="button">Clear filters</a>
     </div>
 </form>
