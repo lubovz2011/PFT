@@ -67,14 +67,4 @@ class User extends Authenticatable
     public function transactions(){
         return $this->hasManyThrough(Transaction::class, Account::class);
     }
-
-    /**
-     * Get the e-mail address where password reset links are sent.
-     *
-     * @return string
-     */
-    public function getEmailForPasswordReset()
-    {
-        return $this->login;
-    }
 }
