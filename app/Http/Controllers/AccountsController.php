@@ -52,6 +52,7 @@ class AccountsController extends Controller
         $user = auth()->user();
         $account = $user->accounts()->where('accounts.id', $id)->firstOrFail();
         $account->title = $request->input("a-$id-title");
+        $account->status = $request->input("a-$id-status") == 'on';
         $account->save();
         return redirect()->back();
     }

@@ -34,7 +34,7 @@
         <div class="row">
             <div class="col-6 form-group">
                 <div class="custom-control custom-switch">
-                    <input type="checkbox" class="custom-control-input" id="report-account-switch">
+                    <input type="checkbox" class="custom-control-input" id="report-account-switch" name="a-{{$account->id}}-status" @if(old("a-{$account->id}-status", $account->status)) checked @endif>
                     <label class="custom-control-label" for="report-account-switch">Include In Reports</label>
                 </div>
             </div>
@@ -45,7 +45,7 @@
                         data-target="#delete-account-modal-{{$account->id}}">
                     Delete
                 </button>
-                <button class="btn btn-secondary mr-2" type="submit">Cancel</button>
+                <button class="btn btn-secondary mr-2" type="reset" data-toggle="collapse" data-target="#collapse-{{$account->id}}">Cancel</button>
                 <button class="btn btn-primary pr-3 pl-3" type="submit">Save</button>
             </div>
         </div>
