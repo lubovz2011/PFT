@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 
 
 use App\Models\Account;
+use App\Models\Rate;
+use App\Models\Transaction;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -30,7 +32,28 @@ class AccountsController extends Controller
             else
                 $groups[Account::TYPE_CARD][] = $account;
         }
-        return view('accounts', ['groups' => array_filter($groups)]);
+        return view('accounts', [
+            'groups'    => array_filter($groups),
+            'balance'   => $this->totalBalance($user->currency, collect($groups[Account::TYPE_CASH])),
+            'currency'  => $user->currency
+        ]);
+    }
+
+    public function updateAccount(Request $request)
+    {
+        $this->validate($request, [
+            'id' => 'bail|required|integer|exists:accounts,id'
+        ]);
+        $id = $request->input('id');
+        $this->validate($request, [
+            "a-$id-title"     => 'bail|required|string|max:255'
+        ]);
+        /** @var User $user */
+        $user = auth()->user();
+        $account = $user->accounts()->where('accounts.id', $id)->firstOrFail();
+        $account->title = $request->input("a-$id-title");
+        $account->save();
+        return redirect()->back();
     }
 
     /**
@@ -64,6 +87,20 @@ class AccountsController extends Controller
         $account->currency = $request->input('currency');
         $user->accounts()->save($account);
         return redirect()->route('accounts');
+    }
+
+    public function totalBalance(string $userCurrency, $accounts = null)
+    {
+        $groupByCurrency = $accounts->groupBy('currency');
+        $total = 0;
+        foreach ($groupByCurrency as $currency => $accounts){
+            $totalByCurrency = 0;
+            foreach ($accounts as $account)
+                /** @var Account $account */
+                $totalByCurrency += $account->balance;
+            $total += Rate::convert($totalByCurrency, $currency, $userCurrency);
+        }
+        return number_format($total, 2, '.', ',');
     }
 
 }

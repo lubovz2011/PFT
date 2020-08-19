@@ -46,7 +46,8 @@ Route::group(['middleware' => 'auth'], function(){
     Route::post('accounts/delete-account', 'AccountsController@deleteAccount')->name('delete-account');
     /** create new cash account */
     Route::post('accounts/create-cash-account', 'AccountsController@createCashAccount')->name('create-cash-account');
-
+    /** update account */
+    Route::post('accounts/update-account', 'AccountsController@updateAccount')->name('update-account');
 
     /** transactions page */
     Route::get('transactions','TransactionsController@displayTransactionsPage')->name('transactions');

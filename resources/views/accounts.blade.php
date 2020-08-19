@@ -26,9 +26,7 @@
                     </div>
                     <div class="row mt-5 text-secondary text-center account-mini-headers">
                         <div class="col-6 text-left">ACCOUNT NAME</div>
-{{--                        <div class="col">ACCOUNT TYPE</div>--}}
-                        <div class="col">CURRENT BALANCE</div>
-                        <div class="col">TURN ON/OFF</div>
+                        <div class="col text-right">CURRENT BALANCE</div>
                     </div>
                 </div>
                 <div class="card-body p-0">
@@ -47,13 +45,11 @@
                                                 <i class="fas fa-wallet mr-3 category-icon text-secondary"></i>cards
                                             </div>
                                         @endif
-                                            <div class="col"></div>
-                                            <div class="col d-flex justify-content-center"> ILS</div>
-                                            <div class="col d-flex justify-content-center">
-                                                <div class="custom-control custom-switch">
-                                                    <input type="checkbox" class="custom-control-input" id="bank-category-toggle" checked>
-                                                    <label class="custom-control-label " for="bank-category-toggle"></label>
-                                                </div>
+                                            <div class="col  d-flex justify-content-end">
+                                                <span class="mr-2 @if($balance >= 0) text-success @else text-danger @endif font-weight-bold">
+                                                    {{$balance}}
+                                                </span>
+                                                    {{$currency}}
                                             </div>
                                     </div>
                                 </div>
@@ -61,14 +57,7 @@
                                     <ul class="list-group list-group-flush">
                                         @foreach($group as $account)
                                             @php /** @var \App\Models\Account $account */ @endphp
-                                            @include('accounts.account-manage-item', [
-                                                                                "id" => $account->id,
-                                                                                "balance" => $account->balance,
-                                                                                "currency" => $account->currency,
-                                                                                "initialAmount" => "0 to do",
-                                                                                "accountType" => $account->type,
-                                                                                "accountName" => $account->title
-                                                                                ])
+                                            @include('accounts.account-manage-item')
                                         @endforeach
                                     </ul>
                                 </div>
