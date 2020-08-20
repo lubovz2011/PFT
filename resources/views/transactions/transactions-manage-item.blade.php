@@ -4,7 +4,7 @@
             <i class="{{$transaction->category->icon}} mr-2 category-icon text-secondary"></i> {{$transaction->category->name}} {{$transaction->id}}
         </div>
         <div class="col d-flex justify-content-end">
-            <div class="font-weight-bold {{$transaction->type == 'income' ? 'text-success' : 'text-danger'}} mr-2">{{$transaction->amount}}</div>
+            <div class="font-weight-bold {{$transaction->type == 'income' ? 'text-success' : 'text-danger'}} mr-2">{{$transaction->getPrettyAmount()}}</div>
             <div class="text-secondary">{{$transaction->currency}}</div>
         </div>
     </div>
@@ -60,7 +60,7 @@
                         </select>
                     </div>
                     <div class="form-group col">
-                        <input type="text" class="form-control text-right" name="t-{{$transaction->id}}-amount" value="{{old("t-{$transaction->id}-amount", $transaction->amount)}}">
+                        <input type="text" class="form-control text-right" name="t-{{$transaction->id}}-amount" value="{{old("t-{$transaction->id}-amount", $transaction->getPrettyAmount())}}">
                     </div>
                 </div>
                 <div class="row">

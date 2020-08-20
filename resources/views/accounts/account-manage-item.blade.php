@@ -34,8 +34,8 @@
         <div class="row">
             <div class="col-6 form-group">
                 <div class="custom-control custom-switch">
-                    <input type="checkbox" class="custom-control-input" id="report-account-switch" name="a-{{$account->id}}-status" @if(old("a-{$account->id}-status", $account->status)) checked @endif>
-                    <label class="custom-control-label" for="report-account-switch">Include In Reports</label>
+                    <input type="checkbox" class="custom-control-input" id="report-account-switch-{{$account->id}}" name="a-{{$account->id}}-status" @if(old("a-{$account->id}-status", $account->status)) checked @endif>
+                    <label class="custom-control-label" for="report-account-switch-{{$account->id}}">Include In Reports</label>
                 </div>
             </div>
             <div class="col d-flex justify-content-end">
