@@ -4,6 +4,7 @@
 namespace App\Http\Controllers;
 
 
+use App\Classes\Requests\SaltEdge\Customer\DeleteCustomer;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -98,6 +99,7 @@ class UserController extends Controller
         /** @var User $user */
         $user = auth()->user();
         auth()->logout();
+        (new DeleteCustomer())->setIdentifier($user->identifier)->send();
         $user->delete();
         return redirect()->route('welcome');
     }

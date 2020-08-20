@@ -27,6 +27,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  * @property Account[]|Collection $accounts
  * @property Category[]|Collection $categories
  * @property Transaction[]|Collection $transactions
+ * @property string $identifier
  * @package App\Models
  */
 class User extends Authenticatable

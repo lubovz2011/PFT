@@ -5,6 +5,7 @@ namespace App\Providers;
 
 use App\Classes\Account\DefaultAccount;
 use App\Classes\Category\DefaultCategories;
+use App\Classes\Requests\SaltEdge\Customer\CreateCustomer;
 use App\Models\User;
 use Illuminate\Support\ServiceProvider;
 
@@ -32,7 +33,7 @@ class AppServiceProvider extends ServiceProvider
 
             DefaultAccount::generate($user);
             DefaultCategories::generate($user);
-
+            (new CreateCustomer())->setUser($user)->send();
         });
 
     }
