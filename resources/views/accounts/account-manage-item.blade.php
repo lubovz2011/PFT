@@ -25,13 +25,6 @@
             </div>
         </div>
         <div class="row">
-        {{-- Current Balance --}}
-            <div class="col-4 form-group">
-                <label>Current Balance</label>
-                <input type="text" class="form-control text-right" id="initial-balance-Input" value="{{number_format($account->balance, 2, '.', ',')}} {{$account->currency}}" readonly>
-            </div>
-        </div>
-        <div class="row">
             <div class="col-6 form-group">
                 <div class="custom-control custom-switch">
                     <input type="checkbox" class="custom-control-input" id="report-account-switch-{{$account->id}}" name="a-{{$account->id}}-status" @if(old("a-{$account->id}-status", $account->status)) checked @endif>
