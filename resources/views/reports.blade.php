@@ -64,14 +64,13 @@
                                     <div class="accordion" id="accordion-categories">
                                         @php /** @var \App\Models\Category[] $categories*/ @endphp
                                         @foreach($categories->where('parent_id', '=', null) as $category)
-{{--                                            @if() @endif--}}
                                             <div class="card">
                                                 <div class="card-header row py-3" id="category-{{$category->id}}" data-toggle="collapse" data-target="#sub-category-{{$category->id}}">
                                                     <div class="col-5">
                                                         <i class="{{$category->icon}} mr-2 category-icon text-secondary"></i> {{$category->name}}
                                                     </div>
                                                     <div class="col">
-                                                        <div class="text-center"></div>
+                                                        <div class="text-center">{{$category->getTransactionsCountForReport($transactions, $categories)}}</div>
                                                     </div>
                                                     <div class="col d-flex justify-content-center">
                                                         <div class="mr-2">-30.00</div>
@@ -81,17 +80,31 @@
                                                         <div class="text-center text-danger">45%</div>
                                                     </div>
                                                 </div>
-                                                <div id="sub-category-{{$category->id}}" class="collapse" aria-labelledby="category-bills" data-parent="#accordion-categories">
-                                                    <div class="card-body p-0">
-                                                        <ul class="list-group list-group-flush">
-                                                            @foreach($categories->where('parent_id', '=', $category->id) as $subCategory)
-                                                                <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                                    {{$subCategory->name}}
-                                                                </li>
-                                                            @endforeach
-                                                        </ul>
+                                                @if($categories->where('parent_id', '=', $category->id)->count())
+                                                    <div id="sub-category-{{$category->id}}" class="collapse" aria-labelledby="category-bills" data-parent="#accordion-categories">
+                                                        <div class="card-body p-0">
+                                                            <ul class="list-group list-group-flush">
+                                                                @foreach($categories->where('parent_id', '=', $category->id) as $subCategory)
+                                                                    <li class="list-group-item d-flex justify-content-between align-items-center px-1">
+                                                                        <div class="col-5">
+                                                                            <i class="{{$subCategory->icon}} invisible mr-2 category-icon text-secondary"></i> {{$subCategory->name}}
+                                                                        </div>
+                                                                        <div class="col">
+                                                                            <div class="text-center">{{$subCategory->getTransactionsCountForReport($transactions, $categories)}}</div>
+                                                                        </div>
+                                                                        <div class="col d-flex justify-content-center">
+                                                                            <div class="mr-2">-30.00</div>
+                                                                            <div class="text-secondary">ILS</div>
+                                                                        </div>
+                                                                        <div class="col">
+                                                                            <div class="text-center text-danger">45%</div>
+                                                                        </div>
+                                                                    </li>
+                                                                @endforeach
+                                                            </ul>
+                                                        </div>
                                                     </div>
-                                                </div>
+                                                @endif
                                             </div>
                                         @endforeach
                                     </div>

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -40,5 +41,12 @@ class Category extends Model
         if(!empty($this->parent_id))
             return $this->category->icon;
         return $icon;
+    }
+
+    public function getTransactionsCountForReport(Collection $transactions, Collection $filteredCategories){
+        $categoryIds = $filteredCategories->where('parent_id', '=', $this->id)
+                                          ->keys()->push($this->id)->toArray();
+
+        return $transactions->flatten()->whereIn('category_id', $categoryIds)->count();
     }
 }

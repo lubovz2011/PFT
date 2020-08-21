@@ -45,15 +45,15 @@ class ReportsController extends Controller
         foreach ($filteredCategories as $category) {
             if(!empty($category->parent_id)){
                 if(!$filteredCategories->has($category->parent_id)) {
-                    if($categories->has($category->parent_id))
-                        $filteredCategories->push($categories->get($category->parent_id));
+                    if($categories->has($category->parent_id)){
+                        $parent = $categories->get($category->parent_id);
+                        $filteredCategories->put($parent->id, $parent);
+                    }
                     else
                         $filteredCategories->forget($category->id);
                 }
             }
         }
-
-//        dd($filteredCategories->toArray(), $transactions->toArray());
         return view('reports', [
             'accounts'     => $accounts,
             'categories'   => $filteredCategories,
