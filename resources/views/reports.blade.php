@@ -62,8 +62,8 @@
                                 <li class="list-group list-group-flush">
 
                                     <div class="accordion" id="accordion-categories">
-                                        @php /** @var \App\Models\Category $categories*/ @endphp
-                                        @foreach($categories as $category)
+                                        @php /** @var \App\Models\Category[] $categories*/ @endphp
+                                        @foreach($categories->where('parent_id', '=', null) as $category)
 {{--                                            @if() @endif--}}
                                             <div class="card">
                                                 <div class="card-header row py-3" id="category-{{$category->id}}" data-toggle="collapse" data-target="#sub-category-{{$category->id}}">
@@ -84,7 +84,7 @@
                                                 <div id="sub-category-{{$category->id}}" class="collapse" aria-labelledby="category-bills" data-parent="#accordion-categories">
                                                     <div class="card-body p-0">
                                                         <ul class="list-group list-group-flush">
-                                                            @foreach($category->categories as $subCategory)
+                                                            @foreach($categories->where('parent_id', '=', $category->id) as $subCategory)
                                                                 <li class="list-group-item d-flex justify-content-between align-items-center">
                                                                     {{$subCategory->name}}
                                                                 </li>

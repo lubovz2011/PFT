@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Account;
 use App\Models\Category;
+use App\Models\Transaction;
 use App\Models\User;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
@@ -20,42 +21,42 @@ class ReportsController extends Controller
     {
         /** @var User $user */
         $user = auth()->user();
-        /** @var Account[] $accounts */
-        $accounts = $user->accounts;
-        /** @var Category[] $categories */
-        $categories = $user->categories()->whereNull('parent_id')->where('status', 1)
-            ->with(['categories' => function($query){
-                $query->where('status', 1);
-            }])->get();
 
+        /** @var Account[]|Collection $accounts */
+        $accounts = $user->accounts;
+
+        /** @var Category[]|Collection $categories */
+        $categories = $user->categories()->where('status', 1)->get()->keyBy('id');
+
+        /** @var Transaction[]|Collection $transactions */
         $transactions = $user->transactions()
                         ->with('account')->where('status', 1)
                         ->with('category')->where('status', 1)
                         ->get()->groupBy('category_id');
 
         /**
-         * Function used to filter categories that was not used in transactions
-         *
-         * @param $category
-         * @return bool
+         * Set to $filteredCategories all categories that have transactions
          */
-        $categoryFilter = function ($category) use ($transactions){
-            if($transactions->has($category->id))
-                return true;
-            return (bool)$category->categories->count();
-        };
+        $filteredCategories = $categories->only($transactions->keys()->toArray())->keyBy('id');
 
         /**
-         * Collect categories that was used in transactions using $categoryFilter function
+         * Push missing parent categories to $filteredCategories for subCategories that have transactions
          */
-        $categories = $categories->transform(function ($category) use ($categoryFilter) {
-            $category->categories = $category->categories->filter($categoryFilter);
-            return $category;
-        })->filter($categoryFilter);
+        foreach ($filteredCategories as $category) {
+            if(!empty($category->parent_id)){
+                if(!$filteredCategories->has($category->parent_id)) {
+                    if($categories->has($category->parent_id))
+                        $filteredCategories->push($categories->get($category->parent_id));
+                    else
+                        $filteredCategories->forget($category->id);
+                }
+            }
+        }
 
+//        dd($filteredCategories->toArray(), $transactions->toArray());
         return view('reports', [
             'accounts'     => $accounts,
-            'categories'   => $categories,
+            'categories'   => $filteredCategories,
             'transactions' => $transactions
         ]);
     }
