@@ -32,6 +32,10 @@ class Category extends Model
         return $this->belongsTo(Category::class, 'parent_id', 'id');
     }
 
+    public function transactions(){
+        return $this->hasMany(Transaction::Class);
+    }
+
     public function getIconAttribute($icon){
         if(!empty($this->parent_id))
             return $this->category->icon;

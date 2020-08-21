@@ -7,7 +7,7 @@
     <div class="container-fluid dynamic-height">
         <div class="row">
             <div class="col-3 bg-dark filters-form">
-                @include('side-bar.filters-form', ["showTypeSelect" => false])
+                @include('side-bar.filters-form')
             </div>
             <div class="col-9">
                 <div class="card shadow-card border-0">
@@ -60,104 +60,40 @@
                                     </div>
                                 </li>
                                 <li class="list-group list-group-flush">
+
                                     <div class="accordion" id="accordion-categories">
-                                        <div class="card border-top-0">
-                                        <div class="card-header row py-3" id="category-bills" data-toggle="collapse" data-target="#sub-category-bills" aria-expanded="true" aria-controls="collapseOne">
-                                            <div class="col-5">
-                                                <i class="fas fa-file-invoice-dollar mr-2 category-icon text-secondary"></i> Bills
-                                            </div>
-                                            <div class="col">
-                                                <div class="text-center">3</div>
-                                            </div>
-                                            <div class="col d-flex justify-content-center">
-                                                <div class="mr-2">-30.00</div>
-                                                <div class="text-secondary">ILS</div>
-                                            </div>
-                                            <div class="col">
-                                                <div class="text-center text-danger">45%</div>
-                                            </div>
-                                        </div>
-                                        <div id="sub-category-bills" class="collapse" aria-labelledby="category-bills" data-parent="#accordion-categories">
-                                            <div class="card-body p-0">
-                                                <ul class="list-group list-group-flush">
-                                                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                        Internet
-                                                        <div class="d-flex justify-content-end">
-                                                            <div class="custom-control custom-switch mr-2">
-                                                                <input type="checkbox" class="custom-control-input" id="internet-category-toggle" checked>
-                                                                <label class="custom-control-label " for="internet-category-toggle"></label>
-                                                            </div>
-                                                            <div class="text-secondary"><i class="far fa-trash-alt"></i></div>
-                                                        </div>
-                                                    </li>
-                                                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                        Phone
-                                                        <div class="d-flex justify-content-end">
-                                                            <div class="custom-control custom-switch mr-2">
-                                                                <input type="checkbox" class="custom-control-input" id="phone-category-toggle" checked>
-                                                                <label class="custom-control-label " for="phone-category-toggle"></label>
-                                                            </div>
-                                                            <div class="text-secondary"><i class="far fa-trash-alt"></i></div>
-                                                        </div>
-                                                    </li>
-                                                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                        Rent
-                                                        <div class="d-flex justify-content-end">
-                                                            <div class="custom-control custom-switch mr-2">
-                                                                <input type="checkbox" class="custom-control-input" id="rent-category-toggle" checked>
-                                                                <label class="custom-control-label " for="rent-category-toggle"></label>
-                                                            </div>
-                                                            <div class="text-secondary"><i class="far fa-trash-alt"></i></div>
-                                                        </div>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                        <div class="card">
-                                            <div class="card-header row py-3" id="category-income" data-toggle="collapse" data-target="#sub-category-income" aria-expanded="true" aria-controls="collapseOne">
-                                                <div class="col-5">
-                                                    <i class="fas fa-hand-holding-usd mr-2 category-icon text-secondary"></i> Income
+                                        @php /** @var \App\Models\Category $categories*/ @endphp
+                                        @foreach($categories as $category)
+{{--                                            @if() @endif--}}
+                                            <div class="card">
+                                                <div class="card-header row py-3" id="category-{{$category->id}}" data-toggle="collapse" data-target="#sub-category-{{$category->id}}">
+                                                    <div class="col-5">
+                                                        <i class="{{$category->icon}} mr-2 category-icon text-secondary"></i> {{$category->name}}
+                                                    </div>
+                                                    <div class="col">
+                                                        <div class="text-center"></div>
+                                                    </div>
+                                                    <div class="col d-flex justify-content-center">
+                                                        <div class="mr-2">-30.00</div>
+                                                        <div class="text-secondary">ILS</div>
+                                                    </div>
+                                                    <div class="col">
+                                                        <div class="text-center text-danger">45%</div>
+                                                    </div>
                                                 </div>
-                                                <div class="col">
-                                                    <div class="text-center">1</div>
-                                                </div>
-                                                <div class="col d-flex justify-content-center">
-                                                    <div class="mr-2">100.00</div>
-                                                    <div class="text-secondary">ILS</div>
-                                                </div>
-                                                <div class="col">
-                                                    <div class="text-center text-success">20%</div>
+                                                <div id="sub-category-{{$category->id}}" class="collapse" aria-labelledby="category-bills" data-parent="#accordion-categories">
+                                                    <div class="card-body p-0">
+                                                        <ul class="list-group list-group-flush">
+                                                            @foreach($category->categories as $subCategory)
+                                                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                                    {{$subCategory->name}}
+                                                                </li>
+                                                            @endforeach
+                                                        </ul>
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div id="sub-category-income" class="collapse" aria-labelledby="category-income" data-parent="#accordion-categories">
-                                                <div class="card-body p-0">
-                                                    <ul class="list-group list-group-flush">
-                                                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                            Salary
-                                                            <div class="custom-control custom-switch float-right">
-                                                                <input type="checkbox" class="custom-control-input" id="salary-category-toggle" checked>
-                                                                <label class="custom-control-label " for="salary-category-toggle"></label>
-                                                            </div>
-                                                        </li>
-                                                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                            Bonus
-                                                            <div class="custom-control custom-switch float-right">
-                                                                <input type="checkbox" class="custom-control-input" id="bonus-category-toggle" checked>
-                                                                <label class="custom-control-label " for="bonus-category-toggle"></label>
-                                                            </div>
-                                                        </li>
-                                                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                            Investment Income
-                                                            <div class="custom-control custom-switch float-right">
-                                                                <input type="checkbox" class="custom-control-input" id="investment-category-toggle" checked>
-                                                                <label class="custom-control-label " for="investment-category-toggle"></label>
-                                                            </div>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        @endforeach
                                     </div>
                                 </li>
                             </ul>
@@ -182,6 +118,25 @@
                 theme : "bootstrap"
             });
 
+            $('select[name="filter-times"]').select2({
+                "placeholder" : "Select time",
+                theme : "bootstrap"
+            });
+
+            $('select[name="filter-types"]').select2({
+                "placeholder" : "Select type",
+                theme : "bootstrap"
+            });
+
+            $('select[name="filter-accounts[]"]').select2({
+                "placeholder" : "Select account",
+                theme : "bootstrap"
+            });
+
+            $('select[name="filter-categories[]"]').select2({
+                "placeholder" : "Select category",
+                theme : "bootstrap"
+            });
 
             var ctx = document.getElementById('myChart');
             var myChart = new Chart(ctx, {
