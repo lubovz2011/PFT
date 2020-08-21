@@ -36,11 +36,15 @@ class Transaction extends Model
         return date(auth()->user()->date_format . " l", strtotime($date));
     }
 
-    public function getPrettyAmount(){
+    public function getAmountAttribute($amount){
         $mult = 1;
         if($this->type == 'expense')
             $mult = -1;
-        return number_format($mult * $this->amount, 2, '.', ',');
+        return $mult * $amount;
+    }
+
+    public function getPrettyAmount(){
+        return number_format($this->amount, 2, '.', ',');
     }
 
     public function getDateForInput(){
