@@ -70,14 +70,20 @@
                                                         <i class="{{$category->icon}} mr-2 category-icon text-secondary"></i> {{$category->name}}
                                                     </div>
                                                     <div class="col">
-                                                        <div class="text-center">{{$category->getTransactionsCountForReport($transactions, $categories)}}</div>
+                                                        <div class="text-center">
+                                                            {{$category->getTransactionsCountForReport($transactions, $categories)}}
+                                                        </div>
                                                     </div>
                                                     <div class="col d-flex justify-content-center">
-                                                        <div class="mr-2">-30.00</div>
-                                                        <div class="text-secondary">ILS</div>
+                                                        <div class="mr-2">
+                                                            {{\App\Helpers\Helpers::NumberFormat($category->getAmountForReport($transactions, $categories))}}
+                                                        </div>
+                                                        <div class="text-secondary">{{$mainCurrency}}</div>
                                                     </div>
                                                     <div class="col">
-                                                        <div class="text-center text-danger">45%</div>
+                                                        <div class="text-center @if($category->getAmountForReport($transactions, $categories) >= 0) text-success @else text-danger @endif font-weight-bold">
+                                                            {{\App\Helpers\Helpers::NumberFormat($category->getPercentForReport($transactions, $categories, $totalIncome, $totalExpense))}}%
+                                                        </div>
                                                     </div>
                                                 </div>
                                                 @if($categories->where('parent_id', '=', $category->id)->count())
@@ -93,11 +99,15 @@
                                                                             <div class="text-center">{{$subCategory->getTransactionsCountForReport($transactions, $categories)}}</div>
                                                                         </div>
                                                                         <div class="col d-flex justify-content-center">
-                                                                            <div class="mr-2">-30.00</div>
-                                                                            <div class="text-secondary">ILS</div>
+                                                                            <div class="mr-2">
+                                                                                {{\App\Helpers\Helpers::NumberFormat($subCategory->getAmountForReport($transactions, $categories))}}
+                                                                            </div>
+                                                                            <div class="text-secondary">{{$mainCurrency}}</div>
                                                                         </div>
                                                                         <div class="col">
-                                                                            <div class="text-center text-danger">45%</div>
+                                                                            <div class="text-center text-danger">
+                                                                                {{\App\Helpers\Helpers::NumberFormat($category->getChildPercentForReport($transactions, $categories, $subCategory))}}%
+                                                                            </div>
                                                                         </div>
                                                                     </li>
                                                                 @endforeach

@@ -43,6 +43,10 @@ class Transaction extends Model
         return $mult * $amount;
     }
 
+    public function getAmountInUserCurrencyAttribute(){
+        return Rate::convert($this->amount, $this->currency, auth()->user()->currency);
+    }
+
     public function getPrettyAmount(){
         return number_format($this->amount, 2, '.', ',');
     }

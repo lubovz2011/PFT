@@ -43,10 +43,82 @@ class Category extends Model
         return $icon;
     }
 
-    public function getTransactionsCountForReport(Collection $transactions, Collection $filteredCategories){
-        $categoryIds = $filteredCategories->where('parent_id', '=', $this->id)
-                                          ->keys()->push($this->id)->toArray();
-
-        return $transactions->flatten()->whereIn('category_id', $categoryIds)->count();
+    /**
+     * Function return count of transactions in current category and her subCategories
+     *
+     * @param Collection $transactions
+     * @param Collection $filteredCategories
+     * @return int
+     */
+    public function getTransactionsCountForReport(Collection $transactions, Collection $filteredCategories)
+    {
+        return $this->getCategoryTransactions($transactions, $filteredCategories)->count();
     }
+
+    /**
+     * Function return amount of transactions in current category and her subCategories
+     *
+     * @param Collection $transactions
+     * @param Collection $filteredCategories
+     * @return mixed
+     */
+    public function getAmountForReport(Collection $transactions, Collection $filteredCategories)
+    {
+        return $this->getCategoryTransactions($transactions, $filteredCategories)->sum('amountInUserCurrency');
+    }
+
+    /**
+     * Function return transactions percent for current category
+     *
+     * @param Collection $transactions
+     * @param Collection $filteredCategories
+     * @param $totalIncome
+     * @param $totalExpense
+     * @return float|int
+     */
+    public function getPercentForReport(Collection $transactions, Collection $filteredCategories, $totalIncome, $totalExpense)
+    {
+        $totalCategoryAmount = $this->getAmountForReport($transactions, $filteredCategories);
+
+        return $totalCategoryAmount * 100 / ($totalCategoryAmount >= 0 ? $totalIncome : $totalExpense);
+    }
+
+    /**
+     * Function return transactions percent for one subCategory
+     *
+     * @param Collection $transactions
+     * @param Collection $filteredCategories
+     * @param Category $subCategory
+     * @return float|int
+     */
+    public function getChildPercentForReport(Collection $transactions, Collection $filteredCategories, Category $subCategory)
+    {
+        $categoryTransactions = $this->getCategoryTransactions($transactions, $filteredCategories);
+        $subCategoryAmount = $subCategory->getAmountForReport($transactions,$filteredCategories);
+        $type = $subCategoryAmount >= 0 ? 'income' : 'expense';
+
+        return 100 * $subCategoryAmount / $categoryTransactions->where('type', '=', $type)->sum('amountInUserCurrency');
+    }
+
+    /**
+     * Function return all transactions that was made with current category and all sub-categories
+     *
+     * @param Collection $transactions
+     * @param Collection $filteredCategories
+     * @return Collection
+     */
+    private function getCategoryTransactions(Collection $transactions, Collection $filteredCategories)
+    {
+        //get all subCategory ids
+        $categoryIds = $filteredCategories->where('parent_id', '=', $this->id)->keys()->toArray();
+        //add current category id to array of subCategory ids
+        $categoryIds[] = $this->id;
+
+        //find and return transactions where category id of each transaction exists in array of category ids
+        return $transactions->whereIn('category_id', $categoryIds);
+    }
+
+
+
+
 }

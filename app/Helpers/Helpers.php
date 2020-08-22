@@ -14,4 +14,9 @@ class Helpers
     public static function isCli(){
         return strpos(php_sapi_name(), 'cli') !== false;
     }
+
+    public static function NumberFormat($num)
+    {
+        return number_format($num, 2, '.', ',');
+    }
 }
