@@ -8,8 +8,12 @@ use App\Models\Account;
 use App\Models\Category;
 use App\Models\Transaction;
 use App\Models\User;
+use Carbon\Carbon;
+use Doctrine\DBAL\Query\QueryBuilder;
+use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Route;
 
 class ReportsController extends Controller
 {
@@ -17,7 +21,7 @@ class ReportsController extends Controller
      * method returns reports page
      * @return \Illuminate\View\View
      */
-    public function displayReportsPage()
+    public function displayReportsPage(Request $request)
     {
         /** @var User $user */
         $user = auth()->user();
@@ -35,6 +39,30 @@ class ReportsController extends Controller
         $transactions = $user->transactions()
                         ->with('account')->where('status', 1)
                         ->with('category')->where('status', 1)
+                        ->when(!empty($request->input('filter-times')), function($query) use ($request){
+                            /** @var QueryBuilder $query */
+                            switch ($request->input('filter-times')) {
+                                case 1: $query->where('date', '=', Carbon::now()); break; //today
+                                case 2: $query->where('date', '=', Carbon::now()->subDay()); break; //yesterday
+                                case 3: $query->where('date', '>', Carbon::now()->subDays(7))
+                                    ->where('date', '<=', Carbon::now()); break; //last 7 days
+                                case 4: $query->where('date', '>', Carbon::now()->subDays(30))
+                                    ->where('date', '<=', Carbon::now()); break; // Last 30 days
+                                case 5: $query->where('date', '>=', Carbon::now()->firstOfMonth())
+                                    ->where('date', '<=', Carbon::now()); break; // This Month
+                                case 6: $query->where('date', '>=', Carbon::now()->subMonth()->firstOfMonth())
+                                    ->where('date', '<=', Carbon::now()->subMonth()->lastOfMonth()); break; // Last Month
+                            }
+                        })
+                        ->when(!empty($request->input('filter-types')), function($query) use ($request){
+                            $query->where('transactions.type', $request->input('filter-types'));
+                        })
+                        ->when(!empty($request->input('filter-accounts')), function($query) use ($request){
+                            $query->whereIn('account_id', $request->input('filter-accounts'));
+                        })
+                        ->when(!empty($request->input('filter-categories')), function ($query) use ($request){
+                            $query->whereIn('category_id', $request->input('filter-categories'));
+                        })
                         ->get();
 
         /**
@@ -76,13 +104,26 @@ class ReportsController extends Controller
                 $totalExpense += $totalAmount;
         }
 
+        $links = [];
+        $params = $request->all();
+        unset($params['filter-types']);
+        $links['all'] = \route('reports', $params);
+
+        $params['filter-types'] = 'income';
+        $links['income'] = \route('reports', $params);
+
+        $params['filter-types'] = 'expense';
+        $links['expense'] = \route('reports', $params);
+
         return view('reports', [
-            'accounts'     => $accounts,
-            'categories'   => $filteredCategories,
-            'transactions' => $transactions,
-            'mainCurrency' => $user->currency,
-            'totalIncome'  => $totalIncome,
-            'totalExpense' => $totalExpense
+            'accounts'              => $accounts,
+            'categories'            => $categories->where('parent_id', '=', null),
+            'filteredCategories'    => $filteredCategories,
+            'transactions'          => $transactions,
+            'mainCurrency'          => $user->currency,
+            'totalIncome'           => $totalIncome,
+            'totalExpense'          => $totalExpense,
+            'links'                 => $links
         ]);
     }
 }
