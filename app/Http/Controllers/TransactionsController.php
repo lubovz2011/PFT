@@ -14,6 +14,7 @@ use Doctrine\DBAL\Query\QueryBuilder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 class TransactionsController extends Controller
 {
@@ -23,7 +24,6 @@ class TransactionsController extends Controller
      */
     public function displayTransactionsPage(Request $request)
     {
-//        dd($request->session());
         /** @var User $user */
         $user = auth()->user();
         /** @var Account[] $accounts */
@@ -33,39 +33,15 @@ class TransactionsController extends Controller
                                          ->with(['categories' => function($query){
                                              $query->where('status', 1);
                                          }])->get();
-        $transactions = $user->transactions()
-                             ->when(!empty($request->input('filter-times')), function($query) use ($request){
-                                    /** @var QueryBuilder $query */
-                                    switch ($request->input('filter-times')) {
-                                        case 1: $query->where('date', '=', Carbon::now()); break; //today
-                                        case 2: $query->where('date', '=', Carbon::now()->subDay()); break; //yesterday
-                                        case 3: $query->where('date', '>', Carbon::now()->subDays(7))
-                                                      ->where('date', '<=', Carbon::now()); break; //last 7 days
-                                        case 4: $query->where('date', '>', Carbon::now()->subDays(30))
-                                                      ->where('date', '<=', Carbon::now()); break; // Last 30 days
-                                        case 5: $query->where('date', '>=', Carbon::now()->firstOfMonth())
-                                                      ->where('date', '<=', Carbon::now()); break; // This Month
-                                        case 6: $query->where('date', '>=', Carbon::now()->subMonth()->firstOfMonth())
-                                                      ->where('date', '<=', Carbon::now()->subMonth()->lastOfMonth()); break; // Last Month
-                                    }
-                             })
-                             ->when(!empty($request->input('filter-types')), function($query) use ($request){
-                                 $query->where('transactions.type', $request->input('filter-types'));
-                             })
-                             ->when(!empty($request->input('filter-accounts')), function($query) use ($request){
-                                 $query->whereIn('account_id', $request->input('filter-accounts'));
-                             })
-                             ->when(!empty($request->input('filter-categories')), function ($query) use ($request){
-                                 $query->whereIn('category_id', $request->input('filter-categories'));
-                             })
+        $transactions = $user->transactions();
+        $this->attachFilterTimesToQuery($transactions, $request);
+        $transactions = $this->attachFiltersToQuery($transactions, $request)
                              ->with('category')
                              ->with('account')
                              ->orderBy('date', 'desc')
                              ->orderBy('id', 'desc')
                              ->paginate($user->limit);
         $transactions->appends($request->all());
-
-//        dd($request->all());
 
         if($transactions->currentPage() > $transactions->lastPage())
             return redirect()->route('transactions', ['page' => $transactions->lastPage()]);

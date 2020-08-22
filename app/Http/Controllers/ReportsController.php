@@ -4,6 +4,7 @@
 namespace App\Http\Controllers;
 
 
+use App\Classes\Utils\DataSets;
 use App\Models\Account;
 use App\Models\Category;
 use App\Models\Transaction;
@@ -32,37 +33,17 @@ class ReportsController extends Controller
         /** @var Category[]|Collection $categories */
         $categories = $user->categories()->where('status', 1)->get()->keyBy('id');
 
+
+        $transactions = $user->transactions();
+        $this->attachFilterTimesToQuery($transactions, $request, true);
+
         /**
          * set to $transactions all user transactions where account and category of each transaction are enabled
          * @var Transaction[]|Collection $transactions
          */
-        $transactions = $user->transactions()
+        $transactions = $this->attachFiltersToQuery($transactions, $request)
                         ->with('account')->where('status', 1)
                         ->with('category')->where('status', 1)
-                        ->when(!empty($request->input('filter-times')), function($query) use ($request){
-                            /** @var QueryBuilder $query */
-                            switch ($request->input('filter-times')) {
-                                case 1: $query->where('date', '=', Carbon::now()); break; //today
-                                case 2: $query->where('date', '=', Carbon::now()->subDay()); break; //yesterday
-                                case 3: $query->where('date', '>', Carbon::now()->subDays(7))
-                                    ->where('date', '<=', Carbon::now()); break; //last 7 days
-                                case 4: $query->where('date', '>', Carbon::now()->subDays(30))
-                                    ->where('date', '<=', Carbon::now()); break; // Last 30 days
-                                case 5: $query->where('date', '>=', Carbon::now()->firstOfMonth())
-                                    ->where('date', '<=', Carbon::now()); break; // This Month
-                                case 6: $query->where('date', '>=', Carbon::now()->subMonth()->firstOfMonth())
-                                    ->where('date', '<=', Carbon::now()->subMonth()->lastOfMonth()); break; // Last Month
-                            }
-                        })
-                        ->when(!empty($request->input('filter-types')), function($query) use ($request){
-                            $query->where('transactions.type', $request->input('filter-types'));
-                        })
-                        ->when(!empty($request->input('filter-accounts')), function($query) use ($request){
-                            $query->whereIn('account_id', $request->input('filter-accounts'));
-                        })
-                        ->when(!empty($request->input('filter-categories')), function ($query) use ($request){
-                            $query->whereIn('category_id', $request->input('filter-categories'));
-                        })
                         ->get();
 
         /**
@@ -114,6 +95,20 @@ class ReportsController extends Controller
 
         $params['filter-types'] = 'expense';
         $links['expense'] = \route('reports', $params);
+
+        $timeOptions=DataSets::getDateOptions();
+
+        $timeFilter=$request->input('filter-times');
+
+        if(empty($timeOptions[$timeFilter])) {
+            $nextDate = Carbon::parse($timeFilter)->startOfMonth()->addMonth()->format('FY');
+            $prevDate = Carbon::parse($timeFilter)->startOfMonth()->subMonth()->format('FY');
+            $params = $request->all();
+            $params['filter-times'] = $nextDate;
+            $links['next'] = \route('reports', $params);
+            $params['filter-times'] = $prevDate;
+            $links['prev'] = \route('reports', $params);
+        }
 
         return view('reports', [
             'accounts'              => $accounts,

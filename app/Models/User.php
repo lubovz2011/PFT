@@ -65,6 +65,9 @@ class User extends Authenticatable
         return $this->hasMany(Category::class);
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
+     */
     public function transactions(){
         return $this->hasManyThrough(Transaction::class, Account::class);
     }

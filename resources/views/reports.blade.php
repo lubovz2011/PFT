@@ -33,14 +33,14 @@
                                             </div>
                                         </div>
                                         <div class="col d-flex justify-content-end align-items-center">
-                                            {{date('F, Y')}}
+                                            {{\Carbon\Carbon::parse(request()->input('filter-times'))->format('F, Y')}}
                                             <div class="btn-group btn-group-sm ml-2" role="group">
-                                                <button type="button" class="btn btn-secondary border-white border-right-0">
+                                                <a href="{{$links['prev']}}" class="btn btn-secondary border-white border-right-0">
                                                     <i class="mx-1 fas fa-chevron-left"></i>
-                                                </button>
-                                                <button type="button" class="btn btn-secondary border-white" disabled>
+                                                </a>
+                                                <a href="{{$links['next']}}" class="btn btn-secondary border-white">
                                                     <i class="mx-1 fas fa-chevron-right"></i>
-                                                </button>
+                                                </a>
                                             </div>
                                         </div>
                                     </div>
