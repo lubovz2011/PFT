@@ -97,7 +97,11 @@ class Category extends Model
         $subCategoryAmount = $subCategory->getAmountForReport($transactions,$filteredCategories);
         $type = $subCategoryAmount >= 0 ? 'income' : 'expense';
 
-        return 100 * $subCategoryAmount / $categoryTransactions->where('type', '=', $type)->sum('amountInUserCurrency');
+        $parentCategoryAmount = $categoryTransactions->where('type', '=', $type)->sum('amountInUserCurrency');
+        if($parentCategoryAmount)
+            return 100 * $subCategoryAmount / $parentCategoryAmount;
+        else
+            return 0;
     }
 
     /**

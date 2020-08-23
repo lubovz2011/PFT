@@ -24,7 +24,7 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav ml-auto">
-                <a class="nav-item nav-link" href="{{route('reports')}}">Dashboard</a>
+                <a class="nav-item nav-link {{Route::currentRouteName() == 'reports' ? 'active' : ''}}" href="{{route('reports')}}">Dashboard</a>
                 <a class="nav-item nav-link {{Route::currentRouteName() == 'transactions' ? 'active' : ''}}" href="{{route('transactions')}}">Transactions</a>
 
                 <a class="nav-item nav-link {{Route::currentRouteName() == 'accounts' ? 'active' : ''}}" href="{{route('accounts')}}">Accounts</a>

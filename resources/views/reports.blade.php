@@ -10,13 +10,12 @@
                 @include('side-bar.filters-form')
             </div>
             <div class="col-9">
-                <div class="card shadow-card border-0">
+                <div class="card shadow-card border-0" style="min-height: 80vh;">
                     <div class="card-header">
                         <h5 class="card-title mb-0">Dashboard</h5>
                     </div>
                     <div class="card-body p-0">
-                        <div>
-                            <ul class="list-group list-group-flush">
+                        <ul class="list-group list-group-flush">
                                 <li class="list-group-item">
                                     <div class="row py-1">
                                         <div class="col">
@@ -33,18 +32,23 @@
                                             </div>
                                         </div>
                                         <div class="col d-flex justify-content-end align-items-center">
-                                            {{\Carbon\Carbon::parse(request()->input('filter-times'))->format('F, Y')}}
-                                            <div class="btn-group btn-group-sm ml-2" role="group">
-                                                <a href="{{$links['prev']}}" class="btn btn-secondary border-white border-right-0">
-                                                    <i class="mx-1 fas fa-chevron-left"></i>
-                                                </a>
-                                                <a href="{{$links['next']}}" class="btn btn-secondary border-white">
-                                                    <i class="mx-1 fas fa-chevron-right"></i>
-                                                </a>
-                                            </div>
+                                            @if(isset($links['prev'], $links['next']))
+                                                {{\Carbon\Carbon::parse(request()->input('filter-times'))->format('F, Y')}}
+                                                <div class="btn-group btn-group-sm ml-2" role="group">
+                                                    <a href="{{$links['prev']}}" class="btn btn-secondary border-white border-right-0">
+                                                        <i class="mx-1 fas fa-chevron-left"></i>
+                                                    </a>
+                                                    <a href="{{$links['next']}}" class="btn btn-secondary border-white">
+                                                        <i class="mx-1 fas fa-chevron-right"></i>
+                                                    </a>
+                                                </div>
+                                            @else
+                                                {{\App\Classes\Utils\DataSets::getDateOptions()[request()->input('filter-times')]}}
+                                            @endif
                                         </div>
                                     </div>
                                 </li>
+                                @if($transactions->count())
                                 <li class="list-group-item">
                                     <div class="row justify-content-center">
                                         <div class="col-12 d-flex justify-content-center align-items-center mb-4">
@@ -131,8 +135,24 @@
                                         @endforeach
                                     </div>
                                 </li>
-                            </ul>
-                        </div>
+                                @else
+                                    <li class="list-group-item py-5">
+                                        <div class="row justify-content-center align-content-center my-5">
+                                            <div class="col text-center">
+                                                You don't have any transactions yet.
+                                            </div>
+                                        </div>
+                                        <div class="row justify-content-center align-content-center mt-5">
+                                            <div class="col text-right">
+                                                <a href="{{route('transactions')}}" class="btn btn-primary">Add transaction</a>
+                                            </div>
+                                            <div class="col text-left">
+                                                <a href="{{route('accounts')}}" class="btn btn-primary">Add account</a>
+                                            </div>
+                                        </div>
+                                    </li>
+                                @endif
+                        </ul>
                     </div>
                     {{--<div class="card-body p-0">
                         <div class="accordion" id="accordion-accounts">

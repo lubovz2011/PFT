@@ -45,7 +45,7 @@
                                                 <i class="fas fa-wallet mr-3 category-icon text-secondary"></i>cards
                                             </div>
                                         @endif
-                                            <div class="col  d-flex justify-content-end">
+                                            <div class="col d-flex justify-content-end">
                                                 <span class="mr-2 @if($balance >= 0) text-success @else text-danger @endif font-weight-bold">
                                                     {{$balance}}
                                                 </span>
