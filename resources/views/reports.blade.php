@@ -66,9 +66,9 @@
                                         @php /** @var \App\Models\Category[] $filteredCategories*/ @endphp
                                         @foreach($filteredCategories->where('parent_id', '=', null) as $category)
                                             <div class="card">
-                                                <div class="card-header row py-3" id="category-{{$category->id}}" data-toggle="collapse" data-target="#sub-category-{{$category->id}}">
+                                                <div class="card-header js-parent-category row py-3" id="category-{{$category->id}}" data-toggle="collapse" data-target="#sub-category-{{$category->id}}">
                                                     <div class="col-5">
-                                                        <i class="{{$category->icon}} mr-2 category-icon text-secondary"></i> {{$category->name}}
+                                                        <i class="{{$category->icon}} mr-2 category-icon text-secondary"></i> <span class="js-category-name">{{$category->name}}</span>
                                                     </div>
                                                     <div class="col d-flex justify-content-center">
                                                         <div class="col">
@@ -77,7 +77,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="col d-flex justify-content-end">
-                                                            <div class="mr-3">
+                                                            <div class="mr-3 js-amount">
                                                                 {{\App\Helpers\Helpers::NumberFormat($category->getAmountForReport($transactions, $filteredCategories))}}
                                                             </div>
                                                             <div class="text-secondary">{{$mainCurrency}}</div>
@@ -168,33 +168,46 @@
                 theme : "bootstrap"
             });
 
+            let data = {
+                "amounts" : [],
+                "labels"  : [],
+                "backgroundColor"  : [],
+                "borderColor"      : []
+            };
+            $('.js-parent-category').each(function(){
+                let amount = +$('.js-amount', $(this)).text().trim().replace(',', '');
+                data.amounts.push(amount);
+                data.labels.push($('.js-category-name', $(this)).text());
+                if(amount >= 0){
+                    data.backgroundColor.push('rgba(40, 167, 69, 0.5)');
+                    data.borderColor.push('rgba(255, 255, 255, 1)');
+                }
+                else{
+                    data.backgroundColor.push('rgba(220, 53, 69, 0.5)');
+                    data.borderColor.push('rgba(255, 255, 255, 1)');
+                }
+
+                console.log($('.category-icon', $(this)).attr('class'))
+                console.log($('.js-category-name', $(this)).text())
+                console.log(+$('.js-amount', $(this)).text().trim().replace(',', ''))
+
+            });
+
             var ctx = document.getElementById('myChart');
             var myChart = new Chart(ctx, {
                 type: 'doughnut',
                 data: {
-                    labels: ['Education', 'Bills', 'Pets', 'Income', 'Home'],
+                    labels: data.labels,
                     datasets: [{
                         label: '# of Votes',
-                        data: [12, 19, 3, 5, 2],
-                        backgroundColor: [
-                            'rgba(255, 99, 132, 0.2)',
-                            'rgba(54, 162, 235, 0.2)',
-                            'rgba(255, 206, 86, 0.2)',
-                            'rgba(75, 192, 192, 0.2)',
-                            'rgba(153, 102, 255, 0.2)',
-                            'rgba(255, 159, 64, 0.2)'
-                        ],
-                        borderColor: [
-                            'rgba(255, 99, 132, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(255, 206, 86, 1)',
-                            'rgba(75, 192, 192, 1)',
-                            'rgba(153, 102, 255, 1)',
-                            'rgba(255, 159, 64, 1)'
-                        ],
+                        data: data.amounts,
+                        backgroundColor: data.backgroundColor,
+                        borderColor: data.borderColor,
                         borderWidth: 1
-                    }]
+                    }],
+                    responsive: true
                 },
+
                 options: {
                     /*scales: {
                         yAxes: [{
