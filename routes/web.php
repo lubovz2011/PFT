@@ -61,7 +61,7 @@ Route::group(['middleware' => 'auth'], function(){
 
 
     /** reports page */
-    Route::get('reports', 'ReportsController@displayReportsPage')->name('reports');
+    Route::get('dashboard', 'ReportsController@displayReportsPage')->name('reports');
 
 
     /** user settings routes */

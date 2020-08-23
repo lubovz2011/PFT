@@ -1,6 +1,6 @@
 @extends("layout")
 @section("title")
-    Reports
+    Dashboard
 @endsection
 @section("content")
 
@@ -12,7 +12,7 @@
             <div class="col-9">
                 <div class="card shadow-card border-0">
                     <div class="card-header">
-                        <h5 class="card-title mb-0">Reports</h5>
+                        <h5 class="card-title mb-0">Dashboard</h5>
                     </div>
                     <div class="card-body p-0">
                         <div>
@@ -47,9 +47,14 @@
                                 </li>
                                 <li class="list-group-item">
                                     <div class="row justify-content-center">
+                                        <div class="col-12 d-flex justify-content-center align-items-center mb-4">
+                                            <span class="js-total-income"></span>
+                                            <span class="js-total-expense"></span>
+                                        </div>
                                         <div class="col-5 my-2">
                                             <canvas id="myChart" width="400" height="400"></canvas>
                                         </div>
+
                                     </div>
                                     <div class="row mt-5 text-secondary text-center account-mini-headers">
                                         <div class="col-5 text-left">CATEGORY NAME</div>
@@ -80,7 +85,7 @@
                                                             <div class="mr-3 js-amount">
                                                                 {{\App\Helpers\Helpers::NumberFormat($category->getAmountForReport($transactions, $filteredCategories))}}
                                                             </div>
-                                                            <div class="text-secondary">{{$mainCurrency}}</div>
+                                                            <div class="text-secondary js-user-currency">{{$mainCurrency}}</div>
                                                         </div>
                                                         <div class="col d-flex justify-content-end">
                                                             <div class="mr-3 text-center @if($category->getAmountForReport($transactions, $filteredCategories) >= 0) text-success @else text-danger @endif font-weight-bold">
@@ -143,6 +148,37 @@
 @endsection
 @section("scripts")
     <script>
+
+        function number_format(number, decimals, dec_point, thousands_point) {
+
+            if (number == null || !isFinite(number)) {
+                throw new TypeError("number is not valid");
+            }
+
+            if (!decimals) {
+                var len = number.toString().split('.').length;
+                decimals = len > 1 ? len : 0;
+            }
+
+            if (!dec_point) {
+                dec_point = '.';
+            }
+
+            if (!thousands_point) {
+                thousands_point = ',';
+            }
+
+            number = parseFloat(number).toFixed(decimals);
+
+            number = number.replace(".", dec_point);
+
+            var splitNum = number.split(dec_point);
+            splitNum[0] = splitNum[0].replace(/\B(?=(\d{3})+(?!\d))/g, thousands_point);
+            number = splitNum.join(dec_point);
+
+            return number;
+        }
+
         $(document).ready(function(){
             $("select").select2({
                 theme : "bootstrap"
@@ -172,7 +208,10 @@
                 "amounts" : [],
                 "labels"  : [],
                 "backgroundColor"  : [],
-                "borderColor"      : []
+                "borderColor"      : [],
+                "totalIncome"      : 0,
+                "totalExpense"     : 0
+
             };
             $('.js-parent-category').each(function(){
                 let amount = +$('.js-amount', $(this)).text().trim().replace(',', '');
@@ -181,17 +220,35 @@
                 if(amount >= 0){
                     data.backgroundColor.push('rgba(40, 167, 69, 0.5)');
                     data.borderColor.push('rgba(255, 255, 255, 1)');
+                    data.totalIncome += amount;
                 }
                 else{
                     data.backgroundColor.push('rgba(220, 53, 69, 0.5)');
                     data.borderColor.push('rgba(255, 255, 255, 1)');
+                    data.totalExpense += amount;
                 }
-
-                console.log($('.category-icon', $(this)).attr('class'))
-                console.log($('.js-category-name', $(this)).text())
-                console.log(+$('.js-amount', $(this)).text().trim().replace(',', ''))
-
             });
+
+            if(data.totalIncome)
+                $('.js-total-income').html('Income :   <span class="text-success font-weight-bold">'
+                                            + number_format(data.totalIncome, 2)
+                                            + " "
+                                            + '</span>'
+                                            + $('.js-user-currency:first').text());
+            else
+                $('.js-total-income').remove()
+
+            if(data.totalExpense)
+                $('.js-total-expense').html('Expense :   <span class="text-danger font-weight-bold">'
+                                            + number_format(data.totalExpense, 2)
+                                            + " "
+                                            + '</span>'
+                                            + $('.js-user-currency:first').text());
+            else
+                $('.js-total-expense').remove()
+
+            if(data.totalIncome && data.totalExpense)
+                $('.js-total-income').addClass('mr-5')
 
             var ctx = document.getElementById('myChart');
             var myChart = new Chart(ctx, {
@@ -209,6 +266,9 @@
                 },
 
                 options: {
+                    legend: {
+                        position: 'bottom'
+                    }
                     /*scales: {
                         yAxes: [{
                             ticks: {
