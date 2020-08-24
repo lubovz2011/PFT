@@ -46,6 +46,8 @@ Route::group(['middleware' => 'auth'], function(){
     Route::post('accounts/delete-account', 'AccountsController@deleteAccount')->name('delete-account');
     /** create new cash account */
     Route::post('accounts/create-cash-account', 'AccountsController@createCashAccount')->name('create-cash-account');
+    /** connect to digital account */
+    Route::post('accounts/connect-digital-account', 'AccountsController@connectDigitalAccount')->name('connect-digital-account');
     /** update account */
     Route::post('accounts/update-account', 'AccountsController@updateAccount')->name('update-account');
 

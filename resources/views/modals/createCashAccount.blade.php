@@ -27,8 +27,7 @@
                         @include('utils.error-invalid-feedback', ['errorField' => 'balance'])
                     </div>
                     <div class="form-group">
-                        <select class="form-control @error('currency') is-invalid @enderror"
-                                name="currency">
+                        <select class="form-control @error('currency') is-invalid @enderror" name="currency">
                             <option value="ILS" @if(old('currency') == "ILS") selected @endif>ILS Israeli new shekel</option>
                             <option value="USD" @if(old('currency') == "USD") selected @endif>USD United States Dollar</option>
                             <option value="EUR" @if(old('currency') == "EUR") selected @endif>EUR Euro</option>

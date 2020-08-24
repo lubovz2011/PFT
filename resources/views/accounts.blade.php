@@ -14,7 +14,13 @@
                 <div class="card-body pb-2">
                     <div class="row justify-content-start">
                         <div class="col">
-                            <button type="submit" class="btn btn-primary mr-2">Connect Digital Account</button>
+                            <button type="submit"
+                                    class="btn btn-primary mr-2"
+                                    data-target="#connect-digital-account"
+                                    data-toggle="modal">
+                                Connect Digital Account
+                            </button>
+                            @include('modals.connectDigitalAccount')
                             <button type="button"
                                     class="btn btn-secondary"
                                     data-target="#create-wallet-modal"
@@ -81,6 +87,10 @@
 
             @if($errors->has('title') || $errors->has('balance') || $errors->has('currency'))
                 $('#create-wallet-modal').modal();
+            @endif
+
+            @if($errors->has('bank') || $errors->has('user-id') || $errors->has('password'))
+                $('#connect-digital-account').modal();
             @endif
         });
 

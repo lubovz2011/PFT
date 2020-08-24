@@ -32,7 +32,7 @@ abstract class AbstractRequest
      * Function returns request body
      * @return string
      */
-    abstract function getBody() : string;
+    abstract function getBody();
 
     /**
      * Function returns request method (get/post...)

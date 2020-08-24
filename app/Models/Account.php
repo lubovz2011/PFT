@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $credentials
  * @property integer $user_id
  * @property boolean $status
+ * @property User $user
  *
  * @package App\Models
  */
