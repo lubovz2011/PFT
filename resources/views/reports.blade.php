@@ -6,10 +6,10 @@
 
     <div class="container-fluid dynamic-height">
         <div class="row">
-            <div class="col-3 bg-dark filters-form">
+            <div class="d-none d-md-block col-3 bg-dark filters-form">
                 @include('side-bar.filters-form')
             </div>
-            <div class="col-9">
+            <div class="col-12 col-md-9">
                 <div class="card shadow-card border-0" style="min-height: 80vh;">
                     <div class="card-header">
                         <h5 class="card-title mb-0">Dashboard</h5>

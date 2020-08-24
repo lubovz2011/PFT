@@ -6,10 +6,10 @@
 @php /** @var \Illuminate\Pagination\LengthAwarePaginator $paginator */ @endphp
     <div class="container-fluid">
         <div class="row">
-            <div class="col-3 bg-dark filters-form">
+            <div class="d-none d-md-block col-3 bg-dark filters-form">
                 @include('side-bar.filters-form')
             </div>
-            <div class="col-9">
+            <div class="col-12 col-md-9">
                 <div class="card shadow-card border-0">
                     <div class="card-header">
                         <h5 class="card-title mb-0">Transactions</h5>
