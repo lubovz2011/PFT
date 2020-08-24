@@ -28,7 +28,7 @@ class ReportsController extends Controller
         $user = auth()->user();
 
         /** @var Account[]|Collection $accounts */
-        $accounts = $user->accounts;
+        $accounts = $user->accounts()->where('status', 1)->get()->keyBy('id');
 
         /** @var Category[]|Collection $categories */
         $categories = $user->categories()->where('status', 1)->get()->keyBy('id');
@@ -42,10 +42,9 @@ class ReportsController extends Controller
          * @var Transaction[]|Collection $transactions
          */
         $transactions = $this->attachFiltersToQuery($transactions, $request)
-                        ->with('account')->where('status', 1)
-                        ->with('category')->where('status', 1)
+                        ->whereIn('account_id', $accounts->keys()->toArray())
+                        ->whereIn('category_id', $categories->keys()->toArray())
                         ->get();
-
         /**
          * Set to $filteredCategories all categories that have transactions
          */
