@@ -147,7 +147,7 @@
                                                 <a href="{{route('transactions')}}" class="btn btn-primary">Add transaction</a>
                                             </div>
                                             <div class="col text-left">
-                                                <a href="{{route('accounts')}}" class="btn btn-primary">Add account</a>
+                                                <a href="{{route('accounts')}}" class="btn btn-primary px-4">Add account</a>
                                             </div>
                                         </div>
                                     </li>
