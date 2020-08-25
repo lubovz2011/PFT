@@ -15,16 +15,14 @@
                                class="form-control @error('login') is-invalid @enderror"
                                name="login"
                                placeholder="email@example.com"
-                               value="{{old('login')}}"
-                               required>
+                               value="{{old('login')}}">
                         @include('utils.error-invalid-feedback', ["errorField" => 'login'])
                     </div>
                     <div class="form-group">
                         <input type="password"
                                class="form-control @error('password') is-invalid @enderror"
                                name="password"
-                               placeholder="Password"
-                               required>
+                               placeholder="Password">
                         @include('utils.error-invalid-feedback', ["errorField" => 'password'])
                     </div>
                     <div class="row">

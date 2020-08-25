@@ -34,7 +34,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/settings';
+    protected $redirectTo = '/dashboard';
 
     /**
      * Create a new controller instance(object).
@@ -104,6 +104,6 @@ class LoginController extends Controller
 
         Auth::login($user, true);
 
-        return redirect()->route('settings');
+        return redirect()->route('reports');
     }
 }
