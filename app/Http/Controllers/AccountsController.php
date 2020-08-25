@@ -4,6 +4,8 @@
 namespace App\Http\Controllers;
 
 
+use App\Classes\Requests\IsraelBank\Otsar;
+use App\Classes\Requests\IsraelBank\ProviderFactory;
 use App\Models\Account;
 use App\Models\Rate;
 use App\Models\Transaction;
@@ -87,6 +89,41 @@ class AccountsController extends Controller
         $account->balance = $request->input('balance');
         $account->currency = $request->input('currency');
         $user->accounts()->save($account);
+        return redirect()->route('accounts');
+    }
+
+    public function connectDigitalAccount(Request $request)
+    {
+        /** @var User $user */
+        $user = auth()->user();
+        $this->validate($request, [
+            'bank'      => 'bail|required|in:otsar',
+            'username'   => 'bail|required|string',
+            'password'  => 'bail|required|string'
+        ]);
+
+        try{
+            DB::beginTransaction();
+            $account = new Account();
+            $account->title = $request->input('bank');
+            $account->balance = 0;
+            $account->currency = $user->currency;
+            $account->credentials = json_encode([
+                'username' => $request->input('username'),
+                'password' => $request->input('password'),
+                'bank'     => $request->input('bank')
+            ]);
+            $user->accounts()->save($account);
+
+            /** @var Otsar $provider */
+            $provider = ProviderFactory::provider($request->input('bank'));
+            $provider->setAccount($account);
+            $provider->send();
+            DB::commit();
+        }
+        catch (\Exception $e) {
+            DB::rollBack();
+        }
         return redirect()->route('accounts');
     }
 
