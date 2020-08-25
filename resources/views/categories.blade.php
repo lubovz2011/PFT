@@ -16,7 +16,7 @@
                     <form method="POST" action="{{route('add-category')}}">
                         @csrf
                         <div class="form-row align-items-center">
-                            <div class="col-auto">
+                            <div class="col-3">
                                 <label for="category-input">Name</label>
                                 <input
                                     name="name"
@@ -25,7 +25,7 @@
                                     id="category-input"
                                     value="{{old('name')}}">
                             </div>
-                            <div class="col-auto">
+                            <div class="col-4">
                                 <label class="" for="parent-category-select">Parent Category</label>
                                 <select class="form-control @error('parent') is-invalid @enderror"
                                         id="parent-category-select" name="parent">
@@ -41,7 +41,7 @@
                                     @endforeach
                                 </select>
                             </div>
-                            <div class="col-auto">
+                            <div class="col-3">
                                 <label for="icon-category-select">Icon</label>
                                 <select class="form-control @error('icon') is-invalid @enderror"
                                         id="icon-category-select" name="icon">
