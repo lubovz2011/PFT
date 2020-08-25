@@ -24,19 +24,10 @@ class AccountsController extends Controller
     {
         /** @var User $user */
         $user = auth()->user();
-        /** @var Account[] $accounts */
-        $accounts = $user->accounts->all();
-        $groups = [Account::TYPE_CASH => [], Account::TYPE_CARD => []];
+        $groups = $user->accounts->groupBy('type');
 
-        foreach ($accounts as $account){
-            if($account->type == Account::TYPE_CASH)
-                $groups[Account::TYPE_CASH][] = $account;
-            else
-                $groups[Account::TYPE_CARD][] = $account;
-        }
         return view('accounts', [
-            'groups'    => array_filter($groups),
-            'balance'   => $this->totalBalance($user->currency, collect($groups[Account::TYPE_CASH])),
+            'groups'    => $groups,
             'currency'  => $user->currency
         ]);
     }
@@ -106,6 +97,7 @@ class AccountsController extends Controller
             DB::beginTransaction();
             $account = new Account();
             $account->title = $request->input('bank');
+            $account->type = Account::TYPE_CARD;
             $account->balance = 0;
             $account->currency = $user->currency;
             $account->credentials = json_encode([

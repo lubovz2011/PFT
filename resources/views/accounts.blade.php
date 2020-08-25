@@ -48,12 +48,12 @@
 
                                         @elseif($key == \App\Models\Account::TYPE_CARD)
                                             <div class="col text-uppercase">
-                                                <i class="fas fa-wallet mr-3 category-icon text-secondary"></i>cards
+                                                <i class="far fa-credit-card mr-3 category-icon text-secondary"></i>banks and cards
                                             </div>
                                         @endif
                                             <div class="col d-flex justify-content-end">
-                                                <span class="mr-2 @if($balance >= 0) text-success @else text-danger @endif font-weight-bold">
-                                                    {{$balance}}
+                                                <span class="mr-2 @if($group->sum('balanceInUserCurrency') >= 0) text-success @else text-danger @endif font-weight-bold">
+                                                    {{\App\Helpers\Helpers::NumberFormat($group->sum('balanceInUserCurrency'))}}
                                                 </span>
                                                     {{$currency}}
                                             </div>
@@ -92,6 +92,10 @@
             @if($errors->has('bank') || $errors->has('user-id') || $errors->has('password'))
                 $('#connect-digital-account').modal();
             @endif
+
+            $('.js-synchronize-buttom').on('click', function (){
+               
+            });
         });
 
 

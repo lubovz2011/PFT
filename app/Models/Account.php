@@ -27,4 +27,8 @@ class Account extends Model
     public function user(){
         return $this->belongsTo("App\Models\User");
     }
+
+    public function getBalanceInUserCurrencyAttribute(){
+        return Rate::convert($this->balance, $this->currency, auth()->user()->currency);
+    }
 }

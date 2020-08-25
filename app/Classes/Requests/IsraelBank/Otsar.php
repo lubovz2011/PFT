@@ -77,6 +77,7 @@ class Otsar extends AbstractRequest
         $credentials = json_decode($this->account->credentials);
         $credentials->lastUpdate = Carbon::parse($txn->date)->toIso8601String();
         $this->account->credentials = json_encode($credentials);
+        $this->account->title = "Otsar Hahayal " . $accountName;
         $this->account->balance = $balance;
         $this->account->currency = $currency;
         $this->account->save();
