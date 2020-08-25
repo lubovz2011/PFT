@@ -53,11 +53,12 @@
                                 </div>
                             </div>
                             <div class="col-lg-10">
+                                <p>
+                                    Welcome to Personal Finance Tracker.
+                                </p>
                                 <p class="subtitle">
-                                    Repellat dignissimos libero. Qui sed at corrupti expedita voluptas odit. Nihil ea quia nesciunt. Ducimus
-                                    aut sed ipsam. Autem eaque officia cum exercitationem. Repellat dignissimos libero. Qui sed at corrupti
-                                    expedita voluptas odit. Nihil ea quia nesciunt. Ducimus aut sed ipsam. Autem eaque officia cum
-                                    exercitationem.
+                                    Can't get your finances in order? Don't know where your money is going? You came to the right place!<br>
+                                    PFT it's a free website, designed to help you organize and concentrate your cash flows in one place and in a convenient way.
                                 </p>
                             </div>
                         </div>
@@ -67,14 +68,12 @@
                         <div class="col-md-6 col-lg-4 aos-init aos-animate" data-aos="fade-up" data-aos-duration="400">
                             <div class="feature-card">
                                 <div class="icon-img">
-                                    <i class="icon-notebook fa-lg"></i>
+                                    <i class="fas fa-chart-bar fa-lg welcome-icon text-success"></i>
                                 </div>
                                 <div class="feature-body">
-                                    <h6>Well Documented</h6>
+                                    <h6>Get an overview</h6>
                                     <p>
-                                        Lorem ipsum dolor sit amet consec tetur adipisicing elit, sed do eiusmod tempor incididunt labore.
-                                        Lorem
-                                        ipsum dolor sit amet consec tetur adipisicing elit, sed do eiusmod tempor incididunt labore.
+                                        You can see overview about your total incomes and expenses in one place.
                                     </p>
                                 </div>
                             </div>
@@ -83,14 +82,12 @@
                         <div class="col-md-6 col-lg-4 aos-init aos-animate" data-aos="fade-up" data-aos-duration="600">
                             <div class="feature-card">
                                 <div class="icon-img">
-                                    <i class="icon-magnifier fa-lg"></i>
+                                    <i class="far fa-credit-card welcome-icon text-success"></i>
                                 </div>
                                 <div class="feature-body">
-                                    <h6>SEO Optimization</h6>
+                                    <h6>Digital Accounts Synchronization</h6>
                                     <p>
-                                        Lorem ipsum dolor sit amet consec tetur adipisicing elit, sed do eiusmod tempor incididunt labore.
-                                        Lorem
-                                        ipsum dolor sit amet consec tetur adipisicing elit, sed do eiusmod tempor incididunt labore.
+                                        Connect your bank accounts and all your transactions will get automatically imported to PFT.
                                     </p>
                                 </div>
                             </div>
@@ -99,14 +96,13 @@
                         <div class="col-md-6 col-lg-4 aos-init aos-animate" data-aos="fade-up" data-aos-duration="800">
                             <div class="feature-card">
                                 <div class="icon-img">
-                                    <i class="icon-screen-smartphone fa-lg"></i>
+                                    <i class="fas fa-icons welcome-icon text-success"></i>
                                 </div>
                                 <div class="feature-body">
-                                    <h6>Fully Responsive</h6>
+                                    <h6>Categories</h6>
                                     <p>
-                                        Lorem ipsum dolor sit amet consec tetur adipisicing elit, sed do eiusmod tempor incididunt labore.
-                                        Lorem
-                                        ipsum dolor sit amet consec tetur adipisicing elit, sed do eiusmod tempor incididunt labore.
+                                        Manage your daily expenses and income as you wish.
+                                        You can create as many categories as you want and edit them.
                                     </p>
                                 </div>
                             </div>
@@ -115,14 +111,12 @@
                         <div class="col-md-6 col-lg-4 aos-init aos-animate" data-aos="fade-up" data-aos-duration="400">
                             <div class="feature-card">
                                 <div class="icon-img">
-                                    <i class="icon-user fa-lg"></i>
+                                    <i class="fas fa-shekel-sign welcome-icon text-success"></i>
                                 </div>
                                 <div class="feature-body">
-                                    <h6>Client Satisfaction</h6>
+                                    <h6>Multiple currencies</h6>
                                     <p>
-                                        Lorem ipsum dolor sit amet consec tetur adipisicing elit, sed do eiusmod tempor incididunt labore.
-                                        Lorem
-                                        ipsum dolor sit amet consec tetur adipisicing elit, sed do eiusmod tempor incididunt labore.
+                                        PFT support multiple currencies so you can create accounts in different currencies.
                                     </p>
                                 </div>
                             </div>
@@ -131,14 +125,12 @@
                         <div class="col-md-6 col-lg-4 aos-init aos-animate" data-aos="fade-up" data-aos-duration="600">
                             <div class="feature-card">
                                 <div class="icon-img">
-                                    <i class="icon-support fa-lg"></i>
+                                    <i class="fas fa-envelope-open-text welcome-icon text-success"></i>
                                 </div>
                                 <div class="feature-body">
-                                    <h6>24/7 Support</h6>
+                                    <h6>Monthly Report</h6>
                                     <p>
-                                        Lorem ipsum dolor sit amet consec tetur adipisicing elit, sed do eiusmod tempor incididunt labore.
-                                        Lorem
-                                        ipsum dolor sit amet consec tetur adipisicing elit, sed do eiusmod tempor incididunt labore.
+                                        Receive a monthly email report that give you overview of your spending, income by dates or categories.
                                     </p>
                                 </div>
                             </div>
@@ -147,14 +139,12 @@
                         <div class="col-md-6 col-lg-4 aos-init aos-animate" data-aos="fade-up" data-aos-duration="800">
                             <div class="feature-card">
                                 <div class="icon-img">
-                                    <i class="icon-earphones fa-lg"></i>
+                                    <i class="far fa-thumbs-up welcome-icon text-success"></i>
                                 </div>
                                 <div class="feature-body">
-                                    <h6>We Play to win</h6>
+                                    <h6>Free and without commercials</h6>
                                     <p>
-                                        Lorem ipsum dolor sit amet consec tetur adipisicing elit, sed do eiusmod tempor incididunt labore.
-                                        Lorem
-                                        ipsum dolor sit amet consec tetur adipisicing elit, sed do eiusmod tempor incididunt labore.
+                                        All services on the site are free. Without advertisements and ads.
                                     </p>
                                 </div>
                             </div>
