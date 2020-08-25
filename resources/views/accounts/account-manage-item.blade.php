@@ -2,8 +2,8 @@
     <div class="row">
         <div class="col-6 ml-4">{{$account->title}}</div>
         <div class="col d-flex justify-content-end">
-            <span class="mr-2 @if($account->balance >= 0) text-success @else text-danger @endif font-weight-bold">
-                {{number_format($account->balance, 2, '.', ',')}}
+            <span class="mr-2 js-account-balance @if($account->balance >= 0) text-success @else text-danger @endif font-weight-bold">
+                {{\App\Helpers\Helpers::NumberFormat($account->balance)}}
             </span>
                 {{$account->currency}}
         </div>

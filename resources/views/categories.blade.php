@@ -123,6 +123,7 @@
 
             function changeStatus(id, status)
             {
+                loaderStart();
                 $.ajax(
                     {
                         method: "POST",
@@ -154,9 +155,8 @@
                         $('#parent-category-select').select2({
                             theme : "bootstrap"
                         });
-
                     }
-
+                    loaderStop();
                 });
             }
 
@@ -171,6 +171,7 @@
             });
 
             function deleteCategory(id){
+                loaderStart();
                 $.ajax(
                     {
                         method: "POST",
@@ -187,9 +188,9 @@
                             theme : "bootstrap"
                         });
                     }
-
                     else
                         alert("Ops, something went wrong. Try again.");
+                    loaderStop();
                 });
             }
         });

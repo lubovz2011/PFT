@@ -94,13 +94,22 @@
             @endif
 
             $('.js-synchronize-buttom').on('click', function (){
+                loaderStart();
                 $.ajax({
                     method:"POST",
                     url: '{{route('synchronize-account')}}',
                     data: {
                         "id" : $(this).data('account'),
                     }
-                })
+                }).done(function (data){
+                    let balanceElement = $('li[data-target="#collapse-' + data.id + '"] .js-account-balance');
+                    balanceElement.text(number_format(data.balance,2));
+                    if(data.balance >= 0)
+                        balanceElement.removeClass('text-danger').addClass('text-success');
+                    else
+                        balanceElement.removeClass('text-success').addClass('text-danger');
+                   loaderStop();
+                });
             });
         });
 

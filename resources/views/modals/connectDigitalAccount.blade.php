@@ -35,7 +35,7 @@
 
                     <div class="col d-flex justify-content-center">
                         <button class="btn btn-secondary mr-2 px-3" data-dismiss="modal" type="reset">Cancel</button>
-                        <button class="btn btn-primary px-4" type="submit">Connect</button>
+                        <button class="btn btn-primary px-4" type="submit" onclick="loaderStart()">Connect</button>
                     </div>
                 </form>
             </div>
