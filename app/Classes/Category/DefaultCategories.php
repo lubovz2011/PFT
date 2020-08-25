@@ -16,6 +16,16 @@ class DefaultCategories extends Defaults
      */
     public static function generate(User $user)
     {
+        $parent_id = self::generateCategory($user, 'Home', 'fas fa-home');
+        self::generateCategory($user, 'Home Services', '', $parent_id);
+        self::generateCategory($user, 'Decoration', '', $parent_id);
+        self::generateCategory($user, 'Home Supplies', '', $parent_id);
+
+        $parent_id = self::generateCategory($user, 'Kids', 'fas fa-child');
+        self::generateCategory($user, 'Education', '', $parent_id);
+        self::generateCategory($user, 'Group Activities', '', $parent_id);
+        self::generateCategory($user, 'Savings Plan', '', $parent_id);
+
         $parent_id = self::generateCategory($user, 'Bills', 'fas fa-file-invoice-dollar');
         self::generateCategory($user, 'Internet', '', $parent_id);
         self::generateCategory($user, 'Phone', '', $parent_id);
@@ -30,11 +40,6 @@ class DefaultCategories extends Defaults
         self::generateCategory($user, 'Salary', '', $parent_id);
         self::generateCategory($user, 'Bonus', '', $parent_id);
         self::generateCategory($user, 'Investment Income', '', $parent_id);
-
-        $parent_id = self::generateCategory($user, 'Home', 'fas fa-home');
-        self::generateCategory($user, 'Home Services', '', $parent_id);
-        self::generateCategory($user, 'Decoration', '', $parent_id);
-        self::generateCategory($user, 'Home Supplies', '', $parent_id);
 
         $parent_id = self::generateCategory($user, 'Health & Fitness', 'fas fa-heartbeat');
         self::generateCategory($user, 'Fitness & Sport', '', $parent_id);

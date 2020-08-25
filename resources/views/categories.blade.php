@@ -31,11 +31,13 @@
                                         id="parent-category-select" name="parent">
                                     <option value="" selected>Without parent category</option>
                                     @foreach($categories as $category)
-                                        <option
-                                            value="{{$category['id']}}"
-                                            @if(old('parent') == $category['id']) selected @endif>
-                                            {{$category['name']}}
-                                        </option>
+                                        @if($category['status'])
+                                            <option
+                                                value="{{$category['id']}}"
+                                                @if(old('parent') == $category['id']) selected @endif>
+                                                {{$category['name']}}
+                                            </option>
+                                        @endif
                                     @endforeach
                                 </select>
                             </div>
@@ -43,7 +45,6 @@
                                 <label for="icon-category-select">Icon</label>
                                 <select class="form-control @error('icon') is-invalid @enderror"
                                         id="icon-category-select" name="icon">
-                                    <option value="" selected>No Icon</option>
                                     @foreach($icons as $icon)
                                         <option value="{{$icon['class']}}"
                                                 @if(old('icon') == $icon['class']) selected @endif>
@@ -136,6 +137,26 @@
                     for(let category of data.categories) {
                         $("#" + category.id + "-category-toggle").prop('checked', category.status === "1");
                     }
+                    if(data.parent_id == null){
+                        if(data.status == 1){
+                            $('#parent-category-select').append($('<option value="' + data.id + '">' + data.name + '</option>'));
+                            let options = $('#parent-category-select option');
+                            var arr = options.map(function(_, o) { return { t: $(o).text(), v: o.value }; }).get();
+                            arr.sort(function(o1, o2) { return o1.v - o2.v; });
+                            options.each(function(i, o) {
+                                o.value = arr[i].v;
+                                $(o).text(arr[i].t);
+                            });
+                        }
+                        else{
+                            $('#parent-category-select option[value="'+ data.id +'"]').remove();
+                        }
+                        $('#parent-category-select').select2({
+                            theme : "bootstrap"
+                        });
+
+                    }
+
                 });
             }
 
@@ -159,8 +180,14 @@
                         }
                     }
                 ).done(function (data) {
-                    if(data.status === "success")
+                    if(data.status === "success"){
                         $('.js-category-' + id + '-container').remove();
+                        $('#parent-category-select option[value="'+ id +'"]').remove();
+                        $('#parent-category-select').select2({
+                            theme : "bootstrap"
+                        });
+                    }
+
                     else
                         alert("Ops, something went wrong. Try again.");
                 });
