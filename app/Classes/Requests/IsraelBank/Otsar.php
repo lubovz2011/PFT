@@ -71,7 +71,7 @@ class Otsar extends AbstractRequest
             $transaction->description = $txn->description;
             $transaction->date = Carbon::parse($txn->date);
             $transaction->account_id = $this->account->id;
-            $transaction->category_id = $this->account->user->categories()->first()->id;
+            $transaction->category_id = $this->account->user->categories()->where('lock', '=', true)->first()->id;
             $transaction->save();
         }
         $credentials = json_decode($this->account->credentials);

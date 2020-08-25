@@ -7,6 +7,7 @@ namespace App\Classes\Category;
 use App\Classes\Defaults;
 use App\Models\Category;
 use App\Models\User;
+use phpDocumentor\Reflection\Types\Boolean;
 
 class DefaultCategories extends Defaults
 {
@@ -91,14 +92,17 @@ class DefaultCategories extends Defaults
         self::generateCategory($user, 'Gifts', '', $parent_id);
 
         $parent_id = self::generateCategory($user, 'Miscellaneous', 'fas fa-list');
+
+        $parent_id = self::generateCategory($user, 'Banks & Cards', 'far fa-credit-card', null, true);
     }
 
-    public static function generateCategory(User $user, string $name, string $icon, int $parent_id = null)
+    public static function generateCategory(User $user, string $name, string $icon, int $parent_id = null, bool $lock = false)
     {
         $category = new Category();
         $category->name = $name;
         $category->icon = $icon;
         $category->parent_id = $parent_id;
+        $category->lock = $lock;
         $user->categories()->save($category);
         return $category->id;
     }

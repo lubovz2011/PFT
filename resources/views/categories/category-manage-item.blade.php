@@ -6,25 +6,28 @@
             <i class="{{$icon}} mr-2 category-icon text-secondary"></i> {{$name}}
         </div>
         {{--  category edit controls  --}}
-        <div class="col d-flex justify-content-end">
-            <div class="custom-control custom-switch mr-2">
-                <input type="checkbox"
-                       class="custom-control-input"
-                       id="{{$id}}-category-toggle"
-                       name="status"
-                       data-id="{{$id}}"
-                       @if($status) checked @endif>
-                <label class="custom-control-label " for="{{$id}}-category-toggle"></label>
+        @if(!$lock)
+            <div class="col d-flex justify-content-end">
+                <div class="custom-control custom-switch mr-2">
+                    <input type="checkbox"
+                           class="custom-control-input"
+                           id="{{$id}}-category-toggle"
+                           name="status"
+                           data-id="{{$id}}"
+                           @if($status) checked @endif>
+                    <label class="custom-control-label " for="{{$id}}-category-toggle"></label>
+                </div>
+                <div>
+                    <a href="#"
+                        class="js-delete-category text-decoration-none text-secondary"
+                        data-id="{{$id}}">
+                        <i class="far fa-trash-alt"></i>
+                    </a>
+                </div>
             </div>
-            <div>
-                <a href="#"
-                    class="js-delete-category text-decoration-none text-secondary"
-                    data-id="{{$id}}">
-                    <i class="far fa-trash-alt"></i>
-                </a>
-            </div>
-        </div>
+        @endif
     </div>
+
     {{--  Sub-Categories list  --}}
     <div id="sub-category-{{$id}}" class="collapse" data-parent="#accordion-categories">
         <div class="card-body p-0">

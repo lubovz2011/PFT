@@ -16,6 +16,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property integer $user_id
  * @property Category[] $categories
  * @property Category $category
+ * @property boolean $lock
  *
  * @package App\Models
  */
