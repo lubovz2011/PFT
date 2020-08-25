@@ -39,6 +39,9 @@
                     Delete
                 </button>
                 <button class="btn btn-secondary mr-2" type="reset" data-toggle="collapse" data-target="#collapse-{{$account->id}}">Cancel</button>
+                @if($account->type == \App\Models\Account::TYPE_CARD)
+                    <button class="btn btn-primary pr-3 pl-3 mr-2 js-synchronize-buttom" type="button" data-account="{{$account->id}}">Synchronize</button>
+                @endif
                 <button class="btn btn-primary pr-3 pl-3" type="submit">Save</button>
             </div>
         </div>

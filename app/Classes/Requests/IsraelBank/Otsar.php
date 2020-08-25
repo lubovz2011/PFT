@@ -43,8 +43,8 @@ class Otsar extends AbstractRequest
         $data = json_decode($this->account->credentials);
 
         return json_encode([
-            'username'   => $data->username,
-            'password'   => $data->password,
+            'username'   => decrypt($data->username),
+            'password'   => decrypt($data->password),
             'lastUpdate' => $data->lastUpdate ?? Carbon::now()->startOfMonth()->subMonth()->toIso8601String()
         ]);
     }
@@ -75,7 +75,7 @@ class Otsar extends AbstractRequest
             $transaction->save();
         }
         $credentials = json_decode($this->account->credentials);
-        $credentials->lastUpdate = Carbon::parse($txn->date)->toIso8601String();
+        $credentials->lastUpdate = Carbon::parse($txn->date)->addSecond()->toIso8601String();
         $this->account->credentials = json_encode($credentials);
         $this->account->title = "Otsar Hahayal " . $accountName;
         $this->account->balance = $balance;

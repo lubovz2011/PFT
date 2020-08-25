@@ -104,7 +104,7 @@
              *
              * @type {jQuery|HTMLElement}
              */
-            let customCheckboxLabel = $('.custom-switch  label');
+            let customCheckboxLabel = $('.custom-switch label');
             /**
              * Set event listener for each custom checkbox label
              */

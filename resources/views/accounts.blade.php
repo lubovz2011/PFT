@@ -94,7 +94,13 @@
             @endif
 
             $('.js-synchronize-buttom').on('click', function (){
-               
+                $.ajax({
+                    method:"POST",
+                    url: '{{route('synchronize-account')}}',
+                    data: {
+                        "id" : $(this).data('account'),
+                    }
+                })
             });
         });
 

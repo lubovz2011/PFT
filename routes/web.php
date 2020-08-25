@@ -50,6 +50,8 @@ Route::group(['middleware' => 'auth'], function(){
     Route::post('accounts/connect-digital-account', 'AccountsController@connectDigitalAccount')->name('connect-digital-account');
     /** update account */
     Route::post('accounts/update-account', 'AccountsController@updateAccount')->name('update-account');
+    /** synchronize account */
+    Route::post('accounts/synchronize-account', 'AccountsController@synchronizeAccount')->name('synchronize-account');
 
     /** transactions page */
     Route::get('transactions','TransactionsController@displayTransactionsPage')->name('transactions');

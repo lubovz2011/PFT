@@ -10,8 +10,10 @@ use App\Models\Account;
 use App\Models\Rate;
 use App\Models\Transaction;
 use App\Models\User;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class AccountsController extends Controller
 {
@@ -101,8 +103,8 @@ class AccountsController extends Controller
             $account->balance = 0;
             $account->currency = $user->currency;
             $account->credentials = json_encode([
-                'username' => $request->input('username'),
-                'password' => $request->input('password'),
+                'username' => encrypt($request->input('username')),
+                'password' => encrypt($request->input('password')),
                 'bank'     => $request->input('bank')
             ]);
             $user->accounts()->save($account);
@@ -117,6 +119,38 @@ class AccountsController extends Controller
             DB::rollBack();
         }
         return redirect()->route('accounts');
+    }
+
+    public function synchronizeAccount(Request $request){
+        /** @var User $user */
+        $user = auth()->user();
+        try{
+            /** @var Account $account */
+            $account = $user->accounts()->where('id', '=', $request->input('id'))->firstOrFail();
+        }
+        catch (ModelNotFoundException $e){
+            throw new ModelNotFoundException("Access to this account is denied!");
+        }
+
+        if($account->type == Account::TYPE_CARD){
+            $credentials = json_decode($account->credentials);
+            try{
+                DB::beginTransaction();
+                /** @var Otsar $provider */
+                $provider = ProviderFactory::provider($credentials->bank);
+                $provider->setAccount($account);
+                $provider->send();
+                DB::commit();
+            }
+            catch (\Exception $e) {
+                DB::rollBack();
+                abort(500, "Ops, something went wrong.. Please, try again later.");
+            }
+        }
+        else{
+            abort(403, "Invalid type of account. Can't update this account.");
+        }
+        return response()->json($account);
     }
 
     public function totalBalance(string $userCurrency, $accounts = null)
