@@ -71,4 +71,8 @@ class User extends Authenticatable
     public function transactions(){
         return $this->hasManyThrough(Transaction::class, Account::class);
     }
+
+    protected function getEmailAttribute(){
+        return $this->login;
+    }
 }
