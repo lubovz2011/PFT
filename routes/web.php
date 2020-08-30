@@ -67,6 +67,9 @@ Route::group(['middleware' => 'auth'], function(){
     /** reports page */
     Route::get('dashboard', 'ReportsController@displayReportsPage')->name('reports');
 
+    /** contact-us modal */
+    Route::post('contact-us', 'ContactUsController@sendContactUsEmail')->name('contact-us');
+
 
     /** user settings routes */
     Route::group(['prefix' => 'settings', 'as' => 'settings'], function()

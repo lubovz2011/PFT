@@ -74,6 +74,7 @@
             </div>
         </footer>
 
+        @include("modals.contact-us")
 
     <script src="/js/jquery-3.5.1.min.js"></script>
     <script src="/js/popper.min.js"></script>
@@ -124,9 +125,12 @@
         function loaderStop(){
             $('.loader-wrapper').addClass('invisible');
         }
+
+        @if($errors->hasAny(['contact-email', 'contact-subject', 'contact-message']))
+            $('#contact-us-modal').modal();
+        @endif
     </script>
     @yield("scripts")
-    @include("modals.contact-us")
 
     </body>
 </html>
