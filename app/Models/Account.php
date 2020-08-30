@@ -29,6 +29,6 @@ class Account extends Model
     }
 
     public function getBalanceInUserCurrencyAttribute(){
-        return Rate::convert($this->balance, $this->currency, auth()->user()->currency);
+        return Rate::convert($this->balance, $this->currency, $this->user->currency);
     }
 }

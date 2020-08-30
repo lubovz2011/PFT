@@ -44,7 +44,7 @@ class Transaction extends Model
     }
 
     public function getAmountInUserCurrencyAttribute(){
-        return Rate::convert($this->amount, $this->currency, auth()->user()->currency);
+        return Rate::convert($this->amount, $this->currency, $this->account->user->currency);
     }
 
     public function getPrettyAmount(){
