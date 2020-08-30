@@ -1,7 +1,7 @@
 <li class="list-group-item py-3" data-toggle="collapse" data-target="#collapse-{{$transaction->id}}">
     <div class="row">
         <div class="col">
-            <i class="{{$transaction->category->icon}} mr-2 category-icon text-secondary"></i> {{$transaction->category->name}} {{$transaction->id}}
+            <i class="{{$transaction->category->icon}} mr-2 category-icon text-secondary"></i> {{$transaction->category->name}}
         </div>
         <div class="col d-flex justify-content-end">
             <div class="font-weight-bold {{$transaction->type == 'income' ? 'text-success' : 'text-danger'}} mr-2">{{$transaction->getPrettyAmount()}}</div>

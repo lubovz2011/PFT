@@ -62,20 +62,22 @@ class Otsar extends AbstractRequest
         $currency = $data[0]->summary->balanceCurrency;
         $txns = $data[0]->txns ?? [];
 
+        $credentials = json_decode($this->account->credentials);
 
         foreach ($txns as $txn){
-            $transaction = new Transaction();
-            $transaction->amount = abs($txn->chargedAmount);
-            $transaction->currency = $currency;
-            $transaction->type = $txn->chargedAmount >= 0 ? 'income' : 'expense';
-            $transaction->description = $txn->description;
-            $transaction->date = Carbon::parse($txn->date);
-            $transaction->account_id = $this->account->id;
-            $transaction->category_id = $this->account->user->categories()->where('lock', '=', true)->first()->id;
-            $transaction->save();
+            if(Carbon::parse($txn->date)->toIso8601String() != ($credentials->lastUpdate ?? '')){
+                $transaction = new Transaction();
+                $transaction->amount = abs($txn->chargedAmount);
+                $transaction->currency = $currency;
+                $transaction->type = $txn->chargedAmount >= 0 ? 'income' : 'expense';
+                $transaction->description = $txn->description;
+                $transaction->date = Carbon::parse($txn->date);
+                $transaction->account_id = $this->account->id;
+                $transaction->category_id = $this->account->user->categories()->where('lock', '=', true)->first()->id;
+                $transaction->save();
+            }
         }
-        $credentials = json_decode($this->account->credentials);
-        $credentials->lastUpdate = Carbon::parse($txn->date)->addSecond()->toIso8601String();
+        $credentials->lastUpdate = Carbon::parse($txn->date)->toIso8601String();
         $this->account->credentials = json_encode($credentials);
         $this->account->title = "Otsar Hahayal " . $accountName;
         $this->account->balance = $balance;

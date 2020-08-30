@@ -99,7 +99,7 @@ class UserController extends Controller
         /** @var User $user */
         $user = auth()->user();
         auth()->logout();
-        (new DeleteCustomer())->setIdentifier($user->identifier)->send();
+//        (new DeleteCustomer())->setIdentifier($user->identifier)->send();
         $user->delete();
         return redirect()->route('welcome');
     }

@@ -33,7 +33,7 @@ class AppServiceProvider extends ServiceProvider
 
             DefaultAccount::generate($user);
             DefaultCategories::generate($user);
-            (new CreateCustomer())->setUser($user)->send();
+//            (new CreateCustomer())->setUser($user)->send();
         });
 
     }
