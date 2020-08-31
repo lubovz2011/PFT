@@ -126,7 +126,7 @@
             $('.loader-wrapper').addClass('invisible');
         }
 
-        @if($errors->hasAny(['contact-email', 'contact-subject', 'contact-message']))
+        @if(session('send-status') || $errors->hasAny(['contact-email', 'contact-subject', 'contact-message']))
             $('#contact-us-modal').modal();
         @endif
     </script>

@@ -24,7 +24,7 @@ class ContactUsController extends Controller
             $mail->subject("Contact us from ". $request->input('contact-email') . ". " . $request->input('contact-subject'));
         });
 
-        return redirect()->back();
+        return redirect()->back()->with('send-status', 'Your email was send successfully.');
     }
 
 }

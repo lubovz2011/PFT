@@ -19,13 +19,13 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                     <form class="form-inline ml-auto">
+                        <button class="invisible scroll-item js-contact-us-scroll-button" data-scroll-nav="2"></button>
                         <button class="btn btn-outline-light my-2 my-sm-0 mr-sm-2" type="button" data-toggle="modal" data-target="#sign-in-modal">Sign in</button>
                         <button class="btn btn-outline-light my-2 my-sm-0" type="button" data-toggle="modal" data-target="#sign-up-modal">Sign up</button>
                     </form>
                 </div>
             </nav>
         </header>
-
 
         <main role="main">
             <div class="d-flex">
@@ -152,6 +152,76 @@
                     </div>
                 </div>
             </section>
+            <section class="contact-us pb-50" data-scroll-index="2">
+                <div class="container">
+                    <!--==== Section Heading Text =====-->
+                    <div class="section-header">
+                        <div class="row">
+                            <div class="col">
+                                <div class="heading-2">
+                                    <h2 class="text-grediant d-inline-block text-center w-100">Contact Us</h2>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-lg-8 offset-lg-2">
+                            @if (session('send-status'))
+                                <div class="alert alert-success" role="alert">
+                                    {{ session('send-status') }}
+                                </div>
+                            @endif
+                            <form class="index-form" method="POST" action="{{route('contact-us')}}">
+                                @csrf
+                                <div class="row">
+                                    <div class="col aos-init aos-animate" data-aos="fade-up" data-aos-duration="400">
+                                        <div class="form-group">
+                                            <input
+                                                type="text"
+                                                class="form-control @error('contact-email') is-invalid @enderror"
+                                                placeholder="email@example.com"
+                                                name="contact-email"
+                                                value="{{old('contact-email')}}"
+                                                autocomplete="off">
+                                            @include('utils.error-invalid-feedback', ['errorField' => 'contact-email'])
+                                        </div>
+                                    </div>
+                                    <div class="col aos-init aos-animate" data-aos="fade-up" data-aos-duration="600">
+                                        <div class="form-group">
+                                            <input type="text"
+                                                   class="form-control @error('contact-subject') is-invalid @enderror"
+                                                   placeholder="Subject"
+                                                   name="contact-subject"
+                                                   value="{{old('contact-subject')}}"
+                                                   autocomplete="off">
+                                            @include('utils.error-invalid-feedback', ['errorField' => 'contact-subject'])
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col aos-init aos-animate" data-aos="fade-up" data-aos-duration="800">
+                                        <div class="form-group">
+                                        <textarea type="text"
+                                                  class="form-control @error('contact-message') is-invalid @enderror"
+                                                  rows="5"
+                                                  placeholder="Enter your message"
+                                                  name="contact-message">{{old('contact-message')}}</textarea>
+                                            @include('utils.error-invalid-feedback', ['errorField' => 'contact-message'])
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col d-flex justify-content-center mt-2">
+                                        <button class="btn btn-secondary mr-2 px-3" type="reset" data-dismiss="modal" aria-label="Close">Clear</button>
+                                        <button class="btn btn-success px-4" type="submit">Send message</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </section>
         </main>
 
         @include("modals.signIn")
@@ -165,14 +235,21 @@
 
         <script src="js/jquery-3.5.1.min.js"></script>
         <script src="js/popper.min.js"></script>
+        <script src="js/scrollIt.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <script defer src="js/font-awesome-5-all.min.js"></script> <!--load all styles -->
         <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
         <script>
             $(document).ready(function(){
                 AOS.init();
+                $.scrollIt();
                 let signInError = {{($errors->has('login') || $errors->has('password')) ? 1 : 0}};
                 let signUpError = {{($errors->has('signup_login') || $errors->has('signup_password')) ? 1 : 0}};
+
+                @if (session('send-status') || $errors->hasAny(['contact-email', 'contact-subject', 'contact-message']))
+                    $('.js-contact-us-scroll-button').click();
+                @endif
+
 
                 if(signInError){
                     $('#sign-in-modal').modal();

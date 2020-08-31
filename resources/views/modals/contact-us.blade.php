@@ -8,6 +8,11 @@
                 </button>
             </div>
             <div class="modal-body">
+                @if (session('send-status'))
+                    <div class="alert alert-success" role="alert">
+                        {{ session('send-status') }}
+                    </div>
+                @endif
                 <form class="px-4 py-2" method="POST" action="{{route('contact-us')}}">
                     @csrf
                     <div class="text-center mb-4">
@@ -21,7 +26,6 @@
                             name="contact-email"
                             value="{{old('contact-email')}}">
                         @include('utils.error-invalid-feedback', ['errorField' => 'contact-email'])
-
                     </div>
                     <div class="form-group">
                         <input type="text"
