@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -92,18 +93,28 @@ class LoginController extends Controller
      */
     public function handleProviderCallback($provider)
     {
-        $user = Socialite::driver($provider)->user();
+        $socialUser = Socialite::driver($provider)->user();
 
-        $user = User::firstOrCreate([
-            'login' => $user->getEmail(),
-            'login_type' => $provider
-        ], [
-            'name' => $user->getName(),
-            'password' => Hash::make(Str::random(24))
-        ]);
+        $isNew = false;
+
+        try {
+            $user = User::where('login', '=', $socialUser->getEmail())
+                        ->where('login_type', '=', $provider)->firstOrFail();
+        }
+        catch (\Exception $e) {
+            $user = User::create([
+                'login' => $socialUser->getEmail(),
+                'login_type' => $provider,
+                'name' => $socialUser->getName(),
+                'password' => Hash::make(Str::random(24)),
+                'email_verified_at' => Carbon::now()
+            ]);
+            $isNew = true;
+        }
+
 
         Auth::login($user, true);
 
-        return redirect()->route('reports');
+        return redirect()->route($isNew ? 'settings' : 'reports');
     }
 }
