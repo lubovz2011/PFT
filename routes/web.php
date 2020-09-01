@@ -13,7 +13,7 @@
 
 
 
-Auth::routes();
+Auth::routes(['verify' => true]);
 
 Route::get('/home', 'HomeController@index')->name('home');
 
@@ -29,7 +29,7 @@ Route::group(['middleware' => 'guest'], function(){
     Route::get('login/{provider}/callback', 'Auth\LoginController@handleProviderCallback')->name('social-login-callback');
 });
 
-Route::group(['middleware' => 'auth'], function(){
+Route::group(['middleware' => ['auth', 'verified']], function(){
 
     /** categories page */
     Route::get('categories', 'CategoriesController@displayCategoriesPage')->name('categories');

@@ -25,7 +25,6 @@ class UpdateUsersTable extends Migration
                 $table->string("currency", 4)->default("USD");
                 $table->string("currencies")->nullable();
                 $table->boolean("monthly_report")->default(1);
-                $table->renameColumn("email_verified_at", "status");
                 $table->timestamp("last_activity")->default(\Illuminate\Support\Facades\DB::raw("CURRENT_TIMESTAMP"));
             });
         }

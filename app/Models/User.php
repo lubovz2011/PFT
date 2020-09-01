@@ -30,7 +30,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  * @property string $identifier
  * @package App\Models
  */
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     use Notifiable;
 
@@ -39,7 +39,7 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $fillable = ['login', 'password', 'name', 'login_type'];
+    protected $fillable = ['login', 'password', 'name', 'login_type', 'email_verified_at'];
 
     /**
      * The attributes that should be hidden for arrays.
