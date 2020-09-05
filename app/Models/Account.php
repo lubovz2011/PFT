@@ -21,6 +21,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Account extends Model
 {
+    public $timestamps = false;
     const TYPE_CASH = 'cash';
     const TYPE_CARD = 'card';
 

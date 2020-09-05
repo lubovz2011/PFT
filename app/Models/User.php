@@ -48,15 +48,6 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     protected $hidden = ['password', 'remember_token'];
 
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'status' => 'datetime',
-    ];
-
     public function accounts(){
         return $this->hasMany(Account::class);
     }
