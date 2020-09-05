@@ -21,18 +21,16 @@
                     <div class="form-group">
                         <input name="balance"
                                type="text"
-                               class="form-control text-right @error('balance') is-invalid @enderror"
+                               class="form-control @error('balance') is-invalid @enderror"
                                value="{{ old('balance') }}"
-                               placeholder="0 ILS">
+                               placeholder="AMOUNT">
                         @include('utils.error-invalid-feedback', ['errorField' => 'balance'])
                     </div>
                     <div class="form-group">
                         <select class="form-control @error('currency') is-invalid @enderror" name="currency">
-                            <option value="ILS" @if(old('currency') == "ILS") selected @endif>ILS Israeli new shekel</option>
-                            <option value="USD" @if(old('currency') == "USD") selected @endif>USD United States Dollar</option>
-                            <option value="EUR" @if(old('currency') == "EUR") selected @endif>EUR Euro</option>
-                            <option value="GBP" @if(old('currency') == "GBP") selected @endif>GBP British pound</option>
-                            <option value="JPY" @if(old('currency') == "JPY") selected @endif>JPY Japanese yen</option>
+                            @foreach(\App\Classes\Utils\DataSets::getUserCurrencyOptions() as $key => $currency)
+                                <option value="{{$key}}" @if(old('currency') == $key) selected @endif>{{$currency}}</option>
+                            @endforeach
                         </select>
                         @include('utils.error-invalid-feedback', ['errorField' => 'currency'])
                     </div>

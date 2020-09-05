@@ -10,7 +10,7 @@
         </h2>
     </div>
     <div id="section-interface"
-         class="collapse @if($errors->hasAny(['date_format', 'time_format', 'week_start', 'limit', 'main_currency', 'currencies.*']))
+         class="collapse @if($errors->hasAny(['date_format', 'limit', 'main_currency', 'currencies.*']))
                               show @endif"
          aria-labelledby="interface-header"
          data-parent="#accordion-settings">
@@ -56,11 +56,9 @@
                             id="main-currency-select"
                             name="main_currency"
                             default-value="{{$mainCurrency}}">
-                        <option value="ILS" @if(old('main_currency', $mainCurrency) == "ILS") selected @endif>ILS Israeli new shekel</option>
-                        <option value="USD" @if(old('main_currency', $mainCurrency) == "USD") selected @endif>USD United States Dollar</option>
-                        <option value="EUR" @if(old('main_currency', $mainCurrency) == "EUR") selected @endif>EUR Euro</option>
-                        <option value="GBP" @if(old('main_currency', $mainCurrency) == "GBP") selected @endif>GBP British pound</option>
-                        <option value="JPY" @if(old('main_currency', $mainCurrency) == "JPY") selected @endif>JPY Japanese yen</option>
+                        @foreach(\App\Classes\Utils\DataSets::getCurrencyOptions() as $key => $currency)
+                            <option value="{{$key}}" @if(old('main_currency', $mainCurrency) == $key) selected @endif>{{$currency}}</option>
+                        @endforeach
                     </select>
                     @include('utils.error-invalid-feedback', ["errorField" => 'main_currency'])
                 </div>
@@ -73,11 +71,9 @@
                             name="currencies[]"
                             default-value="{{implode(",", $currencies)}}"
                             multiple>
-                        <option value="ILS" @if(in_array("ILS", old('currencies', $currencies))) selected @endif>ILS Israeli new shekel</option>
-                        <option value="USD" @if(in_array("USD", old('currencies', $currencies))) selected @endif>USD United States Dollar</option>
-                        <option value="EUR" @if(in_array("EUR", old('currencies', $currencies))) selected @endif>EUR Euro</option>
-                        <option value="GBP" @if(in_array("GBP", old('currencies', $currencies))) selected @endif>GBP British pound</option>
-                        <option value="JPY" @if(in_array("JPY", old('currencies', $currencies))) selected @endif>JPY Japanese yen</option>
+                        @foreach(\App\Classes\Utils\DataSets::getCurrencyOptions() as $key => $currency)
+                            <option value="{{$key}}" @if(in_array($key, old('currencies', $currencies))) selected @endif>{{$currency}}</option>
+                        @endforeach
                     </select>
                     @include('utils.error-invalid-feedback', ["errorField" => 'currencies.*'])
                 </div>
