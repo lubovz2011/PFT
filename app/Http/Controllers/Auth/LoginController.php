@@ -102,14 +102,20 @@ class LoginController extends Controller
                         ->where('login_type', '=', $provider)->firstOrFail();
         }
         catch (\Exception $e) {
-            $user = User::create([
-                'login' => $socialUser->getEmail(),
-                'login_type' => $provider,
-                'name' => $socialUser->getName(),
-                'password' => Hash::make(Str::random(24)),
-                'email_verified_at' => Carbon::now()
-            ]);
-            $isNew = true;
+            try{
+                $user = User::create([
+                    'login' => $socialUser->getEmail(),
+                    'login_type' => $provider,
+                    'name' => $socialUser->getName(),
+                    'password' => Hash::make(Str::random(24)),
+                    'email_verified_at' => Carbon::now()
+                ]);
+                $isNew = true;
+            }
+            catch (\Exception $e){
+                return redirect()->route('welcome')->withErrors(['signup_login' => 'This email has already been taken.']);
+            }
+
         }
 
 

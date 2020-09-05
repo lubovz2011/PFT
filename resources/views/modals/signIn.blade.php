@@ -56,7 +56,7 @@
                 </form>
             </div>
             <div class="modal-footer justify-content-center">
-                <p>Don't have an account? <a href="#">Sign up</a></p>
+                <p>Don't have an account? <a href="#" data-dismiss="modal" data-toggle="modal" data-target="#sign-up-modal">Sign up</a></p>
             </div>
         </div>
     </div>

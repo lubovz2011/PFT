@@ -33,14 +33,6 @@
                                placeholder="Confirm Password"
                                required>
                     </div>
-                    <div class="form-group">
-                        <div class="form-check">
-                            <input type="checkbox" class="form-check-input" id="dropdownCheck">
-                            <label class="form-check-label" for="dropdownCheck">
-                                I accept the <a href="#">Terms of Use</a> & <a href="#">Privacy Policy</a>.
-                            </label>
-                        </div>
-                    </div>
                     <button type="submit" class="btn btn-primary btn-block">Sign up</button>
                     <p class="text-center m-3">or</p>
                     <div class="row">
@@ -54,7 +46,7 @@
                 </form>
             </div>
             <div class="modal-footer justify-content-center">
-                <p>Already have an account? <a href="#">Sign in</a></p>
+                <p>Already have an account? <a href="#" data-dismiss="modal" data-toggle="modal" data-target="#sign-in-modal">Sign in</a></p>
             </div>
         </div>
     </div>
