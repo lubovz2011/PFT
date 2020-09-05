@@ -1,9 +1,12 @@
 <div class="card">
-    <div class="card-header" id="interface-header">
+    <div class="card-header collapsed" id="interface-header" data-toggle="collapse" data-target="#section-interface">
         <h2 class="mb-0">
-            <button class="btn shadow-none" type="button" data-toggle="collapse" data-target="#section-interface" aria-expanded="true" aria-controls="collapseOne">
+            <button class="btn shadow-none" type="button">
                 Interface
             </button>
+            <div class="float-right">
+                <i class="arrow up mb-1"></i>
+            </div>
         </h2>
     </div>
     <div id="section-interface"
@@ -28,37 +31,6 @@
                         <option value="d-m-Y" @if(old('date_format', $dateFormat) == "d-m-Y") selected @endif>DD-MM-YYYY ({{date("d-m-Y")}})</option>
                     </select>
                     @include('utils.error-invalid-feedback', ["errorField" => 'date_format'])
-                </div>
-            </div>
-            <div class="form-group row">
-                <label for="time-format-select" class="col-md-4 col-lg-4 col-form-label">Time format</label>
-                <div class="col-md-8 col-lg-8">
-                    <select class="form-control @error('time_format') is-invalid @enderror"
-                            id="time-format-select"
-                            name="time_format"
-                            default-value="{{$timeFormat}}">
-                        <option value="H:i" @if(old('time_format', $timeFormat) == "H:i") selected @endif>HH:MM ({{date("H:i")}})</option>
-                        <option value="h:i A" @if(old('time_format', $timeFormat) == "h:i A") selected @endif>hh:mm A ({{date("h:i A")}})</option>
-                    </select>
-                    @include('utils.error-invalid-feedback', ["errorField" => 'time_format'])
-                </div>
-            </div>
-            <div class="form-group row">
-                <label for="week-start-select" class="col-md-4 col-lg-4 col-form-label">Week start</label>
-                <div class="col-md-8 col-lg-8">
-                    <select class="form-control @error('week_start') is-invalid @enderror"
-                            id="week-start-select"
-                            name="week_start"
-                            default-value="{{$weekStart}}">
-                        <option value="0" @if(old('week_start', $weekStart) == 0) selected @endif>Sunday</option>
-                        <option value="1" @if(old('week_start', $weekStart) == 1) selected @endif>Monday</option>
-                        <option value="2" @if(old('week_start', $weekStart) == 2) selected @endif>Tuesday</option>
-                        <option value="3" @if(old('week_start', $weekStart) == 3) selected @endif>Wednesday</option>
-                        <option value="4" @if(old('week_start', $weekStart) == 4) selected @endif>Thursday</option>
-                        <option value="5" @if(old('week_start', $weekStart) == 5) selected @endif>Friday</option>
-                        <option value="6" @if(old('week_start', $weekStart) == 6) selected @endif>Saturday</option>
-                    </select>
-                    @include('utils.error-invalid-feedback', ["errorField" => 'week_start'])
                 </div>
             </div>
             <div class="form-group row">

@@ -1,9 +1,12 @@
 <div class="card">
-    <div class="card-header" id="security-header">
+    <div class="card-header collapsed" id="security-header" data-toggle="collapse" data-target="#email-notifications-info">
         <h2 class="mb-0">
-            <button class="btn shadow-none" type="button" data-toggle="collapse" data-target="#email-notifications-info" aria-expanded="true" aria-controls="collapseOne">
+            <button class="btn shadow-none" type="button">
                 Email notifications
             </button>
+            <div class="float-right">
+                <i class="arrow up mb-1"></i>
+            </div>
         </h2>
     </div>
     <div id="email-notifications-info"

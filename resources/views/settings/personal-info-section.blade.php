@@ -1,9 +1,12 @@
 <div class="card">
-    <div class="card-header" id="personal-info-header">
+    <div class="card-header collapsed" id="personal-info-header" data-toggle="collapse" data-target="#section-personal-info">
         <h2 class="mb-0">
-            <button class="btn shadow-none" type="button" data-toggle="collapse" data-target="#section-personal-info" aria-expanded="true" aria-controls="collapseOne">
+            <button class="btn shadow-none" type="button">
                 Personal Info
             </button>
+            <div class="float-right">
+                <i class="arrow up mb-1"></i>
+            </div>
         </h2>
     </div>
     <div id="section-personal-info"
