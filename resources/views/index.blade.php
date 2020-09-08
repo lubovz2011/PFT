@@ -73,7 +73,7 @@
                                 <div class="feature-body">
                                     <h6>Get an overview</h6>
                                     <p>
-                                        You can see overview about your total incomes and expenses in one place.
+                                        Overview your total incomes and expenses in one place.
                                     </p>
                                 </div>
                             </div>

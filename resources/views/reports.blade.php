@@ -10,7 +10,7 @@
                 @include('side-bar.filters-form')
             </div>
             <div class="col-12 col-md-9">
-                <div class="card shadow-card border-0" style="min-height: 80vh;">
+                <div class="card shadow-card mh-80 border-0">
                     <div class="card-header">
                         <h5 class="card-title mb-0">Dashboard</h5>
                     </div>

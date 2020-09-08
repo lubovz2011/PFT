@@ -63,6 +63,7 @@ class Otsar extends AbstractRequest
         $txns = $data[0]->txns ?? [];
 
         $credentials = json_decode($this->account->credentials);
+        $lockedCategory = $this->account->user->categories()->where('lock', '=', true)->first()->id;
 
         foreach ($txns as $txn){
             if(Carbon::parse($txn->date)->toIso8601String() != ($credentials->lastUpdate ?? '')){
@@ -73,7 +74,7 @@ class Otsar extends AbstractRequest
                 $transaction->description = $txn->description;
                 $transaction->date = Carbon::parse($txn->date);
                 $transaction->account_id = $this->account->id;
-                $transaction->category_id = $this->account->user->categories()->where('lock', '=', true)->first()->id;
+                $transaction->category_id = $lockedCategory;
                 $transaction->save();
             }
         }

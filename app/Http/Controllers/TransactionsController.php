@@ -67,7 +67,7 @@ class TransactionsController extends Controller
             'account'     => 'bail|required|integer',
             'category'    => 'bail|required|integer|exists:categories,id',
             'date'        => 'bail|required|date',
-            'amount'      => 'bail|numeric',
+            'amount'      => 'bail|required|numeric',
             'description' => 'bail|max:1024'
         ]);
         /** @var User $user */
@@ -144,10 +144,12 @@ class TransactionsController extends Controller
             $transaction->account_id = $request->input("t-$id-account");
             $transaction->category_id = $request->input("t-$id-category");
             $transaction->date = $request->input("t-$id-date");
-            $transaction->amount = abs($request->input("t-$id-amount"));
             $transaction->description = $request->input("t-$id-description") ?? '';
             /** @var Account $account */
             $account = $user->accounts()->where('accounts.id', '=', $transaction->account_id)->first();
+            $transaction->amount = abs($request->input("t-$id-amount"));
+            $transaction->amount = Rate::convert($transaction->amount, $transaction->currency, $account->currency);
+            $transaction->currency = $account->currency;
             $account->balance += $transaction->amount;
             $account->save();
             $transaction->save();

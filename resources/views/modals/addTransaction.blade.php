@@ -46,11 +46,11 @@
                         @include('utils.error-invalid-feedback', ["errorField" => 'category'])
                     </div>
                     <div class="form-group">
-                        <input type="date" class="form-control @error('date') is-invalid @enderror" name="date" value="{{old('date')}}" placeholder="" required>
+                        <input type="date" class="form-control @error('date') is-invalid @enderror" name="date" value="{{old('date', \Carbon\Carbon::now()->format('Y-m-d'))}}" placeholder="" required>
                         @include('utils.error-invalid-feedback', ["errorField" => 'date'])
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control text-right @error('amount') is-invalid @enderror" name="amount" value="{{old('amount')}}" placeholder="0 ILS">
+                        <input type="text" class="form-control @error('amount') is-invalid @enderror" name="amount" value="{{old('amount')}}" placeholder="Amount">
                         @include('utils.error-invalid-feedback', ["errorField" => 'amount'])
                     </div>
                     <div class="form-group">

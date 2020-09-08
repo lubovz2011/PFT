@@ -68,7 +68,8 @@ class CategoriesController extends Controller
         $user = auth()->user();
 
         $category = $user->categories()
-            ->where('id', '=', $request->input('categoryId'))->first();
+            ->where('id', '=', $request->input('categoryId'))
+            ->where('lock', '=', 0)->firstOrFail();
 
 
         return response()->json([

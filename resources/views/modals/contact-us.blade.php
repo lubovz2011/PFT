@@ -24,7 +24,7 @@
                             class="form-control @error('contact-email') is-invalid @enderror"
                             placeholder="email@example.com"
                             name="contact-email"
-                            value="{{old('contact-email')}}">
+                            value="{{old('contact-email', auth()->user()->login)}}">
                         @include('utils.error-invalid-feedback', ['errorField' => 'contact-email'])
                     </div>
                     <div class="form-group">

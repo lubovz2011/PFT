@@ -21,7 +21,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  * @property integer $week_start
  * @property integer $limit
  * @property string $currency
- * @property string[]|null $currencies
+ * @property string|null $currencies
  * @property bool $monthly_report
  * @property \DateTime|null $last_activity
  * @property Account[]|Collection $accounts

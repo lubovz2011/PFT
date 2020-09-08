@@ -13,4 +13,12 @@ class PagesController extends Controller
     public function displayWelcomePage(){
         return view('index');
     }
+
+    /**
+     * method returns about-us page
+     * @return \Illuminate\View\View
+     */
+    public function displayAboutUsPage(){
+        return view('about-us');
+    }
 }
