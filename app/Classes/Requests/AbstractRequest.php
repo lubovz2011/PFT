@@ -8,6 +8,8 @@ use GuzzleHttp\Client;
 
 /**
  * Class AbstractRequest
+ * This class
+ *
  * @package App\Classes\Requests
  */
 abstract class AbstractRequest
@@ -41,11 +43,18 @@ abstract class AbstractRequest
     abstract function getMethod() : string;
 
     /**
+     * Function handle response data
+     * @param string $data
+     * @return mixed
+     */
+    abstract function parseResponse(string $data);
+
+    /**
      * Function execute http request
-     *
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function send(){
+    public function send()
+    {
         $client = new Client();
         $response = $client->request($this->getMethod(), $this->getUrl(), [
            'body'    => $this->getBody(),
@@ -53,6 +62,4 @@ abstract class AbstractRequest
         ]);
         $this->parseResponse($response->getBody()->getContents());
     }
-
-    abstract function parseResponse(string $data);
 }

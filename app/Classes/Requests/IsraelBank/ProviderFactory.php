@@ -2,9 +2,11 @@
 
 
 namespace App\Classes\Requests\IsraelBank;
-use App\Classes\Requests\IsraelBank\Otsar;
+
 /**
  * Class ProviderFactory
+ * This class create suitable object for given provider
+ *
  * @package App\Classes\Requests\IsraelBank
  * @uses \App\Classes\Requests\IsraelBank\Otsar
  */
@@ -15,8 +17,7 @@ class ProviderFactory
     ];
 
     /**
-     * Function create and return suitable object for given provider
-     *
+     * Static method create and return suitable object for given provider
      * @param string $providerName
      * @return mixed
      * @throws \Exception
@@ -28,5 +29,4 @@ class ProviderFactory
 
         throw new \Exception('Unexpected provider '.$providerName);
     }
-
 }

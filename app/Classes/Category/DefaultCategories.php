@@ -9,10 +9,16 @@ use App\Models\Category;
 use App\Models\User;
 use phpDocumentor\Reflection\Types\Boolean;
 
+/**
+ * Class DefaultCategories
+ * This class contains methods that allow us set defaults for user categories
+ *
+ * @package App\Classes\Category
+ */
 class DefaultCategories extends Defaults
 {
     /**
-     * generate default categories for new user
+     * Static method generate default categories
      * @param User $user
      */
     public static function generate(User $user)
@@ -96,6 +102,16 @@ class DefaultCategories extends Defaults
         $parent_id = self::generateCategory($user, 'Banks & Cards', 'far fa-credit-card', null, true);
     }
 
+    /**
+     * Static method inserts the category into the database
+     *
+     * @param User $user
+     * @param string $name
+     * @param string $icon
+     * @param int|null $parent_id
+     * @param bool $lock
+     * @return int
+     */
     public static function generateCategory(User $user, string $name, string $icon, int $parent_id = null, bool $lock = false)
     {
         $category = new Category();
@@ -106,5 +122,4 @@ class DefaultCategories extends Defaults
         $user->categories()->save($category);
         return $category->id;
     }
-
 }

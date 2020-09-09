@@ -6,11 +6,16 @@ namespace App\Classes\Utils;
 
 use App\Models\User;
 
+/**
+ * Class DataSets
+ * This class contain methods that returns static data sets
+ *
+ * @package App\Classes\Utils
+ */
 class DataSets
 {
     /**
      * Method return array with dates
-     *
      * @return string[]
      */
     public static function getDateOptions()
@@ -26,8 +31,7 @@ class DataSets
     }
 
     /**
-     * Method return array with types
-     *
+     * Method return array with transaction types
      * @return string[]
      */
     public static function getTypeOptions()
@@ -40,7 +44,6 @@ class DataSets
 
     /**
      * Method return array with default currencies
-     *
      * @return string[]
      */
     public static function getCurrencyOptions()
@@ -56,11 +59,11 @@ class DataSets
 
     /**
      * Method return array with selected currencies by user in settings
-     *
      * @return string[]
      */
     public static function getUserCurrencyOptions()
     {
+        /** @var User $user */
         $user = auth()->user();
         $defaultCurrencies = self::getCurrencyOptions();
         $userCurrencies = explode(',', $user->currencies ?: "");
