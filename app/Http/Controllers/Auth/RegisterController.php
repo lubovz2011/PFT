@@ -51,16 +51,7 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'signup_login' => ['required', 'string', 'email', 'max:255', 'unique:users,login'],
             'signup_password' => ['required', 'string', 'min:8', 'confirmed'],
-        ]/*,
-        [
-            "signup_login.required" => "The login field is required.",
-            "signup_login.email"    => "The login must be a valid email address.",
-            "signup_login.unique"   => "The login has already been taken.",
-            "signup_login.max"      => "The login may not be greater than 255 characters.",
-            "signup_password.required"  => "The password field is required.",
-            "signup_password.min"       => "The password must be at least 8 characters.",
-            "signup_password.confirmed" => "The password confirmation does not match."
-        ]*/);
+        ]);
     }
 
     /**

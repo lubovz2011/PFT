@@ -47,11 +47,13 @@ class MonthlyReport extends Mailable
         $endOfMonth = (clone $startOfMonth)->lastOfMonth();
 
         /** @var Transaction[]|Collection $transactions */
+
         $transactions = $this->user->transactions()->whereIn('account_id', $accounts->pluck('id')->all())
             ->whereIn('category_id', $categories->pluck('id')->all())
             ->where('date', '>=', $startOfMonth)
             ->where('date', '<=', $endOfMonth)
             ->get();
+
 
 
         $totalIncome = $transactions->where('type', '=', 'income')->sum('amountInUserCurrency');

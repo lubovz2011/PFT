@@ -4,6 +4,7 @@
 namespace App\Classes\Requests;
 
 
+use App\Classes\Requests\IsraelBank\Otsar;
 use GuzzleHttp\Client;
 
 /**
@@ -17,6 +18,10 @@ abstract class AbstractRequest
     const METHOD_POST = 'POST';
     const METHOD_GET = 'GET';
     const METHOD_DEL = 'DELETE';
+
+    private static $providers = [
+        'otsar' => Otsar::class
+    ];
 
     /**
      * Function returns request url
@@ -61,5 +66,19 @@ abstract class AbstractRequest
            'headers' => $this->getHeaders()
         ]);
         $this->parseResponse($response->getBody()->getContents());
+    }
+
+    /**
+     * Static method create and return suitable object for given provider (factory method)
+     * @param string $providerName
+     * @return AbstractRequest
+     * @throws \Exception
+     */
+    public static function provider(string $providerName)
+    {
+        if(isset(self::$providers[strtolower($providerName)]))
+            return new self::$providers[strtolower($providerName)]();
+
+        throw new \Exception('Unexpected provider '.$providerName);
     }
 }

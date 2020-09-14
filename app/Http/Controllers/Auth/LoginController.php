@@ -106,14 +106,11 @@ class LoginController extends Controller
                 $isNew = true;
             }
             catch (\Exception $e){
-                return redirect()->route('welcome')->withErrors(['signup_login' => 'This email has already been taken.']);
+                return redirect()->route('welcome')
+                    ->withErrors(['signup_login' => 'This email has already been taken.']);
             }
-
         }
-
-
         Auth::login($user, true);
-
         return redirect()->route($isNew ? 'settings' : 'reports');
     }
 }
