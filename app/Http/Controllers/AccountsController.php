@@ -4,22 +4,24 @@
 namespace App\Http\Controllers;
 
 
-use App\Classes\Requests\IsraelBank\Otsar;
-use App\Classes\Requests\IsraelBank\ProviderFactory;
+use App\Classes\Requests\AbstractRequest;
+use App\Helpers\Helpers;
 use App\Models\Account;
 use App\Models\Rate;
-use App\Models\Transaction;
 use App\Models\User;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
+/**
+ * Class AccountsController
+ * This class handle user commands on accounts
+ *
+ * @package App\Http\Controllers
+ */
 class AccountsController extends Controller
 {
     /**
-     * ToDo: empty table for empty accounts
-     * method returns accounts page
+     * Method returns accounts page
      * @return \Illuminate\View\View
      */
     public function displayAccountsPage()
@@ -34,6 +36,12 @@ class AccountsController extends Controller
         ]);
     }
 
+    /**
+     * Method update existing account and redirect user back
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Validation\ValidationException
+     */
     public function updateAccount(Request $request)
     {
         $this->validate($request, [
@@ -53,7 +61,7 @@ class AccountsController extends Controller
     }
 
     /**
-     * ToDo: validate request
+     * Method delete account and redirect user back
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      * @throws \Exception
@@ -65,9 +73,15 @@ class AccountsController extends Controller
         $accountId = $request->input('id');
         $account = $user->accounts()->where('id', '=', $accountId)->first();
         $account->delete();
-        return redirect()->route('accounts');
+        return redirect()->back();
     }
 
+    /**
+     * Method create cash account and redirect user back
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Validation\ValidationException
+     */
     public function createCashAccount(Request $request)
     {
         /** @var User $user */
@@ -82,18 +96,21 @@ class AccountsController extends Controller
         $account->balance = $request->input('balance');
         $account->currency = $request->input('currency');
         $user->accounts()->save($account);
-        return redirect()->route('accounts');
+        return redirect()->back();
     }
 
+    /**
+     * Method create digital account and redirect user back
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Illuminate\Validation\ValidationException
+     */
     public function connectDigitalAccount(Request $request)
     {
         /** @var User $user */
         $user = auth()->user();
-        $this->validate($request, [
-            'bank'      => 'bail|required|in:otsar',
-            'username'   => 'bail|required|string',
-            'password'  => 'bail|required|string'
-        ]);
+        $this->connectDigitalAccountValidation($request);
 
         try{
             DB::beginTransaction();
@@ -108,38 +125,46 @@ class AccountsController extends Controller
                 'bank'     => $request->input('bank')
             ]);
             $user->accounts()->save($account);
-
-            /** @var Otsar $provider */
-            $provider = ProviderFactory::provider($request->input('bank'));
-            $provider->setAccount($account);
-            $provider->send();
+            AbstractRequest::provider($request->input('bank'))->setAccount($account)->send();
             DB::commit();
         }
         catch (\Exception $e) {
             DB::rollBack();
         }
-        return redirect()->route('accounts');
+        return redirect()->back();
     }
 
-    public function synchronizeAccount(Request $request){
+    /**
+     * Method validate request data for digital account connection
+     * @param Request $request
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    private function connectDigitalAccountValidation(Request $request){
+        $this->validate($request, [
+            'bank'      => 'bail|required|in:otsar',
+            'username'   => 'bail|required|string',
+            'password'  => 'bail|required|string'
+        ]);
+    }
+
+    /**
+     * Method synchronize with digital account
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    public function synchronizeAccount(Request $request)
+    {
         /** @var User $user */
         $user = auth()->user();
-        try{
-            /** @var Account $account */
-            $account = $user->accounts()->where('id', '=', $request->input('id'))->firstOrFail();
-        }
-        catch (ModelNotFoundException $e){
-            throw new ModelNotFoundException("Access to this account is denied!");
-        }
+        /** @var Account $account */
+        $account = $user->accounts()->where('id', '=', $request->input('id'))->firstOrFail();
 
         if($account->type == Account::TYPE_CARD){
             $credentials = json_decode($account->credentials);
             try{
                 DB::beginTransaction();
-                /** @var Otsar $provider */
-                $provider = ProviderFactory::provider($credentials->bank);
-                $provider->setAccount($account);
-                $provider->send();
+                AbstractRequest::provider($credentials->bank)->setAccount($account)->send();
                 DB::commit();
             }
             catch (\Exception $e) {
@@ -153,6 +178,12 @@ class AccountsController extends Controller
         return response()->json($account);
     }
 
+    /**
+     * Method return total balance of accounts
+     * @param string $userCurrency
+     * @param null $accounts
+     * @return string
+     */
     public function totalBalance(string $userCurrency, $accounts = null)
     {
         $groupByCurrency = $accounts->groupBy('currency');
@@ -164,7 +195,6 @@ class AccountsController extends Controller
                 $totalByCurrency += $account->balance;
             $total += Rate::convert($totalByCurrency, $currency, $userCurrency);
         }
-        return number_format($total, 2, '.', ',');
+        return Helpers::NumberFormat($total);
     }
-
 }

@@ -2,7 +2,7 @@
 
 namespace App\Mail;
 
-use App\Helpers\Helpers;
+
 use App\Models\Account;
 use App\Models\Category;
 use App\Models\Transaction;
@@ -11,9 +11,14 @@ use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Collection;
 
+/**
+ * Class MonthlyReport
+ * This class built pretty email
+ *
+ * @package App\Mail
+ */
 class MonthlyReport extends Mailable
 {
     use Queueable, SerializesModels;
@@ -31,38 +36,20 @@ class MonthlyReport extends Mailable
     }
 
     /**
-     * Build the message.
-     *
-     * @return $this
+     * Method build the message.
+     * @return MonthlyReport
      */
     public function build()
     {
-        /** @var Account[]|Collection $accounts */
-        $accounts = $this->user->accounts()->where('status', '=', 1)->get();
+        list($accounts, $categories, $startOfMonth, $transactions) = $this->getDataForReport();
 
-        /** @var Category[]|Collection $categories */
-        $categories = $this->user->categories()->where('status', '=', 1)->get();
-
-        $startOfMonth = Carbon::now()->firstOfMonth()->subMonth();
-        $endOfMonth = (clone $startOfMonth)->lastOfMonth();
-
-        /** @var Transaction[]|Collection $transactions */
-
-        $transactions = $this->user->transactions()->whereIn('account_id', $accounts->pluck('id')->all())
-            ->whereIn('category_id', $categories->pluck('id')->all())
-            ->where('date', '>=', $startOfMonth)
-            ->where('date', '<=', $endOfMonth)
-            ->get();
-
-
-
+        //calculate all values for the report
         $totalIncome = $transactions->where('type', '=', 'income')->sum('amountInUserCurrency');
         $totalExpense = $transactions->where('type', '=', 'expense')->sum('amountInUserCurrency');
         $endBalance = $accounts->sum('balanceInUserCurrency');
         $startBalance = $endBalance - $totalIncome + $totalExpense;
         $profit = $totalIncome + $totalExpense;
-
-        $avgPerMonth = $this->prognosis($accounts, $categories);
+        $avgPerMonth = $this->avgPerMonth($accounts, $categories);
 
         return $this->view('mail.monthly-report', [
             "start_balance" => $startBalance,
@@ -73,11 +60,17 @@ class MonthlyReport extends Mailable
             "currency"      => $this->user->currency,
             "transactions"  => $transactions->count(),
             "month"         => $startOfMonth->format("M Y"),
-            "avg_per_month" => $this->avgPerMonth($avgPerMonth)
+            "avg_per_month" => $this->prognosis($avgPerMonth)
         ]);
     }
 
-    public function prognosis($accounts, $categories)
+    /**
+     * Method return the avg monthly balance change for the last 3 months
+     * @param $accounts
+     * @param $categories
+     * @return float|int
+     */
+    public function avgPerMonth($accounts, $categories)
     {
         $thirdMonth = Carbon::now()->firstOfMonth()->subMonth();
         $secondMonth = (clone $thirdMonth)->subMonth();
@@ -102,7 +95,12 @@ class MonthlyReport extends Mailable
         return $total / 3;
     }
 
-    private function avgPerMonth(float $avgPerMonth){
+    /**
+     * Method calculate prognosis for the next 3-36 months
+     * @param float $avgPerMonth
+     * @return array|float[]|int[]
+     */
+    private function prognosis(float $avgPerMonth){
         if(empty($avgPerMonth))
             return [];
         return [
@@ -112,5 +110,30 @@ class MonthlyReport extends Mailable
             "2 Years"   => $avgPerMonth * 24,
             "3 Years"   => $avgPerMonth * 36
         ];
+    }
+
+    /**
+     * Method return all required data for monthly report
+     * @return array
+     */
+    private function getDataForReport()
+    {
+        /** @var Account[]|Collection $accounts */
+        $accounts = $this->user->accounts()->where('status', '=', 1)->get();
+
+        /** @var Category[]|Collection $categories */
+        $categories = $this->user->categories()->where('status', '=', 1)->get();
+
+        $startOfMonth = Carbon::now()->firstOfMonth()->subMonth();
+        $endOfMonth = (clone $startOfMonth)->lastOfMonth();
+
+        /** @var Transaction[]|Collection $transactions */
+        $transactions = $this->user->transactions()->whereIn('account_id', $accounts->pluck('id')->all())
+            ->whereIn('category_id', $categories->pluck('id')->all())
+            ->where('date', '>=', $startOfMonth)
+            ->where('date', '<=', $endOfMonth)
+            ->get();
+
+        return [$accounts, $categories, $startOfMonth, $transactions];
     }
 }

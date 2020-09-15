@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class Rate
+ * This class represent record from rates table
  *
  * @package App\Models
  *
@@ -20,7 +21,15 @@ class Rate extends Model
 {
     public $timestamps = false;
 
-    public static function convert(float $amount, string $from, string $to){
+    /**
+     * Method return converted amount value
+     * @param float $amount
+     * @param string $from
+     * @param string $to
+     * @return float
+     */
+    public static function convert(float $amount, string $from, string $to)
+    {
         if($from == $to)
             return $amount;
         $rate = Rate::where('from', '=', $from)->where('to', '=', $to)->value('rate');

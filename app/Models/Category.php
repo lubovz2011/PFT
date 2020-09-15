@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class Category
+ * This class represent record from categories table
  *
  * @property integer $id
  * @property string $name
@@ -24,55 +25,82 @@ class Category extends Model
 {
     public $timestamps = false;
 
-    public function user(){
+    /**
+     * Define relation - Category belongs to User
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
 
-    public function categories(){
+    /**
+     * Define relation - Category has many Categories
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function categories()
+    {
         return $this->hasMany(Category::class, 'parent_id');
     }
 
-    public function category(){
+    /**
+     * Define relation - Category belongs to Category
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function category()
+    {
         return $this->belongsTo(Category::class, 'parent_id', 'id');
     }
 
-    public function transactions(){
+    /**
+     * Define relation - Category has many Transactions
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function transactions()
+    {
         return $this->hasMany(Transaction::Class);
     }
 
-    public function getIconAttribute($icon){
+    /**
+     * Method return:
+     *      icon - for parent category
+     *      parent icon - for child category
+     * @param $icon
+     * @return string
+     */
+    public function getIconAttribute($icon)
+    {
         if(!empty($this->parent_id))
             return $this->category->icon;
         return $icon;
     }
 
     /**
-     * Function return count of transactions in current category and her subCategories
-     *
+     * Method return count of transactions in current category and her subCategories
      * @param Collection $transactions
      * @param Collection $filteredCategories
      * @return int
      */
     public function getTransactionsCountForReport(Collection $transactions, Collection $filteredCategories)
     {
-        return $this->getCategoryTransactions($transactions, $filteredCategories)->count();
+        return $this->getCategoryTransactions($transactions, $filteredCategories)
+                    ->count();
     }
 
     /**
-     * Function return amount of transactions in current category and her subCategories
-     *
+     * Method return amount of transactions in current category and her subCategories
      * @param Collection $transactions
      * @param Collection $filteredCategories
      * @return mixed
      */
     public function getAmountForReport(Collection $transactions, Collection $filteredCategories)
     {
-        return $this->getCategoryTransactions($transactions, $filteredCategories)->sum('amountInUserCurrency');
+        return $this->getCategoryTransactions($transactions, $filteredCategories)
+                    ->sum('amountInUserCurrency');
     }
 
     /**
-     * Function return transactions percent for current category
-     *
+     * Method return transactions percent for current category
      * @param Collection $transactions
      * @param Collection $filteredCategories
      * @param $totalIncome
@@ -87,8 +115,7 @@ class Category extends Model
     }
 
     /**
-     * Function return transactions percent for one subCategory
-     *
+     * Method return transactions percent for one subCategory
      * @param Collection $transactions
      * @param Collection $filteredCategories
      * @param Category $subCategory
@@ -100,7 +127,8 @@ class Category extends Model
         $subCategoryAmount = $subCategory->getAmountForReport($transactions,$filteredCategories);
         $type = $subCategoryAmount >= 0 ? 'income' : 'expense';
 
-        $parentCategoryAmount = $categoryTransactions->where('type', '=', $type)->sum('amountInUserCurrency');
+        $parentCategoryAmount = $categoryTransactions->where('type', '=', $type)
+                                                     ->sum('amountInUserCurrency');
         if($parentCategoryAmount)
             return 100 * $subCategoryAmount / $parentCategoryAmount;
         else
@@ -108,8 +136,7 @@ class Category extends Model
     }
 
     /**
-     * Function return all transactions that was made with current category and all sub-categories
-     *
+     * Method return all transactions that was made with current category and all sub-categories
      * @param Collection $transactions
      * @param Collection $filteredCategories
      * @return Collection
@@ -117,15 +144,14 @@ class Category extends Model
     private function getCategoryTransactions(Collection $transactions, Collection $filteredCategories)
     {
         //get all subCategory ids
-        $categoryIds = $filteredCategories->where('parent_id', '=', $this->id)->keys()->toArray();
+        $categoryIds = $filteredCategories->where('parent_id', '=', $this->id)
+                                          ->keys()
+                                          ->toArray();
+
         //add current category id to array of subCategory ids
         $categoryIds[] = $this->id;
 
         //find and return transactions where category id of each transaction exists in array of category ids
         return $transactions->whereIn('category_id', $categoryIds);
     }
-
-
-
-
 }

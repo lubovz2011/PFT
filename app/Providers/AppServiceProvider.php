@@ -9,6 +9,10 @@ use App\Classes\Requests\SaltEdge\Customer\CreateCustomer;
 use App\Models\User;
 use Illuminate\Support\ServiceProvider;
 
+/**
+ * Class AppServiceProvider
+ * @package App\Providers
+ */
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -28,13 +32,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        User::created(function($user){
+        //when user created - run following cod
+        User::created(function($user)
+        {
             /** @var User $user */
-
             DefaultAccount::generate($user);
             DefaultCategories::generate($user);
-//            (new CreateCustomer())->setUser($user)->send();
         });
-
     }
 }

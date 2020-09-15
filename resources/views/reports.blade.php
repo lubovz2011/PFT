@@ -93,7 +93,7 @@
                                                         </div>
                                                         <div class="col d-flex justify-content-end">
                                                             <div class="mr-3 text-center @if($category->getAmountForReport($transactions, $filteredCategories) >= 0) text-success @else text-danger @endif font-weight-bold">
-                                                                {{\App\Helpers\Helpers::NumberFormat($category->getPercentForReport($transactions, $filteredCategories, $totalIncome, $totalExpense))}}%
+                                                                {{\App\Helpers\Helpers::NumberFormat($category->getPercentForReport($transactions, $filteredCategories, $totalPositive, $totalNegative))}}%
                                                             </div>
                                                         </div>
                                                     </div>

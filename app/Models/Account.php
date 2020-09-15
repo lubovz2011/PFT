@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class Account
+ * This class represent record from accounts table
  *
  * @property integer $id
  * @property string $title
@@ -25,11 +26,21 @@ class Account extends Model
     const TYPE_CASH = 'cash';
     const TYPE_CARD = 'card';
 
-    public function user(){
+    /**
+     * Define relation - Account belongs to User
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function user()
+    {
         return $this->belongsTo("App\Models\User");
     }
 
-    public function getBalanceInUserCurrencyAttribute(){
+    /**
+     * Method return account balance converted to user main currency
+     * @return float
+     */
+    public function getBalanceInUserCurrencyAttribute()
+    {
         return Rate::convert($this->balance, $this->currency, $this->user->currency);
     }
 }

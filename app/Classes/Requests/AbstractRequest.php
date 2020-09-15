@@ -9,7 +9,7 @@ use GuzzleHttp\Client;
 
 /**
  * Class AbstractRequest
- * This class
+ * This class handle all http requests outside the system
  *
  * @package App\Classes\Requests
  */

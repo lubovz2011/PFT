@@ -3,11 +3,16 @@
 
 namespace App\Http\Controllers;
 
-
+/**
+ * Class PagesController
+ * This class returns simple pages
+ *
+ * @package App\Http\Controllers
+ */
 class PagesController extends Controller
 {
     /**
-     * method returns welcome page
+     * Method returns welcome page
      * @return \Illuminate\View\View
      */
     public function displayWelcomePage(){
@@ -15,7 +20,7 @@ class PagesController extends Controller
     }
 
     /**
-     * method returns about-us page
+     * Method returns about-us page
      * @return \Illuminate\View\View
      */
     public function displayAboutUsPage(){

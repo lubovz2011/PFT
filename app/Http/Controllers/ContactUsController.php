@@ -7,8 +7,20 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 
+/**
+ * Class ContactUsController
+ * This class handle user commands on contact us
+ *
+ * @package App\Http\Controllers
+ */
 class ContactUsController extends Controller
 {
+    /**
+     * Method send contact us email
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Validation\ValidationException
+     */
     public function sendContactUsEmail(Request $request)
     {
         $this->validate($request, [

@@ -8,13 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class Icon
- * @package App\Models
+ * This class represent record from icons table
+ *
  * @property string $name
  * @property string $class
+ *
+ * @package App\Models
  */
 class Icon extends Model
 {
     public $timestamps = false;
-    protected $primaryKey = null;
-    public $incrementing = false;
 }

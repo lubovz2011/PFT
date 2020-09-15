@@ -7,13 +7,18 @@ namespace App\Http\Controllers;
 use App\Classes\Requests\SaltEdge\Customer\DeleteCustomer;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
+/**
+ * Class UserController
+ * This class handle user commands on settings
+ *
+ * @package App\Http\Controllers
+ */
 class UserController extends Controller
 {
     /**
-     * method returns settings page
+     * Method returns settings page
      * @return \Illuminate\View\View
      */
     public function displaySettingsPage(Request $request){
@@ -32,6 +37,12 @@ class UserController extends Controller
         return view('settings.settings', $params);
     }
 
+    /**
+     * Method update personal info of user
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Validation\ValidationException
+     */
     public function editPersonalInfo(Request $request)
     {
         $user = auth()->user();
@@ -41,10 +52,9 @@ class UserController extends Controller
             $additionalLoginValidation = '|unique:users,login';
         }
         $this->validate($request, [
-            'name'  => 'string|max:255',
+            'name'  => 'string|max:255|nullable',
             'login' => 'bail|required|email|max:255'.$additionalLoginValidation
         ]);
-
         $user->name = $request->input("name");
         $user->login = $request->input("login");
         $user->save();
@@ -52,6 +62,12 @@ class UserController extends Controller
         return redirect()->route("settings");
     }
 
+    /**
+     * Method update interface settings of user
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Validation\ValidationException
+     */
     public function editInterface(Request $request){
         $user = auth()->user();
         $this->validate($request, [
@@ -69,6 +85,12 @@ class UserController extends Controller
         return redirect()->route("settings");
     }
 
+    /**
+     * Method for updating user password
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Validation\ValidationException
+     */
     public function editSecurity(Request $request){
         $user = auth()->user();
         $this->validate($request, [
@@ -80,6 +102,11 @@ class UserController extends Controller
         return redirect()->route("settings");
     }
 
+    /**
+     * Method for updating monthly report agreement
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function editEmailNotifications(Request $request){
         $user = auth()->user();
 
@@ -89,11 +116,15 @@ class UserController extends Controller
         return redirect()->route("settings");
     }
 
+    /**
+     * Method delete user profile from DB
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
+     */
     public function deleteProfile(){
         /** @var User $user */
         $user = auth()->user();
         auth()->logout();
-//        (new DeleteCustomer())->setIdentifier($user->identifier)->send();
         $user->delete();
         return redirect()->route('welcome');
     }

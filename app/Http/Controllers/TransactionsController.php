@@ -4,45 +4,33 @@
 namespace App\Http\Controllers;
 
 
+use App\Helpers\Helpers;
 use App\Models\Account;
 use App\Models\Category;
 use App\Models\Rate;
 use App\Models\Transaction;
 use App\Models\User;
-use Carbon\Carbon;
-use Doctrine\DBAL\Query\QueryBuilder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Mail;
 
+/**
+ * Class TransactionsController
+ * This class handle user commands on transactions
+ *
+ * @package App\Http\Controllers
+ */
 class TransactionsController extends Controller
 {
     /**
-     * method return transactions page
+     * Method return transactions page
      * @return \Illuminate\View\View
      */
     public function displayTransactionsPage(Request $request)
     {
-        /** @var User $user */
-        $user = auth()->user();
-        /** @var Account[] $accounts */
-        $accounts = $user->accounts;
-        /** @var Category[] $categories */
-        $categories = $user->categories()->whereNull('parent_id')->where('status', 1)
-                                         ->with(['categories' => function($query){
-                                             $query->where('status', 1);
-                                         }])->get();
-        $transactions = $user->transactions();
-        $this->attachFilterTimesToQuery($transactions, $request);
-        $transactions = $this->attachFiltersToQuery($transactions, $request)
-                             ->with('category')
-                             ->with('account')
-                             ->orderBy('date', 'desc')
-                             ->orderBy('id', 'desc')
-                             ->paginate($user->limit);
-        $transactions->appends($request->all());
+        list($user, $accounts, $categories, $transactions) = $this->getDataForTransactionsPage($request);
 
+        //if requested page number is bigger than last page number, then redirect to last page
         if($transactions->currentPage() > $transactions->lastPage())
             return redirect()->route('transactions', ['page' => $transactions->lastPage()]);
 
@@ -56,20 +44,14 @@ class TransactionsController extends Controller
     }
 
     /**
+     * Method create new transaction
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      * @throws \Illuminate\Validation\ValidationException
      */
     public function addTransaction(Request $request)
     {
-        $this->validate($request, [
-            'type'        => 'required|in:income,expense',
-            'account'     => 'bail|required|integer',
-            'category'    => 'bail|required|integer|exists:categories,id',
-            'date'        => 'bail|required|date',
-            'amount'      => 'bail|required|numeric',
-            'description' => 'bail|max:1024'
-        ]);
+        $this->addTransactionValidation($request);
         /** @var User $user */
         $user = auth()->user();
         /** @var Account $account */
@@ -92,10 +74,27 @@ class TransactionsController extends Controller
     }
 
     /**
-     * ToDo: validate request
+     * Method validate request data for new transaction
+     * @param Request $request
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    private function addTransactionValidation(Request $request)
+    {
+        $this->validate($request, [
+            'type'        => 'required|in:income,expense',
+            'account'     => 'bail|required|integer',
+            'category'    => 'bail|required|integer|exists:categories,id',
+            'date'        => 'bail|required|date',
+            'amount'      => 'bail|required|numeric',
+            'description' => 'bail|max:1024'
+        ]);
+    }
+
+    /**
+     * Method delete transaction
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
-     * @throws \Exception
+     * @throws \Illuminate\Validation\ValidationException
      */
     public function deleteTransaction(Request $request)
     {
@@ -104,7 +103,9 @@ class TransactionsController extends Controller
         ]);
         /** @var User $user */
         $user = auth()->user();
-        $transaction = $user->transactions()->where('transactions.id', '=', $request->input('id'))->first();
+        $transaction = $user->transactions()
+                            ->where('transactions.id', '=', $request->input('id'))
+                            ->first();
         $account = $transaction->account;
         $account->balance -= $transaction->amount;
         $account->save();
@@ -113,24 +114,14 @@ class TransactionsController extends Controller
     }
 
     /**
+     * Method update transaction
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      * @throws \Illuminate\Validation\ValidationException
      */
     public function updateTransaction(Request $request)
     {
-        $this->validate($request, [
-            'id' => 'bail|required|integer|exists:transactions,id'
-        ]);
-        $id = $request->input('id');
-        $this->validate($request, [
-            "t-$id-type"        => 'bail|required|in:income,expense',
-            "t-$id-account"     => 'bail|required|integer',
-            "t-$id-category"    => 'bail|required|integer|exists:categories,id',
-            "t-$id-date"        => 'bail|required|date',
-            "t-$id-amount"      => 'bail|numeric',
-            "t-$id-description" => 'bail|max:1024'
-        ]);
+        $id = $this->updateTransactionValidation($request);
         /** @var User $user */
         $user = auth()->user();
         /** @var Transaction $transaction */
@@ -161,14 +152,36 @@ class TransactionsController extends Controller
     }
 
     /**
+     * Method validate request data for transaction updating
+     * @param Request $request
+     * @return int $id
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    private function updateTransactionValidation(Request $request)
+    {
+        $this->validate($request, [
+            'id' => 'bail|required|integer|exists:transactions,id'
+        ]);
+        $id = $request->input('id');
+        $this->validate($request, [
+            "t-$id-type" => 'bail|required|in:income,expense',
+            "t-$id-account" => 'bail|required|integer',
+            "t-$id-category" => 'bail|required|integer|exists:categories,id',
+            "t-$id-date" => 'bail|required|date',
+            "t-$id-amount" => 'bail|numeric',
+            "t-$id-description" => 'bail|max:1024'
+        ]);
+        return $id;
+    }
+
+    /**
      * Method return total balance of auth user
      * by grouping accounts by currency, converting to user's main currency and sum all balances
-     *
      * @param string $userCurrency - main user's currency
      * @param Collection|Account[]|null $accounts - all user's accounts
      * @return string
      */
-    public function totalBalance(string $userCurrency, $accounts = null)
+    private function totalBalance(string $userCurrency, $accounts = null)
     {
         $groupByCurrency = $accounts->groupBy('currency');
         $total = 0;
@@ -179,7 +192,37 @@ class TransactionsController extends Controller
                 $totalByCurrency += $account->balance;
             $total += Rate::convert($totalByCurrency, $currency, $userCurrency);
         }
-        return number_format($total, 2, '.', ',');
+        return Helpers::NumberFormat($total);
+    }
+
+    /**
+     * Method return all required data for transactions page
+     * @param Request $request
+     * @return array [$user, $accounts, $categories, $transactions]
+     */
+    private function getDataForTransactionsPage(Request $request)
+    {
+        /** @var User $user */
+        $user = auth()->user();
+        /** @var Account[] $accounts */
+        $accounts = $user->accounts;
+        /** @var Category[] $categories */
+        $categories = $user->categories()->whereNull('parent_id')
+                                         ->where('status', 1)
+                                         ->with(['categories' => function($query){
+                                             $query->where('status', 1);
+                                         }])->get();
+        $transactions = $user->transactions();
+        $this->attachFilterTimesToQuery($transactions, $request);
+        $transactions = $this->attachFiltersToQuery($transactions, $request)
+                             ->with('category')
+                             ->with('account')
+                             ->orderBy('date', 'desc')
+                             ->orderBy('id', 'desc')
+                             ->paginate($user->limit);
+        $transactions->appends($request->all());
+
+        return [$user, $accounts, $categories, $transactions];
     }
 
 

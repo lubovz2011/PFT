@@ -9,28 +9,38 @@ use App\Models\Category;
 use App\Models\Icon;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
+/**
+ * Class CategoriesController
+ * This class handle user commands on categories
+ *
+ * @package App\Http\Controllers
+ */
 class CategoriesController extends Controller
 {
     /**
-     * method returns categories page
+     * Method returns categories page
      * @return \Illuminate\View\View
      */
     public function displayCategoriesPage()
     {
         /** @var User $user */
         $user = auth()->user();
-//        DB::enableQueryLog();
         /** @var Category[] $categories */
         $categories = $user->categories()->whereNull('parent_id')->with('categories')->get()->toArray();
-//        dd(DB::getQueryLog(), $categories);
+
         return view('categories', [
             'categories' => $categories,
             'icons'      => Icon::all()->toArray()
         ]);
     }
 
+    /**
+     * Method change category status
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Illuminate\Validation\ValidationException
+     */
     public function changeStatus(Request $request)
     {
         $this->validate($request, [
@@ -59,6 +69,12 @@ class CategoriesController extends Controller
         return response()->json($category);
     }
 
+    /**
+     * Method delete category
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Illuminate\Validation\ValidationException
+     */
     public function deleteCategory(Request $request)
     {
         $this->validate($request, [
@@ -71,12 +87,17 @@ class CategoriesController extends Controller
             ->where('id', '=', $request->input('categoryId'))
             ->where('lock', '=', 0)->firstOrFail();
 
-
         return response()->json([
             "status" => $category->delete() ? "success" : "error"
         ]);
     }
 
+    /**
+     * Method create new category
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Validation\ValidationException
+     */
     public function addCategory(Request $request)
     {
         $this->validate($request, [
@@ -85,11 +106,12 @@ class CategoriesController extends Controller
             'icon'    => 'bail|nullable|string|exists:icons,class'
         ]);
 
-        //dd($request->all());
         /** @var User $user */
         $user = auth()->user();
-
-        DefaultCategories::generateCategory($user, $request->input('name'), $request->input('icon') ?? "", $request->input('parent'));
+        DefaultCategories::generateCategory($user,
+                                            $request->input('name'),
+                                       $request->input('icon') ?? "",
+                                            $request->input('parent'));
 
         return redirect()->route('categories');
     }

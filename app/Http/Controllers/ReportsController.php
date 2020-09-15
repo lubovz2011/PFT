@@ -10,19 +10,46 @@ use App\Models\Category;
 use App\Models\Transaction;
 use App\Models\User;
 use Carbon\Carbon;
-use Doctrine\DBAL\Query\QueryBuilder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Route;
 
+/**
+ * Class ReportsController
+ * This class handle user commands on reports
+ *
+ * @package App\Http\Controllers
+ */
 class ReportsController extends Controller
 {
     /**
-     * method returns reports page
-     * @return \Illuminate\View\View
+     * Method return reports (dashboard) page
+     * @param Request $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function displayReportsPage(Request $request)
+    {
+        list($user, $categories, $accounts, $transactions) = $this->getDataForReport($request);
+        $filteredCategories = $this->filterCategoriesForReport($transactions, $categories);
+        list($totalPositive, $totalNegative) = $this->getTotalsForReport($filteredCategories, $transactions);
+
+        return view('reports', [
+            'accounts'              => $accounts,
+            'categories'            => $categories->where('parent_id', '=', null),
+            'filteredCategories'    => $filteredCategories,
+            'transactions'          => $transactions,
+            'mainCurrency'          => $user->currency,
+            'totalPositive'         => $totalPositive,
+            'totalNegative'         => $totalNegative,
+            'links'                 => $this->getPageLinks($request)
+        ]);
+    }
+
+    /**
+     * Method return all required data for dashboard page
+     * @param Request $request
+     * @return array [$user, $categories, $accounts, $transactions]
+     */
+    private function getDataForReport(Request $request)
     {
         /** @var User $user */
         $user = auth()->user();
@@ -33,7 +60,6 @@ class ReportsController extends Controller
         /** @var Category[]|Collection $categories */
         $categories = $user->categories()->where('status', 1)->get()->keyBy('id');
 
-
         $transactions = $user->transactions();
         $this->attachFilterTimesToQuery($transactions, $request, true);
 
@@ -42,48 +68,76 @@ class ReportsController extends Controller
          * @var Transaction[]|Collection $transactions
          */
         $transactions = $this->attachFiltersToQuery($transactions, $request)
-                        ->whereIn('account_id', $accounts->keys()->toArray())
-                        ->whereIn('category_id', $categories->keys()->toArray())
-                        ->get();
-        /**
-         * Set to $filteredCategories all categories that have transactions
-         */
+            ->whereIn('account_id', $accounts->keys()->toArray())
+            ->whereIn('category_id', $categories->keys()->toArray())
+            ->get();
+
+        return [$user, $categories, $accounts, $transactions];
+    }
+
+    /**
+     * Method return only those categories that contain transactions
+     * @param $transactions
+     * @param $categories
+     * @return mixed
+     */
+    private function filterCategoriesForReport($transactions, $categories)
+    {
+        //set to $filteredCategories all categories that have transactions
         $categoryIds = $transactions->groupBy('category_id')->keys()->toArray();
         $filteredCategories = $categories->only($categoryIds)->keyBy('id');
 
-        /**
-         * Push missing parent categories to $filteredCategories for subCategories that have transactions
-         */
+        //push missing parent categories to $filteredCategories for subCategories that have transactions
         foreach ($filteredCategories as $category)
-        {
-            if(!empty($category->parent_id)) //check if category is subCategory
-            {
-                if(!$filteredCategories->has($category->parent_id)) //check if parent not exists in filteredCategories
-                {
-                    if($categories->has($category->parent_id)) //check if parent exists in full category list
-                    {
+        {   //check if category is subCategory
+            if(!empty($category->parent_id))
+            {   //check if parent not exists in filteredCategories
+                if(!$filteredCategories->has($category->parent_id))
+                {   //check if parent exists in full category list
+                    if($categories->has($category->parent_id))
+                    {   //add parent to filteredCategories
                         $parent = $categories->get($category->parent_id);
-                        $filteredCategories->put($parent->id, $parent); //add parent to filteredCategories
+                        $filteredCategories->put($parent->id, $parent);
                     }
                     else
-                        $filteredCategories->forget($category->id); //remove from filteredCategories subCategory that has not parent
+                        //remove from filteredCategories subCategory that has not parent
+                        $filteredCategories->forget($category->id);
                 }
             }
         }
+        return $filteredCategories;
+    }
 
-        $totalIncome = 0; //total positive amount for category
-        $totalExpense = 0; //total negative amount for category
+    /**
+     * Method return positive ang negative amounts
+     * @param $filteredCategories
+     * @param $transactions
+     * @return float[]
+     */
+    private function getTotalsForReport($filteredCategories, $transactions)
+    {
+        $totalPositive = 0; //total positive amount for category
+        $totalNegative = 0; //total negative amount for category
 
         foreach ($filteredCategories->where('parent_id', '=', null) as $category)
         {
             $totalAmount = $category->getAmountForReport($transactions, $filteredCategories);
 
             if($totalAmount >= 0)
-                $totalIncome += $totalAmount;
+                $totalPositive += $totalAmount;
             else
-                $totalExpense += $totalAmount;
+                $totalNegative += $totalAmount;
         }
+        return [$totalPositive, $totalNegative];
+    }
 
+    /**
+     * Method generate suitable link for dashboard page using chosen filters
+     * @param Request $request
+     * @return array $links
+     */
+    private function getPageLinks(Request $request)
+    {
         $links = [];
         $params = $request->all();
         unset($params['filter-types']);
@@ -96,7 +150,6 @@ class ReportsController extends Controller
         $links['expense'] = \route('reports', $params);
 
         $timeOptions=DataSets::getDateOptions();
-
         $timeFilter=$request->input('filter-times');
 
         if(empty($timeOptions[$timeFilter])) {
@@ -108,16 +161,6 @@ class ReportsController extends Controller
             $params['filter-times'] = $prevDate;
             $links['prev'] = \route('reports', $params);
         }
-
-        return view('reports', [
-            'accounts'              => $accounts,
-            'categories'            => $categories->where('parent_id', '=', null),
-            'filteredCategories'    => $filteredCategories,
-            'transactions'          => $transactions,
-            'mainCurrency'          => $user->currency,
-            'totalIncome'           => $totalIncome,
-            'totalExpense'          => $totalExpense,
-            'links'                 => $links
-        ]);
+        return $links;
     }
 }

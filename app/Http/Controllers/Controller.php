@@ -10,10 +10,22 @@ use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
+/**
+ * Class Controller
+ * This class basic class for controllers
+ *
+ * @package App\Http\Controllers
+ */
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
+    /**
+     * Method attach type/accounts/categories filters to query
+     * @param Relation $query
+     * @param Request $request
+     * @return \Illuminate\Database\Concerns\BuildsQueries|Relation|mixed
+     */
     protected function attachFiltersToQuery(Relation $query, Request $request)
     {
         return $query->when(!empty($request->input('filter-types')), function ($query) use ($request) {
@@ -27,7 +39,15 @@ class Controller extends BaseController
         });
     }
 
-    protected function attachFilterTimesToQuery(Relation $query, Request $request, bool $useDefault = false){
+    /**
+     * Method attach time filter to query
+     * @param Relation $query
+     * @param Request $request
+     * @param bool $useDefault
+     * @return Relation
+     */
+    protected function attachFilterTimesToQuery(Relation $query, Request $request, bool $useDefault = false)
+    {
         switch ($request->input('filter-times')) {
             case 1: $query->where('date', '=', Carbon::now()); break; //today
             case 2: $query->where('date', '=', Carbon::now()->subDay()); break; //yesterday

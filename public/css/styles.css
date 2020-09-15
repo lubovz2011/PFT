@@ -98,6 +98,7 @@ body {
 .shadow-card{
     box-shadow: 0 0 15px 5px #aeaeaf;
 }
+
 .footer {
     position: absolute;
     bottom: 0;
@@ -106,6 +107,14 @@ body {
     height: 30px; /* Set the fixed height of the footer here */
     line-height: 30px; /* Vertically center the text there */
     background-color: #f8f9fa;
+}
+
+.pb-50{
+    padding-bottom: 50px;
+}
+
+.pt-100 {
+    padding-top: 100px;
 }
 /*</editor-fold>*/
 
@@ -140,7 +149,6 @@ body {
 
 /************ Featured card start ************/
 
-
 .feature-card {
     background: #fcfcfc;
     padding: 2rem;
@@ -163,7 +171,33 @@ body {
 .feature-card .feature-body h6 {
     margin-bottom: 0.75rem;
 }
+
 /************ Featured card end ************/
+
+.section-header {
+    margin-bottom: 3rem;
+}
+
+.section-header h2 {
+    letter-spacing: 2px;
+    font-weight: 400;
+    position: relative;
+}
+
+.section-header .subtitle {
+    margin-top: 0.5rem;
+}
+
+.section-header .heading-2 {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+
+.section-header .heading-2 h2 {
+    display: inline-block;
+}
 
 /* Container holding the image and the text */
 .header {
@@ -220,37 +254,12 @@ body {
 .z-index-2 {
     z-index: 2;
 }
-/*</editor-fold>*/
-.pb-50{
-    padding-bottom: 50px;
-}
-.pt-100 {
-    padding-top: 100px;
-}
-.section-header {
-    margin-bottom: 3rem;
-}
-.section-header h2 {
-    letter-spacing: 2px;
-    font-weight: 400;
-    position: relative;
-}
-.section-header .subtitle {
-    margin-top: 0.5rem;
-}
-.section-header .heading-2 {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    flex-wrap: wrap;
-}
-.section-header .heading-2 h2 {
-    display: inline-block;
-}
 
 .welcome-icon {
     font-size: 2.5rem;
 }
+
+/*</editor-fold>*/
 
 /*<editor-fold desc="transactions-page">*/
 .loader-wrapper{
