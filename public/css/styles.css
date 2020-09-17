@@ -76,6 +76,12 @@
     border-bottom-left-radius: .25rem;
     border-bottom-right-radius: .25rem;
 }
+.arrow {
+    border: solid #6c757d;
+    border-width: 0 3px 3px 0;
+    display: inline-block;
+    padding: 3px;
+}
 /*</editor-fold>*/
 
 /*<editor-fold desc="category-page">*/
@@ -115,6 +121,19 @@ body {
 
 .pt-100 {
     padding-top: 100px;
+}
+
+.up {
+    transform: rotate(225deg);
+    transition: all .5s;
+}
+
+.card-header.collapsed .up{
+    transform: rotate(45deg);
+}
+
+.mh-80{
+    min-height: 80vh;
 }
 /*</editor-fold>*/
 
@@ -688,5 +707,36 @@ body {
         transform: scale(1, 1);
     }
 }
+/*</editor-fold>*/
+
+/*<editor-fold desc="about-us-page">*/
+.display-5{
+    font-size: 1.5rem;
+    font-weight: 400;
+    line-height: 1.2;
+    text-align: center;
+}
+.lead-1{
+    font-size: 1.10rem;
+    font-weight: 300;
+    text-align: center;
+}
+.lead-2{
+    font-size: 1.10rem;
+    font-weight: 300;
+}
+
+.lead-3{
+    font-size: 1.20rem;
+    font-weight: 400;
+}
+
+.our-team{
+    max-width: 440px;
+}
+/*.team-img{
+    width: 70%;
+    flex-shrink: 0;
+}*/
 /*</editor-fold>*/
 

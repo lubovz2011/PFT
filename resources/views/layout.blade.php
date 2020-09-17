@@ -29,13 +29,13 @@
 
                     <a class="nav-item nav-link {{Route::currentRouteName() == 'accounts' ? 'active' : ''}}" href="{{route('accounts')}}">Accounts</a>
                     <a class="nav-item nav-link {{Route::currentRouteName() == 'categories' ? 'active' : ''}}" href="{{route('categories')}}">Categories</a>
-                    <div class="nav-item dropdown {{in_array(Route::currentRouteName(), ['reports', 'about-us']) ? 'active' : ''}}">
+                    <div class="nav-item dropdown {{Route::currentRouteName() == 'about-us' ? 'active' : ''}}">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             More
                         </a>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="#" data-toggle="modal" data-target="#contact-us-modal">Contact Us</a>
-                            <a class="dropdown-item" href="#">About Us</a>
+                            <a class="dropdown-item {{Route::currentRouteName() == 'about-us' ? 'active' : ''}}" href="{{route('about-us')}}">About Us</a>
                         </div>
                     </div>
                     <div class="dropdown ml-2">

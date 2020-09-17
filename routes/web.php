@@ -64,7 +64,8 @@ Route::group(['middleware' => ['auth', 'verified']], function(){
     Route::post('transactions/update-transaction', 'TransactionsController@updateTransaction')->name('update-transaction');
 
 
-
+    /** about-us page */
+    Route::get('about-us', 'PagesController@displayAboutUsPage')->name('about-us');
     /** reports page */
     Route::get('dashboard', 'ReportsController@displayReportsPage')->name('reports');
 
