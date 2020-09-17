@@ -25,6 +25,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->command('monthly_report')->monthlyOn(1, '00:15');
+        $schedule->command('password_notification')->dailyAt('09:00');
     }
 
     /**
