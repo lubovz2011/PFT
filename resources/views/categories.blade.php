@@ -3,7 +3,7 @@
     Categories
 @endsection
 @section("content")
-
+{{--Categories view--}}
 <div class="container">
     <div class="row justify-content-center">
         <div class="col col-md-10 col-lg-8">
@@ -23,12 +23,14 @@
                                     type="text"
                                     class="form-control @error('name') is-invalid @enderror"
                                     id="category-input"
-                                    value="{{old('name')}}">
+                                    value="{{old('name')}}"
+                                    autocomplete="off">
                             </div>
                             <div class="col-4">
                                 <label class="" for="parent-category-select">Parent Category</label>
                                 <select class="form-control @error('parent') is-invalid @enderror"
-                                        id="parent-category-select" name="parent">
+                                        id="parent-category-select"
+                                        name="parent">
                                     <option value="" selected>Without parent category</option>
                                     @foreach($categories as $category)
                                         @if($category['status'])
@@ -52,10 +54,11 @@
                                     @endforeach
                                 </select>
                             </div>
-
                             <div class="col-auto">
                                 <label>&nbsp;</label>
-                                <button type="submit" class="btn btn-primary form-control">Add</button>
+                                <button type="submit" class="btn btn-primary form-control">
+                                    Add
+                                </button>
                             </div>
                         </div>
                     </form>
@@ -72,9 +75,6 @@
         </div>
     </div>
 </div>
-
-
-
 @endsection
 
 @section("scripts")
@@ -90,7 +90,6 @@
                 theme : "bootstrap"
             });
 
-
             $('select[name="icon"]').select2({
                theme : "bootstrap",
                 templateResult: function(data) {
@@ -101,7 +100,6 @@
 
             /**
              *  Find all labels for custom checkboxes
-             *
              * @type {jQuery|HTMLElement}
              */
             let customCheckboxLabel = $('.custom-switch label');
@@ -159,7 +157,6 @@
                     loaderStop();
                 });
             }
-
             let deleteButton = $('.js-delete-category');
 
             deleteButton.on('click', function (e) {
@@ -196,5 +193,3 @@
         });
     </script>
 @endsection
-
-

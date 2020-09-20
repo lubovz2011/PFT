@@ -16,6 +16,7 @@
         <div class="card-body">
             <form method="POST" action="{{route("settings:personal-info")}}">
                 @csrf
+                {{--input name--}}
                 <div class="form-group row">
                     <label for="inputName" class="col-sm-2 col-form-label">Name</label>
                     <div class="col-sm-10">
@@ -25,10 +26,12 @@
                                placeholder="user name"
                                name="name"
                                value="{{ old('name', $name) }}"
-                               default-value="{{$name}}">
+                               default-value="{{$name}}"
+                               autocomplete="off">
                         @include('utils.error-invalid-feedback', ["errorField" => 'name'])
                     </div>
                 </div>
+                {{--input login (mail)--}}
                 <div class="form-group row">
                     <label for="inputEmail3" class="col-sm-2 col-form-label">Email</label>
                     <div class="col-sm-10">
@@ -38,12 +41,14 @@
                                placeholder="email@example.com"
                                name="login"
                                value="{{ old('login', $login) }}"
-                               default-value="{{$login}}">
+                               default-value="{{$login}}"
+                               autocomplete="off">
                         @include('utils.error-invalid-feedback', ["errorField" => 'login'])
                     </div>
                 </div>
                 <div class="row mt-4">
                     <div class="col">
+                        {{--delete profile--}}
                         <button class="btn btn-secondary"
                                 type="button"
                                 data-toggle="modal"
@@ -60,7 +65,7 @@
         </div>
     </div>
 </div>
-
+{{--delete modal--}}
 <div class="modal fade" id="delete-profile-modal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-sm">
         <div class="modal-content">

@@ -6,7 +6,6 @@ namespace App\Console\Commands;
 
 use App\Models\User;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 
 /**
@@ -30,7 +29,7 @@ class MonthlyReport extends Command
     public function handle()
     {
         //get all user ids that accept to get monthly report email
-        $userIds = DB::table('users')->select('id')->where('monthly_report', '=', '1')->get();
+        $userIds = User::select('id')->where('monthly_report', '=', '1')->get();
 
         foreach ($userIds as $userId)
         {

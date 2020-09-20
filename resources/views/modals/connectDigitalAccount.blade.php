@@ -12,7 +12,9 @@
                     @csrf
                     <div class="form-group">
                         <select class="form-control @error('bank') is-invalid @enderror" name="bank">
-                            <option value="otsar" @if(old('bank') == "otsar") selected @endif>Bank Otsar Hahayal</option>
+                            <option value="otsar" @if(old('bank') == "otsar") selected @endif>
+                                Bank Otsar Hahayal
+                            </option>
                         </select>
                         @include('utils.error-invalid-feedback', ['errorField' => 'bank'])
                     </div>
@@ -21,7 +23,8 @@
                                type="text"
                                class="form-control @error('username') is-invalid @enderror"
                                value="{{ old('username') }}"
-                               placeholder="User ID">
+                               placeholder="User ID"
+                               autocomplete="off">
                         @include('utils.error-invalid-feedback', ['errorField' => 'username'])
                     </div>
                     <div class="form-group">
@@ -29,13 +32,17 @@
                                type="password"
                                class="form-control @error('password') is-invalid @enderror"
                                value="{{ old('password') }}"
-                               placeholder="Password">
+                               placeholder="Password"
+                               autocomplete="off">
                         @include('utils.error-invalid-feedback', ['errorField' => 'password'])
                     </div>
-
                     <div class="col d-flex justify-content-center">
-                        <button class="btn btn-secondary mr-2 px-3" data-dismiss="modal" type="reset">Cancel</button>
-                        <button class="btn btn-primary px-4" type="submit" onclick="loaderStart()">Connect</button>
+                        <button class="btn btn-secondary mr-2 px-3" data-dismiss="modal" type="reset">
+                            Cancel
+                        </button>
+                        <button class="btn btn-primary px-4" type="submit" onclick="loaderStart()">
+                            Connect
+                        </button>
                     </div>
                 </form>
             </div>

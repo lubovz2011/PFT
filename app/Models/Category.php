@@ -18,6 +18,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property Category[] $categories
  * @property Category $category
  * @property boolean $lock
+ * @property User $user
  *
  * @package App\Models
  */

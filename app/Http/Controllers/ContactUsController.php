@@ -38,5 +38,4 @@ class ContactUsController extends Controller
 
         return redirect()->back()->with('send-status', 'Your email was send successfully.');
     }
-
 }

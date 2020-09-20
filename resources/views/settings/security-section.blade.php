@@ -17,7 +17,9 @@
             <form method="POST" action="{{route("settings:security")}}">
             @csrf
             <div class="form-group row">
-                <label for="inputPassword" class="col-md-4 col-lg-4 col-form-label">New password</label>
+                <label for="inputPassword" class="col-md-4 col-lg-4 col-form-label">
+                    New password
+                </label>
                 <div class="col-md-8 col-lg-8">
                     <input type="password"
                            class="form-control @error('password') is-invalid @enderror"
@@ -28,7 +30,9 @@
                 </div>
             </div>
             <div class="form-group row">
-                <label for="inputPasswordConfirmation" class="col-md-4 col-lg-4 col-form-label">Password confirmation</label>
+                <label for="inputPasswordConfirmation" class="col-md-4 col-lg-4 col-form-label">
+                    Password confirmation
+                </label>
                 <div class="col-md-8 col-lg-8">
                     <input type="password"
                            class="form-control"

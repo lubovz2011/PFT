@@ -224,8 +224,6 @@ class TransactionsController extends Controller
 
         return [$user, $accounts, $categories, $transactions];
     }
-
-
 }
 
 

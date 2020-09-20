@@ -15,7 +15,8 @@
                                type="text"
                                class="form-control @error('title') is-invalid @enderror"
                                value="{{ old('title') }}"
-                               placeholder="NAME">
+                               placeholder="NAME"
+                               autocomplete="off">
                         @include('utils.error-invalid-feedback', ['errorField' => 'title'])
                     </div>
                     <div class="form-group">
@@ -23,20 +24,27 @@
                                type="text"
                                class="form-control @error('balance') is-invalid @enderror"
                                value="{{ old('balance') }}"
-                               placeholder="AMOUNT">
+                               placeholder="AMOUNT"
+                               autocomplete="off">
                         @include('utils.error-invalid-feedback', ['errorField' => 'balance'])
                     </div>
                     <div class="form-group">
                         <select class="form-control @error('currency') is-invalid @enderror" name="currency">
                             @foreach(\App\Classes\Utils\DataSets::getUserCurrencyOptions() as $key => $currency)
-                                <option value="{{$key}}" @if(old('currency') == $key) selected @endif>{{$currency}}</option>
+                                <option value="{{$key}}" @if(old('currency') == $key) selected @endif>
+                                    {{$currency}}
+                                </option>
                             @endforeach
                         </select>
                         @include('utils.error-invalid-feedback', ['errorField' => 'currency'])
                     </div>
                     <div class="col d-flex justify-content-center">
-                        <button class="btn btn-secondary mr-2 px-3" data-dismiss="modal" type="reset">Cancel</button>
-                        <button class="btn btn-primary px-4" type="submit">Create</button>
+                        <button class="btn btn-secondary mr-2 px-3" data-dismiss="modal" type="reset">
+                            Cancel
+                        </button>
+                        <button class="btn btn-primary px-4" type="submit">
+                            Create
+                        </button>
                     </div>
                 </form>
             </div>

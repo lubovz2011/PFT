@@ -3,7 +3,7 @@
     Accounts
 @endsection
 @section("content")
-
+{{--Accounts view--}}
 <div class="container">
     <div class="row justify-content-center">
         <div class="col col-md-10 col-lg-8">
@@ -14,6 +14,7 @@
                 <div class="card-body pb-2">
                     <div class="row justify-content-start">
                         <div class="col">
+                            {{--connect digital account--}}
                             <button type="submit"
                                     class="btn btn-primary mr-2"
                                     data-target="#connect-digital-account"
@@ -21,6 +22,7 @@
                                 Connect Digital Account
                             </button>
                             @include('modals.connectDigitalAccount')
+                            {{--create cash account--}}
                             <button type="button"
                                     class="btn btn-secondary"
                                     data-target="#create-wallet-modal"
@@ -37,22 +39,26 @@
                 </div>
                 <div class="card-body p-0">
                     <div class="accordion" id="accordion-accounts">
+                        {{--group accounts by type (cash / card)--}}
                         @foreach($groups as $key => $group)
                             <div class="card">
                                 <div class="card-header py-3 hover-disabled">
                                     <div class="row">
                                         @if($key == \App\Models\Account::TYPE_CASH)
                                             <div class="col text-uppercase">
-                                                <i class="fas fa-wallet mr-3 category-icon text-secondary"></i>cash wallets
+                                                <i class="fas fa-wallet mr-3 category-icon text-secondary"></i>
+                                                cash wallets
                                             </div>
-
                                         @elseif($key == \App\Models\Account::TYPE_CARD)
                                             <div class="col text-uppercase">
-                                                <i class="far fa-credit-card mr-3 category-icon text-secondary"></i>banks and cards
+                                                <i class="far fa-credit-card mr-3 category-icon text-secondary"></i>
+                                                banks and cards
                                             </div>
                                         @endif
+                                            {{--cerrunt balance of all accounts of the same type--}}
                                             <div class="col d-flex justify-content-end">
-                                                <span class="mr-2 @if($group->sum('balanceInUserCurrency') >= 0) text-success @else text-danger @endif font-weight-bold">
+                                                <span class="mr-2 font-weight-bold
+                                                            @if($group->sum('balanceInUserCurrency') >= 0) text-success @else text-danger @endif">
                                                     {{\App\Helpers\Helpers::NumberFormat($group->sum('balanceInUserCurrency'))}}
                                                 </span>
                                                     {{$currency}}
@@ -85,6 +91,7 @@
                 theme : "bootstrap"
             });
 
+            /* open suitable modal if there is some error */
             @if($errors->has('title') || $errors->has('balance') || $errors->has('currency'))
                 $('#create-wallet-modal').modal();
             @endif
@@ -93,6 +100,7 @@
                 $('#connect-digital-account').modal();
             @endif
 
+            /* account synchronization */
             $('.js-synchronize-buttom').on('click', function (){
                 loaderStart();
                 $.ajax({
@@ -112,8 +120,6 @@
                 });
             });
         });
-
-
     </script>
 @endsection
 

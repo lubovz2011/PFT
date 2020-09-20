@@ -7,10 +7,15 @@ namespace App\Console\Commands;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 
-class PasswordNotification extends Command
+/**
+ * Class PasswordNotifications
+ * This class handle the password notifications
+ *
+ * @package App\Console\Commands
+ */
+class PasswordNotifications extends Command
 {
     protected $signature = 'password_notification';
 
@@ -20,7 +25,7 @@ class PasswordNotification extends Command
     public function handle()
     {
         //get all user ids that register with email
-        $userIds = DB::table('users')->select('id')->where('login_type', '=', 'email')->get();
+        $userIds = User::select('id')->where('login_type', '=', 'email')->get();
 
         foreach ($userIds as $userId)
         {

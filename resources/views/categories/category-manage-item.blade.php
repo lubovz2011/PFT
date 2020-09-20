@@ -27,7 +27,6 @@
             </div>
         @endif
     </div>
-
     {{--  Sub-Categories list  --}}
     <div id="sub-category-{{$id}}" class="collapse" data-parent="#accordion-categories">
         <div class="card-body p-0">

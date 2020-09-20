@@ -3,6 +3,7 @@
     Transactions
 @endsection
 @section("content")
+{{--Transactions view--}}
 @php /** @var \Illuminate\Pagination\LengthAwarePaginator $paginator */ @endphp
     <div class="container-fluid">
         <div class="row">
@@ -21,15 +22,21 @@
                                     <div class="row py-1">
                                         <div class="col">
                                             <div class="row">
-                                                <div class="col text-uppercase text-secondary account-mini-headers">Current Balance</div>
+                                                <div class="col text-uppercase text-secondary account-mini-headers">
+                                                    Current Balance
+                                                </div>
                                             </div>
+                                            {{--current user balance in user main currency--}}
                                             <div class="row">
                                                 <div class="col d-flex justify-content-start">
-                                                    <div class=" @if ($totalBalance >= 0) text-success @else text-danger @endif  mr-2 font-weight-bold">{{$totalBalance}}</div>
+                                                    <div class="@if ($totalBalance >= 0) text-success @else text-danger @endif  mr-2 font-weight-bold">
+                                                        {{$totalBalance}}
+                                                    </div>
                                                     <div class="text-secondary">{{$currency}}</div>
                                                 </div>
                                             </div>
                                         </div>
+                                        {{--pagination--}}
                                         <div class="col d-flex justify-content-end align-items-center">
                                             @if(empty($paginator->total()))
                                                 0 - 0
@@ -50,6 +57,7 @@
                                         </div>
                                     </div>
                                 </li>
+                                {{--Add new transaction--}}
                                 <li class="list-group-item">
                                     <div class="row">
                                         <div class="col my-2">
@@ -79,6 +87,7 @@
     </div>
     @include("modals.addTransaction")
 @endsection
+
 @section("scripts")
     <script>
         $(document).ready(function(){

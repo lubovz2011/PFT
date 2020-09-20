@@ -1,5 +1,4 @@
 @extends('public-layout')
-
 @section('content')
     <main role="main">
         <div class="d-flex">
@@ -15,7 +14,6 @@
                 </div>
             </div>
         </div>
-
         <section class="about-us pt-100 pb-50" data-scroll-index="1">
             <div class="container">
                 <!--==== Section Heading Text =====-->
@@ -137,7 +135,6 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
                 <div class="row">
                     <div class="col-12 col-lg-8 offset-lg-2">
@@ -180,15 +177,24 @@
                                                   class="form-control @error('contact-message') is-invalid @enderror"
                                                   rows="5"
                                                   placeholder="Enter your message"
-                                                  name="contact-message">{{old('contact-message')}}</textarea>
+                                                  name="contact-message">{{old('contact-message')}}
+                                        </textarea>
                                         @include('utils.error-invalid-feedback', ['errorField' => 'contact-message'])
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col d-flex justify-content-center mt-2">
-                                    <button class="btn btn-secondary mr-2 px-3" type="reset" data-dismiss="modal" aria-label="Close">Clear</button>
-                                    <button class="btn btn-success px-4" type="submit">Send message</button>
+                                    <button class="btn btn-secondary mr-2 px-3"
+                                            type="reset"
+                                            data-dismiss="modal"
+                                            aria-label="Close">
+                                        Clear
+                                    </button>
+                                    <button class="btn btn-success px-4"
+                                            type="submit">
+                                        Send message
+                                    </button>
                                 </div>
                             </div>
                         </form>
@@ -212,7 +218,6 @@
             @if (session('send-status') || $errors->hasAny(['contact-email', 'contact-subject', 'contact-message']))
             $('.js-contact-us-scroll-button').click();
             @endif
-
 
             if(signInError){
                 $('#sign-in-modal').modal();

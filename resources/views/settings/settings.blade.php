@@ -3,7 +3,7 @@
     Settings
 @endsection
 @section("content")
-
+{{--settings view--}}
 <div class="container">
     <div class="row justify-content-center">
         <div class="col col-md-10 col-lg-8">
@@ -33,7 +33,6 @@
         </div>
     </div>
 </div>
-
 @endsection
 
 @section("scripts")
@@ -43,15 +42,16 @@
                 theme : "bootstrap"
             });
 
-            $("form").on("reset", function()
+            /* reset input values to default values (values from db) */
+            $("form").on("reset", function(event)
             {
+                event.preventDefault();
                 $(this).parent().parent().collapse('hide');
 
                 $("input[type=text], input[type=email], input[type=password]", $(this)).each(function()
                 {
                     let value = $(this).attr("default-value");
                     $(this).val(value);
-
                 });
 
                 $("input[type=checkbox]", $(this)).each(function()
@@ -71,4 +71,3 @@
         });
     </script>
 @endsection
-

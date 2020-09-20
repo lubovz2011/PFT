@@ -3,7 +3,7 @@
     About-Us
 @endsection
 @section("content")
-
+{{--About-us view--}}
     <div class="container">
         <div class="row justify-content-center">
             <div class="col">
@@ -43,7 +43,6 @@
                     </div>
                     {{--  Categories list accordion  --}}
                     <div class="card-body p-0">
-
                     </div>
                 </div>
             </div>

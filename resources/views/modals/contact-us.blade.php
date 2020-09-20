@@ -24,7 +24,8 @@
                             class="form-control @error('contact-email') is-invalid @enderror"
                             placeholder="email@example.com"
                             name="contact-email"
-                            value="{{old('contact-email', auth()->user()->login)}}">
+                            value="{{old('contact-email', auth()->user()->login)}}"
+                            autocomplete="off">
                         @include('utils.error-invalid-feedback', ['errorField' => 'contact-email'])
                     </div>
                     <div class="form-group">
@@ -32,7 +33,8 @@
                                class="form-control @error('contact-subject') is-invalid @enderror"
                                placeholder="Subject"
                                name="contact-subject"
-                               value="{{old('contact-subject')}}">
+                               value="{{old('contact-subject')}}"
+                               autocomplete="off">
                         @include('utils.error-invalid-feedback', ['errorField' => 'contact-subject'])
                     </div>
                     <div class="form-group">
@@ -40,7 +42,9 @@
                                   class="form-control @error('contact-message') is-invalid @enderror"
                                   rows="5"
                                   placeholder="Enter your message"
-                                  name="contact-message">{{old('contact-message')}}</textarea>
+                                  name="contact-message">
+                            {{old('contact-message')}}
+                        </textarea>
                         @include('utils.error-invalid-feedback', ['errorField' => 'contact-message'])
                     </div>
                     <div class="col d-flex justify-content-center mt-2">

@@ -17,15 +17,31 @@
             <a class="navbar-brand" href="/">
                 <i class="fas fa-chart-line mr-2 category-icon text-success"></i>PFT
             </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler"
+                    type="button"
+                    data-toggle="collapse"
+                    data-target="#navbarNavAltMarkup">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                <form class="form-inline ml-auto">
-                    <button class="invisible scroll-item js-contact-us-scroll-button" data-scroll-nav="2"></button>
-                    <button class="btn btn-outline-light my-2 my-sm-0 mr-sm-2" type="button" data-toggle="modal" data-target="#sign-in-modal">Sign in</button>
-                    <button class="btn btn-outline-light my-2 my-sm-0" type="button" data-toggle="modal" data-target="#sign-up-modal">Sign up</button>
-                </form>
+                @guest
+                    <form class="form-inline ml-auto">
+                        <button class="invisible scroll-item js-contact-us-scroll-button"
+                                data-scroll-nav="2"></button>
+                        <button class="btn btn-outline-light my-2 my-sm-0 mr-sm-2"
+                                type="button"
+                                data-toggle="modal"
+                                data-target="#sign-in-modal">
+                            Sign in
+                        </button>
+                        <button class="btn btn-outline-light my-2 my-sm-0"
+                                type="button"
+                                data-toggle="modal"
+                                data-target="#sign-up-modal">
+                            Sign up
+                        </button>
+                    </form>
+                @endguest
             </div>
         </nav>
     </header>

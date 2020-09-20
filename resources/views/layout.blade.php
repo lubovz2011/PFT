@@ -15,34 +15,60 @@
 
     <body class="pb-4">
         <nav class="navbar navbar-expand-sm navbar-light bg-light mb-4">
-    {{--        <a class="navbar-brand" href="#">PFT</a>--}}
             <a class="navbar-brand" href="#">
                 <i class="fas fa-chart-line mr-2 category-icon text-success"></i>PFT
             </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler"
+                    type="button"
+                    data-toggle="collapse"
+                    data-target="#navbarNavAltMarkup">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav ml-auto">
-                    <a class="nav-item nav-link {{Route::currentRouteName() == 'reports' ? 'active' : ''}}" href="{{route('reports')}}">Dashboard</a>
-                    <a class="nav-item nav-link {{Route::currentRouteName() == 'transactions' ? 'active' : ''}}" href="{{route('transactions')}}">Transactions</a>
-
-                    <a class="nav-item nav-link {{Route::currentRouteName() == 'accounts' ? 'active' : ''}}" href="{{route('accounts')}}">Accounts</a>
-                    <a class="nav-item nav-link {{Route::currentRouteName() == 'categories' ? 'active' : ''}}" href="{{route('categories')}}">Categories</a>
+                    <a class="nav-item nav-link {{Route::currentRouteName() == 'reports' ? 'active' : ''}}"
+                       href="{{route('reports')}}">
+                        Dashboard
+                    </a>
+                    <a class="nav-item nav-link {{Route::currentRouteName() == 'transactions' ? 'active' : ''}}"
+                       href="{{route('transactions')}}">
+                        Transactions
+                    </a>
+                    <a class="nav-item nav-link {{Route::currentRouteName() == 'accounts' ? 'active' : ''}}"
+                       href="{{route('accounts')}}">
+                        Accounts
+                    </a>
+                    <a class="nav-item nav-link {{Route::currentRouteName() == 'categories' ? 'active' : ''}}"
+                       href="{{route('categories')}}">
+                        Categories
+                    </a>
                     <div class="nav-item dropdown {{Route::currentRouteName() == 'about-us' ? 'active' : ''}}">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle"
+                           href="#" id="navbarDropdown"
+                           role="button"
+                           data-toggle="dropdown">
                             More
                         </a>
-                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#contact-us-modal">Contact Us</a>
-                            <a class="dropdown-item {{Route::currentRouteName() == 'about-us' ? 'active' : ''}}" href="{{route('about-us')}}">About Us</a>
+                        <div class="dropdown-menu dropdown-menu-right"
+                             aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item"
+                               href="#"
+                               data-toggle="modal"
+                               data-target="#contact-us-modal">
+                                Contact Us
+                            </a>
+                            <a class="dropdown-item {{Route::currentRouteName() == 'about-us' ? 'active' : ''}}"
+                               href="{{route('about-us')}}">
+                                About Us
+                            </a>
                         </div>
                     </div>
                     <div class="dropdown ml-2">
-                        <span class="round-user-icon-container border border-success rounded-circle text-success content-box" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span class="round-user-icon-container border border-success rounded-circle text-success content-box"
+                              id="dropdownMenuButton" data-toggle="dropdown">
                             <i class="fa fa-user-circle"></i>
                         </span>
-                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                        <div class="dropdown-menu dropdown-menu-right" >
                             <a class="dropdown-item" href="{{route('settings')}}">Settings</a>
                             <a class="dropdown-item" href="#"
                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Log out</a>
@@ -56,7 +82,6 @@
         </nav>
 
     @yield("content")
-
         <div class="loader-wrapper invisible">
             <div class="loader">
                 <div class="loader__bar"></div>
@@ -89,27 +114,22 @@
             }
         });
 
-            function number_format(number, decimals, dec_point, thousands_point) {
-
+            function number_format(number, decimals, dec_point, thousands_point)
+            {
                 if (number == null || !isFinite(number)) {
                     throw new TypeError("number is not valid");
                 }
-
                 if (!decimals) {
                     var len = number.toString().split('.').length;
                     decimals = len > 1 ? len : 0;
                 }
-
                 if (!dec_point) {
                     dec_point = '.';
                 }
-
                 if (!thousands_point) {
                     thousands_point = ',';
                 }
-
                 number = parseFloat(number).toFixed(decimals);
-
                 number = number.replace(".", dec_point);
 
                 var splitNum = number.split(dec_point);
@@ -131,7 +151,6 @@
             @endif
         </script>
         @yield("scripts")
-
     </body>
 </html>
 
