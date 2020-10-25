@@ -64,7 +64,7 @@ class Otsar extends AbstractRequest
         return json_encode([
             'username'   => decrypt($data->username),
             'password'   => decrypt($data->password),
-            'lastUpdate' => $data->lastUpdate ?? Carbon::now()->startOfMonth()->subMonth()->toIso8601String()
+            'lastUpdate' => $data->lastUpdate ?? Carbon::now()->subMonth()->toIso8601String()
         ]);
     }
 
