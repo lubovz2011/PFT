@@ -176,7 +176,7 @@
 
 @section("scripts")
     <script>
-        $(document).ready(function(){
+        function select2init(){
             $("select").select2({
                 theme : "bootstrap"
             });
@@ -201,6 +201,12 @@
                 "placeholder" : "Select category",
                 theme : "bootstrap"
             });
+        }
+
+        $(document).ready(function()
+        {
+            select2init();
+            $( window ).resize(select2init);
 
             /* prepare default data for chart */
             let data = {

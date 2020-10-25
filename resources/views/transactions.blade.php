@@ -90,11 +90,12 @@
 
 @section("scripts")
     <script>
-        $(document).ready(function(){
+        function select2init(){
             $("select").select2({
                 theme : "bootstrap"
             });
 
+            /* turn on select2 plugin for filters */
             $('select[name="filter-times"]').select2({
                 "placeholder" : "Select time",
                 theme : "bootstrap"
@@ -114,6 +115,11 @@
                 "placeholder" : "Select category",
                 theme : "bootstrap"
             });
+        }
+
+        $(document).ready(function(){
+            select2init();
+            $( window ).resize(select2init);
 
             @if(
                $errors->has('type') ||
