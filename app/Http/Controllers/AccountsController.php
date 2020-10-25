@@ -88,7 +88,7 @@ class AccountsController extends Controller
         $user = auth()->user();
         $this->validate($request, [
            'title'    => 'bail|required|string|max:255',
-           'balance'  => 'bail|required|numeric',
+           'balance'  => 'bail|required|numeric|between:-999999.99,999999.99',
            'currency' => 'bail|required|in:ILS,USD,EUR,GBP,JPY'
         ]);
         $account = new Account();

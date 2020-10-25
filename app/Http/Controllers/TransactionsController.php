@@ -85,7 +85,7 @@ class TransactionsController extends Controller
             'account'     => 'bail|required|integer',
             'category'    => 'bail|required|integer|exists:categories,id',
             'date'        => 'bail|required|date',
-            'amount'      => 'bail|required|numeric',
+            'amount'      => 'bail|required|numeric|between:-999999.99,999999.99',
             'description' => 'bail|max:1024'
         ]);
     }
