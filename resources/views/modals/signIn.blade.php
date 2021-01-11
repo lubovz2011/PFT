@@ -20,15 +20,18 @@
                                autocomplete="off">
                         @include('utils.error-invalid-feedback', ["errorField" => 'login'])
                     </div>
+
                     {{--input password--}}
                     <div class="form-group">
-                        <input type="password"
-                               class="form-control @error('password') is-invalid @enderror"
-                               name="password"
-                               placeholder="Password"
-                               autocomplete="off">
-                        @include('utils.error-invalid-feedback', ["errorField" => 'password'])
+                        @include('utils.secure-field', [
+                            'class' => $errors->has('password') ? 'is-invalid' : '',
+                            'placeholder' => 'Password',
+                            'name' => 'password',
+                            'autocomplete' => 'off'
+                        ])
+                        @include('utils.error-invalid-feedback', ['errorField' => 'password'])
                     </div>
+
                     <div class="row">
                         {{--remember me--}}
                         <div class="form-group col">

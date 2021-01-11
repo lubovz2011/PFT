@@ -20,23 +20,25 @@
                                autocomplete="off">
                         @include('utils.error-invalid-feedback', ["errorField" => 'signup_login'])
                     </div>
+
                     {{--input password--}}
                     <div class="form-group">
-                        <input type="password"
-                               class="form-control @error('signup_password') is-invalid @enderror"
-                               name="signup_password"
-                               placeholder="Password"
-                               autocomplete="off">
-                        @include('utils.error-invalid-feedback', ["errorField" => 'signup_password'])
+                        @include('utils.secure-field', [
+                            'class' => $errors->has('signup_password') ? 'is-invalid' : '',
+                            'placeholder' => 'Password',
+                            'name' => 'signup_password',
+                            'autocomplete' => 'off'
+                        ])
+                        @include('utils.error-invalid-feedback', ['errorField' => 'signup_password'])
                     </div>
+
                     {{--input password confirmation--}}
                     <div class="form-group">
-                        <input type="password"
-                               class="form-control"
-                               name="signup_password_confirmation"
-                               placeholder="Confirm Password"
-                               autocomplete="off"
-                               required>
+                        @include('utils.secure-field', [
+                            'placeholder' => 'Confirm Password',
+                            'name' => 'signup_password_confirmation',
+                            'autocomplete' => 'off'
+                        ])
                     </div>
                     <button type="submit" class="btn btn-primary btn-block">Sign up</button>
                     <p class="text-center m-3">or</p>

@@ -149,6 +149,18 @@
             @if(session('send-status') || $errors->hasAny(['contact-email', 'contact-subject', 'contact-message']))
                 $('#contact-us-modal').modal();
             @endif
+
+        /* -------------change eye with mouse clicking on it to show/hide data-------------------- */
+            $('.js-show-hidden').on('mousedown', function(){
+                if($(this).siblings('input').attr('type') === 'text') {
+                    $(this).find('svg').removeClass('fa-eye').addClass('fa-eye-slash');
+                    $(this).siblings('input').attr('type', 'password');
+                }
+                else {
+                    $(this).find('svg').removeClass('fa-eye-slash').addClass('fa-eye');
+                    $(this).siblings('input').attr('type', 'text');
+                }
+            });
         </script>
         @yield("scripts")
     </body>

@@ -21,12 +21,13 @@
                     New password
                 </label>
                 <div class="col-md-8 col-lg-8">
-                    <input type="password"
-                           class="form-control @error('password') is-invalid @enderror"
-                           id="inputPassword"
-                           name="password"
-                           default-value="">
-                    @include('utils.error-invalid-feedback', ["errorField" => 'password'])
+                    @include('utils.secure-field', [
+                        'class' => $errors->has('password') ? 'is-invalid' : '',
+                        'name' => 'password',
+                        'id' => 'inputPassword',
+                        'defaultValue' => ''
+                    ])
+                    @include('utils.error-invalid-feedback', ['errorField' => 'password'])
                 </div>
             </div>
             <div class="form-group row">
@@ -34,11 +35,11 @@
                     Password confirmation
                 </label>
                 <div class="col-md-8 col-lg-8">
-                    <input type="password"
-                           class="form-control"
-                           id="inputPasswordConfirmation"
-                           name="password_confirmation"
-                           default-value="">
+                    @include('utils.secure-field', [
+                        'name' => 'password_confirmation',
+                        'id' => 'inputPasswordConfirmation',
+                        'defaultValue' => ''
+                    ])
                 </div>
             </div>
             <div class="row mt-4">

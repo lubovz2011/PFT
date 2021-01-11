@@ -135,6 +135,10 @@ body {
 .mh-80{
     min-height: 80vh;
 }
+
+.cursor-pointer {
+    cursor: pointer;
+}
 /*</editor-fold>*/
 
 /*<editor-fold desc="accounts-page">*/

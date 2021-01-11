@@ -52,7 +52,7 @@
 
     <footer class="footer z-index-2">
         <div class="container text-center">
-            <span class="text-muted">&copy; {{date("Y")}} Lubov Langleben</span>
+            <span class="text-muted">&copy; 2020-{{date("Y")}} PFT Lubov Langleben</span>
         </div>
     </footer>
 
@@ -61,5 +61,17 @@
     <script src="/js/bootstrap.min.js"></script>
     <script defer src="/js/font-awesome-5-all.min.js"></script> <!--load all styles -->
     @yield('script')
+    <script>
+        $('.js-show-hidden').on('mousedown', function(){
+            if($(this).siblings('input').attr('type') === 'text') {
+                $(this).find('svg').removeClass('fa-eye').addClass('fa-eye-slash');
+                $(this).siblings('input').attr('type', 'password');
+            }
+            else {
+                $(this).find('svg').removeClass('fa-eye-slash').addClass('fa-eye');
+                $(this).siblings('input').attr('type', 'text');
+            }
+        });
+    </script>
 </body>
 </html>

@@ -19,23 +19,27 @@
                         @include('utils.error-invalid-feedback', ['errorField' => 'bank'])
                     </div>
                     <div class="form-group">
-                        <input name="username"
-                               type="text"
-                               class="form-control @error('username') is-invalid @enderror"
-                               value="{{ old('username') }}"
-                               placeholder="User ID"
-                               autocomplete="off">
+                        @include('utils.secure-field', [
+                            'class' => $errors->has('username') ? 'is-invalid' : '',
+                            'placeholder' => 'User ID',
+                            'name' => 'username',
+                            'value' => old('username'),
+                            'autocomplete' => 'off'
+                        ])
                         @include('utils.error-invalid-feedback', ['errorField' => 'username'])
                     </div>
+
                     <div class="form-group">
-                        <input name="password"
-                               type="password"
-                               class="form-control @error('password') is-invalid @enderror"
-                               value="{{ old('password') }}"
-                               placeholder="Password"
-                               autocomplete="off">
+                        @include('utils.secure-field', [
+                            'class' => $errors->has('password') ? 'is-invalid' : '',
+                            'placeholder' => 'Password',
+                            'name' => 'password',
+                            'value' => old('password'),
+                            'autocomplete' => 'off'
+                        ])
                         @include('utils.error-invalid-feedback', ['errorField' => 'password'])
                     </div>
+
                     <div class="col d-flex justify-content-center">
                         <button class="btn btn-secondary mr-2 px-3" data-dismiss="modal" type="reset">
                             Cancel
