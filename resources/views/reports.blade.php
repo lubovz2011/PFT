@@ -203,10 +203,20 @@
             });
         }
 
+        function calcFiltersHeight(){
+            let headerHeight = $('.navbar').innerHeight();
+            let footerHeight = $('.footer').innerHeight();
+            let windowHeight = $(document).height();
+            $('.filters-form').height(windowHeight - headerHeight - footerHeight);
+        }
+
         $(document).ready(function()
         {
             select2init();
             $( window ).resize(select2init);
+            $( window ).resize(calcFiltersHeight);
+
+            calcFiltersHeight();
 
             /* prepare default data for chart */
             let data = {

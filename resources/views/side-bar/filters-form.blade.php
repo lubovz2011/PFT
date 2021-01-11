@@ -68,8 +68,8 @@
             </select>
         </div>
     </div>
-    <div class="row mt-2 d-flex justify-content-center">
-        <button class="btn btn-primary mr-2 px-3" type="submit">Apply filters</button>
-        <a href="{{Request::url()}}" class="btn btn-secondary mr-2 px-3" type="button">Clear filters</a>
+    <div class="row d-flex justify-content-center">
+        <button class="btn btn-primary mt-2 mr-2 px-3" type="submit">Apply filters</button>
+        <a href="{{Request::url()}}" class="btn btn-secondary mt-2 mr-2 px-3" type="button">Clear filters</a>
     </div>
 </form>
