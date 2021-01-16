@@ -21,7 +21,7 @@
             .report-container{
                 background-color: white;
                 margin: auto;
-                width: 30%;
+                width: 40%;
                 padding: 10px;
                 text-align: center;
             }

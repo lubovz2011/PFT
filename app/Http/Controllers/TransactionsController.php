@@ -138,7 +138,7 @@ class TransactionsController extends Controller
             $transaction->description = $request->input("t-$id-description") ?? '';
             /** @var Account $account */
             $account = $user->accounts()->where('accounts.id', '=', $transaction->account_id)->first();
-            $transaction->amount = abs($request->input("t-$id-amount"));
+            $transaction->amount = $request->input("t-$id-amount");
             $transaction->amount = Rate::convert($transaction->amount, $transaction->currency, $account->currency);
             $transaction->currency = $account->currency;
             $account->balance += $transaction->amount;

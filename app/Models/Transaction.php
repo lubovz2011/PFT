@@ -64,7 +64,7 @@ class Transaction extends Model
         $mult = 1;
         if($this->type == 'expense')
             $mult = -1;
-        return $mult * $amount;
+        return $mult * abs($amount);
     }
 
     /**
