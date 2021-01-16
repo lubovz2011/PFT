@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 
 use App\Classes\Category\DefaultCategories;
+use App\Models\Account;
 use App\Models\Category;
 use App\Models\Icon;
 use App\Models\User;
@@ -86,6 +87,16 @@ class CategoriesController extends Controller
         $category = $user->categories()
             ->where('id', '=', $request->input('categoryId'))
             ->where('lock', '=', 0)->firstOrFail();
+
+        /** @var Category $category */
+        $groups = $category->transactions->groupBy('account_id');
+        $accounts = $user->accounts()->whereIn('id', $groups->keys()->toArray())->get();
+
+        /** @var Account $account */
+        foreach ($accounts as $account){
+            $account->balance -= $groups->get($account->id)->sum('amount');
+            $account->save();
+        }
 
         return response()->json([
             "status" => $category->delete() ? "success" : "error"

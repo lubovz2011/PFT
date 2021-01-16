@@ -89,7 +89,6 @@ class Otsar extends AbstractRequest
         $balance  = $data[0]->summary->balance;
         $currency = $data[0]->summary->balanceCurrency;
         $txns = $data[0]->txns ?? [];
-
         $credentials = json_decode($this->account->credentials);
         $this->handleTransactions($txns, $credentials, $currency);
 
