@@ -139,6 +139,18 @@ body {
 .cursor-pointer {
     cursor: pointer;
 }
+
+.btn-to-top {
+    position: fixed;
+    background-color: rgba(255,255,255,50%);
+    border: 2px solid black;
+    border-radius: 25%;
+    display: none;
+    z-index: 99;
+    bottom: 45px;
+    left: 10px;
+}
+
 /*</editor-fold>*/
 
 /*<editor-fold desc="accounts-page">*/
@@ -290,6 +302,12 @@ body {
 /*</editor-fold>*/
 
 /*<editor-fold desc="transactions-page">*/
+
+/*.btn-to-top:focus {
+    outline: none;
+    box-shadow: none;
+}*/
+
 .loader-wrapper{
     position: fixed;
     top: 0;

@@ -81,6 +81,11 @@
             </div>
         </nav>
 
+        <button onclick="topFunction()" id="btnToTop" class="btn-to-top btn js-show-hide-btn" type="button">
+            <i class="fas fa-chevron-up"></i>
+        </button>
+
+
     @yield("content")
         <div class="loader-wrapper invisible">
             <div class="loader">
@@ -93,9 +98,11 @@
             </div>
         </div>
 
+
+
         <footer class="footer">
             <div class="container text-center">
-                <span class="text-muted">&copy; {{date("Y")}} Lubov Langleben</span>
+                <span class="text-muted">&copy; 2020-{{date("Y")}} PFT Lubov Langleben</span>
             </div>
         </footer>
 
@@ -161,6 +168,28 @@
                     $(this).siblings('input').attr('type', 'text');
                 }
             });
+
+            /* -------------show/hide btn to top when the user scrolls down-------------------- */
+            var btnToTop = document.getElementById("btnToTop");
+
+            // When the user scrolls down 20px from the top of the document, show the button
+            window.onscroll = function() {scrollFunction()};
+
+            function scrollFunction() {
+                if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20)
+                {
+                    btnToTop.style.display = "block";
+                }
+                else {
+                    btnToTop.style.display = "none";
+                }
+            }
+
+            // When the user clicks on the button, scroll to the top of the document
+            function topFunction() {
+                window.scrollTo({top: 0, behavior: 'smooth'});
+            }
+
         </script>
         @yield("scripts")
     </body>
