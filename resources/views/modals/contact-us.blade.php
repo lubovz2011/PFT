@@ -13,6 +13,11 @@
                         {{ session('send-status') }}
                     </div>
                 @endif
+                @if (session('send-status-error'))
+                    <div class="alert alert-danger" role="alert">
+                        {{ session('send-status-error') }}
+                    </div>
+                @endif
                 <form class="px-4 py-2" method="POST" action="{{route('contact-us')}}">
                     @csrf
                     <div class="text-center mb-4">
@@ -42,9 +47,7 @@
                                   class="form-control @error('contact-message') is-invalid @enderror"
                                   rows="5"
                                   placeholder="Enter your message"
-                                  name="contact-message">
-                            {{old('contact-message')}}
-                        </textarea>
+                                  name="contact-message">{{old('contact-message')}}</textarea>
                         @include('utils.error-invalid-feedback', ['errorField' => 'contact-message'])
                     </div>
                     <div class="col d-flex justify-content-center mt-2">

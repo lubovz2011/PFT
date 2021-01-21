@@ -143,6 +143,11 @@
                                 {{ session('send-status') }}
                             </div>
                         @endif
+                        @if (session('send-status-error'))
+                            <div class="alert alert-danger" role="alert">
+                                {{ session('send-status-error') }}
+                            </div>
+                        @endif
                         <form class="index-form" method="POST" action="{{route('contact-us')}}">
                             @csrf
                             <div class="row">
@@ -177,8 +182,7 @@
                                                   class="form-control @error('contact-message') is-invalid @enderror"
                                                   rows="5"
                                                   placeholder="Enter your message"
-                                                  name="contact-message">{{old('contact-message')}}
-                                        </textarea>
+                                                  name="contact-message">{{old('contact-message')}}</textarea>
                                         @include('utils.error-invalid-feedback', ['errorField' => 'contact-message'])
                                     </div>
                                 </div>
@@ -215,7 +219,7 @@
             let signInError = {{($errors->has('login') || $errors->has('password')) ? 1 : 0}};
             let signUpError = {{($errors->has('signup_login') || $errors->has('signup_password')) ? 1 : 0}};
 
-            @if (session('send-status') || $errors->hasAny(['contact-email', 'contact-subject', 'contact-message']))
+            @if (session('send-status') || session('send-status-error') || $errors->hasAny(['contact-email', 'contact-subject', 'contact-message']))
             $('.js-contact-us-scroll-button').click();
             @endif
 

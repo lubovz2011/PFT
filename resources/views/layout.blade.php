@@ -153,7 +153,8 @@
                 $('.loader-wrapper').addClass('invisible');
             }
 
-            @if(session('send-status') || $errors->hasAny(['contact-email', 'contact-subject', 'contact-message']))
+        /* -------------open contact-us modal in case of some error or message was successfully send-------------------- */
+            @if(session('send-status') || session('send-status-error') || $errors->hasAny(['contact-email', 'contact-subject', 'contact-message']))
                 $('#contact-us-modal').modal();
             @endif
 
