@@ -85,9 +85,7 @@
                         <textarea class="form-control @error('description') is-invalid @enderror"
                                   name="description"
                                   placeholder="Description"
-                                  rows="3">
-                            {{old('description')}}
-                        </textarea>
+                                  rows="3">{{old('description')}}</textarea>
                         @include('utils.error-invalid-feedback', ["errorField" => 'description'])
                     </div>
                     <div class="col d-flex justify-content-center">

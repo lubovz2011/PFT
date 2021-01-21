@@ -16,7 +16,7 @@
                                     {{ session('status') }}
                                 </div>
                             @endif
-                            <form method="POST" action="{{ route('password.email') }}">
+                            <form method="POST" action="{{ route('password.email') }}" novalidate>
                                 @csrf
                                 <div class="form-group row">
                                     <label for="email"

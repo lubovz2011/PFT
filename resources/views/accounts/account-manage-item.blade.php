@@ -78,7 +78,7 @@
     </form>
 </li>
 
-{{--delete modal--}}
+{{--delete account modal--}}
 <div class="modal fade"
      id="delete-account-modal-{{$account->id}}"
      tabindex="-1"

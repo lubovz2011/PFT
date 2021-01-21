@@ -11,7 +11,6 @@
     </div>
     <div id="section-personal-info"
          class="collapse @if($errors->has('name') || $errors->has('login')) show @endif"
-         aria-labelledby="personal-info-header"
          data-parent="#accordion-settings">
         <div class="card-body">
             <form method="POST" action="{{route("settings:personal-info")}}">

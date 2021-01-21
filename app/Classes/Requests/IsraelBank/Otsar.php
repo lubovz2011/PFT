@@ -117,7 +117,7 @@ class Otsar extends AbstractRequest
                 $transaction->amount = abs($txn->chargedAmount);
                 $transaction->currency = $currency;
                 $transaction->type = $txn->chargedAmount >= 0 ? 'income' : 'expense';
-                $transaction->description = $txn->description;
+                $transaction->description = trim($txn->description);
                 $transaction->date = $txnDate;
                 $transaction->account_id = $this->account->id;
                 $transaction->category_id = $lockedCategory;

@@ -98,9 +98,7 @@
             <div class="form-group col-6">
                 <textarea class="form-control h-100"
                           rows="3"
-                          name="t-{{$transaction->id}}-description">
-                    {{old("t-{$transaction->id}-description", $transaction->description)}}
-                </textarea>
+                          name="t-{{$transaction->id}}-description">{{old("t-{$transaction->id}-description", $transaction->description)}}</textarea>
             </div>
         </div>
         {{--delete transaction--}}
@@ -129,8 +127,13 @@
         </div>
     </form>
 </li>
+
 {{--delete transaction modal--}}
-<div class="modal fade" id="delete-transaction-modal-{{$transaction->id}}" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal fade"
+     id="delete-transaction-modal-{{$transaction->id}}"
+     tabindex="-1"
+     role="dialog"
+     aria-hidden="true">
     <div class="modal-dialog modal-sm">
         <div class="modal-content">
             <div class="modal-body">
@@ -139,10 +142,12 @@
                 </p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                <button type="button"
+                        class="btn btn-secondary"
+                        data-dismiss="modal"> No </button>
                 <a href="#"
                    onclick="event.preventDefault(); document.getElementById('delete-transaction-form-{{$transaction->id}}').submit();"
-                   class="btn btn-primary">Yes</a>
+                   class="btn btn-primary"> Yes </a>
                 <form id="delete-transaction-form-{{$transaction->id}}"
                       action="{{ route('delete-transaction') }}"
                       method="POST" style="display: none;">
