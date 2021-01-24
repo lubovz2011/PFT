@@ -151,7 +151,7 @@
                         <form class="index-form" method="POST" action="{{route('contact-us')}}">
                             @csrf
                             <div class="row">
-                                <div class="col aos-init aos-animate" data-aos="fade-up" data-aos-duration="400">
+                                <div class="col-12 col-lg-6 col-md-6 aos-init aos-animate" data-aos="fade-up" data-aos-duration="400">
                                     <div class="form-group">
                                         <input
                                             type="text"

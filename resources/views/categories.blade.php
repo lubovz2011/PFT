@@ -11,11 +11,13 @@
                 <div class="card-header">
                     <h5 class="card-title mb-0">Categories</h5>
                 </div>
+
                 {{--  Add new category  --}}
                 <div class="card-body">
                     <form method="POST" action="{{route('add-category')}}">
                         @csrf
                         <div class="form-row align-items-center">
+                            {{-- add category name --}}
                             <div class="col-3">
                                 <label for="category-input">Name</label>
                                 <input
@@ -26,6 +28,8 @@
                                     value="{{old('name')}}"
                                     autocomplete="off">
                             </div>
+
+                            {{-- select parent category --}}
                             <div class="col-4">
                                 <label class="" for="parent-category-select">Parent Category</label>
                                 <select class="form-control @error('parent') is-invalid @enderror"
@@ -43,6 +47,8 @@
                                     @endforeach
                                 </select>
                             </div>
+
+                            {{-- select category icon --}}
                             <div class="col-3">
                                 <label for="icon-category-select">Icon</label>
                                 <select class="form-control @error('icon') is-invalid @enderror"
@@ -63,6 +69,7 @@
                         </div>
                     </form>
                 </div>
+
                 {{--  Categories list accordion  --}}
                 <div class="card-body p-0">
                     <div class="accordion" id="accordion-categories">
@@ -98,6 +105,8 @@
                 }
             });
 
+            /*------------------------- change category status -----------------------------------*/
+
             /**
              *  Find all labels for custom checkboxes
              * @type {jQuery|HTMLElement}
@@ -131,14 +140,22 @@
                             "status" : status
                         }
                     }
-                ).done(function(data){
+                ).done(function(data)
+                {
+                    //Change status to parent category
                     $("#" + data.id + "-category-toggle").prop('checked', data.status === "1");
+
+                    //Change status to sub categories
                     for(let category of data.categories) {
                         $("#" + category.id + "-category-toggle").prop('checked', category.status === "1");
                     }
                     if(data.parent_id == null){
                         if(data.status == 1){
+
+                            // Add new option (parent category) to select
                             $('#parent-category-select').append($('<option value="' + data.id + '">' + data.name + '</option>'));
+
+                            // Sort options (parent categories) in select
                             let options = $('#parent-category-select option');
                             var arr = options.map(function(_, o) { return { t: $(o).text(), v: o.value }; }).get();
                             arr.sort(function(o1, o2) { return o1.v - o2.v; });
@@ -148,6 +165,7 @@
                             });
                         }
                         else{
+                            //Remove an option (parent category) from select
                             $('#parent-category-select option[value="'+ data.id +'"]').remove();
                         }
                         $('#parent-category-select').select2({
@@ -157,14 +175,19 @@
                     loaderStop();
                 });
             }
-            let deleteButton = $('.js-delete-category');
 
-            deleteButton.on('click', function (e) {
+
+            /*------------------------- delete category -----------------------------------*/
+
+            let deleteButtons = $('.js-delete-category');
+
+            deleteButtons.on('click', function (e) {
                 // on click we prevent 'bubbling'
                 e.preventDefault();
                 e.stopPropagation();
-
-                deleteCategory($(this).data('id'));
+                let conf = confirm('Are you sure you want to delete this category?');
+                if(conf)
+                    deleteCategory($(this).data('id'));
             });
 
             function deleteCategory(id){

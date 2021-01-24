@@ -207,7 +207,7 @@
             let headerHeight = $('.navbar').innerHeight();
             let footerHeight = $('.footer').innerHeight();
             let windowHeight = $(document).height();
-            $('.filters-form').height(windowHeight - headerHeight - footerHeight);
+            $('.filters-form').css("min-height", windowHeight - headerHeight - footerHeight);
         }
 
         $(document).ready(function()

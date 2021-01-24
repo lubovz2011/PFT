@@ -28,7 +28,7 @@
                     <form class="form-inline ml-auto">
                         <button class="invisible scroll-item js-contact-us-scroll-button"
                                 data-scroll-nav="2"></button>
-                        <button class="btn btn-outline-light my-2 my-sm-0 mr-sm-2"
+                        <button class="btn btn-outline-light my-2 my-sm-0 mr-2"
                                 type="button"
                                 data-toggle="modal"
                                 data-target="#sign-in-modal">

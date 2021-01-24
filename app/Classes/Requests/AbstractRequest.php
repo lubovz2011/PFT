@@ -60,7 +60,7 @@ abstract class AbstractRequest
      */
     public function send()
     {
-        $client = new Client();
+        $client = new Client(); //http client for http requests
         $response = $client->request($this->getMethod(), $this->getUrl(), [
            'body'    => $this->getBody(),
            'headers' => $this->getHeaders()

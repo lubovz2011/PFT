@@ -47,7 +47,7 @@ class MonthlyReport extends Mailable
         $totalIncome = $transactions->where('type', '=', 'income')->sum('amountInUserCurrency');
         $totalExpense = $transactions->where('type', '=', 'expense')->sum('amountInUserCurrency');
         $endBalance = $accounts->sum('balanceInUserCurrency');
-        $startBalance = $endBalance - $totalIncome + $totalExpense;
+        $startBalance = $endBalance - $totalIncome - $totalExpense;
         $profit = $totalIncome + $totalExpense;
         $avgPerMonth = $this->avgPerMonth($accounts, $categories);
 

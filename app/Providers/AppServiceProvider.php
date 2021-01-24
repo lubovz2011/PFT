@@ -31,7 +31,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //when user created - run following cod
+        //when user created - run following code
         User::created(function($user)
         {
             /** @var User $user */

@@ -49,21 +49,21 @@ class Controller extends BaseController
     protected function attachFilterTimesToQuery(Relation $query, Request $request, bool $useDefault = false)
     {
         switch ($request->input('filter-times')) {
-            case 1: $query->where('date', '=', Carbon::now()); break; //today
-            case 2: $query->where('date', '=', Carbon::now()->subDay()); break; //yesterday
-            case 3: $query->where('date', '>', Carbon::now()->subDays(7))
+            case 1: $query->whereDate('date', '=', Carbon::now()); break; //today
+            case 2: $query->whereDate('date', '=', Carbon::now()->subDay()); break; //yesterday
+            case 3: $query->whereDate('date', '>', Carbon::now()->subDays(7))
                 ->where('date', '<=', Carbon::now()); break; //last 7 days
-            case 4: $query->where('date', '>', Carbon::now()->subDays(30))
-                ->where('date', '<=', Carbon::now()); break; // Last 30 days
-            case 5: $query->where('date', '>=', Carbon::now()->firstOfMonth())
-                ->where('date', '<=', Carbon::now()); break; // This Month
-            case 6: $query->where('date', '>=', Carbon::now()->subMonth()->firstOfMonth())
-                ->where('date', '<=', Carbon::now()->subMonth()->lastOfMonth()); break; // Last Month
+            case 4: $query->whereDate('date', '>', Carbon::now()->subDays(30))
+                ->whereDate('date', '<=', Carbon::now()); break; // Last 30 days
+            case 5: $query->whereDate('date', '>=', Carbon::now()->firstOfMonth())
+                ->whereDate('date', '<=', Carbon::now()); break; // This Month
+            case 6: $query->whereDate('date', '>=', Carbon::now()->subMonth()->firstOfMonth())
+                ->whereDate('date', '<=', Carbon::now()->subMonth()->lastOfMonth()); break; // Last Month
             default:
                 if($useDefault) {
                     $date = Carbon::parse($request->input('filter-times'));
-                    $query->where('date', '>=', (clone $date)->firstOfMonth())
-                        ->where('date', '<=', (clone $date)->lastOfMonth());
+                    $query->whereDate('date', '>=', (clone $date)->firstOfMonth())
+                        ->whereDate('date', '<=', (clone $date)->lastOfMonth());
                 }
         }
         return $query;

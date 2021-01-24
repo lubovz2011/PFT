@@ -183,14 +183,11 @@ class TransactionsController extends Controller
      */
     private function totalBalance(string $userCurrency, $accounts = null)
     {
+        $accounts = $accounts ?? collect([]);
         $groupByCurrency = $accounts->groupBy('currency');
         $total = 0;
         foreach ($groupByCurrency as $currency => $accounts){
-            $totalByCurrency = 0;
-            foreach ($accounts as $account)
-                /** @var Account $account */
-                $totalByCurrency += $account->balance;
-            $total += Rate::convert($totalByCurrency, $currency, $userCurrency);
+            $total += Rate::convert($accounts->sum('balance'), $currency, $userCurrency);
         }
         return Helpers::NumberFormat($total);
     }
@@ -216,11 +213,10 @@ class TransactionsController extends Controller
         $this->attachFilterTimesToQuery($transactions, $request);
         $transactions = $this->attachFiltersToQuery($transactions, $request)
                              ->with('category')
-                             ->with('account')
                              ->orderBy('date', 'desc')
                              ->orderBy('id', 'desc')
                              ->paginate($user->limit);
-        $transactions->appends($request->all());
+        $transactions->appends($request->all()); //for adding request parameters to url (filters)
 
         return [$user, $accounts, $categories, $transactions];
     }

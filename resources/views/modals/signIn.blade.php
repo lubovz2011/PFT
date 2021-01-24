@@ -34,7 +34,7 @@
 
                     <div class="row">
                         {{--remember me--}}
-                        <div class="form-group col">
+                        <div class="form-group col-12 col-md-6 col-lg-6">
                             <div class="form-check">
                                 <input type="checkbox" class="form-check-input" name="remember" id="dropdownCheck">
                                 <label class="form-check-label" for="dropdownCheck">

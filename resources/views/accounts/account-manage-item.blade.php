@@ -13,6 +13,7 @@
         </div>
     </div>
 </li>
+
 {{--update account--}}
 <li class="list-group-item py-3 collapse
            @if($errors->hasAny(["id", "a-{$account->id}-title"])) show @endif"
@@ -20,6 +21,7 @@
     <form method="POST" action="{{route('update-account')}}">
         @csrf
         <input type="hidden" name="id" value="{{$account->id}}">
+
         {{--update account name--}}
         <div class="row">
             <div class="form-group col">
@@ -31,6 +33,7 @@
                 @include('utils.error-invalid-feedback', ['errorField' => "a-{$account->id}-title"])
             </div>
         </div>
+
         {{--switch to choose current account to include or not include in reports--}}
         <div class="row">
             <div class="col-6 form-group">
@@ -46,6 +49,7 @@
                 </div>
             </div>
             <div class="col d-flex justify-content-end">
+
                 {{--delete account--}}
                 <button class="btn btn-secondary mr-2"
                         type="button"
@@ -53,6 +57,7 @@
                         data-target="#delete-account-modal-{{$account->id}}">
                     Delete
                 </button>
+
                 {{--cancel changes--}}
                 <button class="btn btn-secondary mr-2"
                         type="reset"
@@ -60,6 +65,7 @@
                         data-target="#collapse-{{$account->id}}">
                     Cancel
                 </button>
+
                 {{--transactions synchronization--}}
                 @if($account->type == \App\Models\Account::TYPE_CARD)
                     <button class="btn btn-primary pr-3 pl-3 mr-2 js-synchronize-buttom"
@@ -68,6 +74,7 @@
                         Synchronize
                     </button>
                 @endif
+
                 {{--save all changes--}}
                 <button class="btn btn-primary pr-3 pl-3"
                         type="submit">

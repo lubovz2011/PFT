@@ -10,6 +10,7 @@ use App\Models\Category;
 use App\Models\Icon;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 /**
  * Class CategoriesController
@@ -88,16 +89,15 @@ class CategoriesController extends Controller
             ->where('id', '=', $request->input('categoryId'))
             ->where('lock', '=', 0)->firstOrFail();
 
-        /** @var Category $category */
+        /** @var Category $category get data for update account */
         $groups = $category->transactions->groupBy('account_id');
         $accounts = $user->accounts()->whereIn('id', $groups->keys()->toArray())->get();
 
-        /** @var Account $account */
+        /** @var Account $account update account */
         foreach ($accounts as $account){
             $account->balance -= $groups->get($account->id)->sum('amount');
             $account->save();
         }
-
         return response()->json([
             "status" => $category->delete() ? "success" : "error"
         ]);

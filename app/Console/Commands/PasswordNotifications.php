@@ -32,7 +32,7 @@ class PasswordNotifications extends Command
             /** @var User $user */
             $user = User::find($userId->id); //get user from DB by id
             $diff = $this->getDiff($user);
-            if($diff % 3 == 0){
+            if($diff && $diff % 3 == 0){
                 $this->info("sending email to : ".$user->login); //console message
                 $message = "We're here to remind you it's time to reset your password.\n".
                            "You do not have to but are highly recommended to secure your user account.\n\n".
@@ -59,6 +59,6 @@ class PasswordNotifications extends Command
         $date = $date->startOfDay();
         $now = Carbon::now()->startOfDay();
 
-        return $date->floatDiffInMonths($now);
+        return $date->diffInMonths($now);
     }
 }

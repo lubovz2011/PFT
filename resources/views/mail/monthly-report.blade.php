@@ -165,7 +165,7 @@
                 </div>
             </div>
             <div class="align-center mt-25 font">
-                &copy; {{date("Y")}} Lubov Langleben
+                &copy; 2020-{{date("Y")}} PFT Lubov Langleben
             </div>
         </div>
     </body>

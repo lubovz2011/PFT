@@ -32,7 +32,7 @@
         <input type="hidden" name="id" value="{{$transaction->id}}">
         <div class="row">
             {{--update transaction account--}}
-            <div class="form-group col">
+            <div class="form-group col-12 col-md-6 col-lg-6">
                 <select class="form-control" name="t-{{$transaction->id}}-account">
                     @php /** @var \App\Models\Account[] $accounts */ @endphp
                     @foreach($accounts as $account)
@@ -62,10 +62,10 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-6">
+            <div class="col-12 col-lg-6 col-md-6">
                 <div class="row">
                     {{--update transaction type--}}
-                    <div class="form-group col">
+                    <div class="form-group col-12 col-lg-6 col-md-6">
                         <select class="form-control" name="t-{{$transaction->id}}-type">
                             <option value="expense" @if(old("t-{$transaction->id}-type", $transaction->type) == "expense") selected @endif>
                                 Expense
@@ -86,7 +86,7 @@
                 </div>
                 <div class="row">
                     {{--update transaction date--}}
-                    <div class="form-group col">
+                    <div class="form-group col-12">
                         <input type="date"
                                class="form-control"
                                name="t-{{$transaction->id}}-date"
@@ -95,7 +95,7 @@
                 </div>
             </div>
             {{--update transaction description--}}
-            <div class="form-group col-6">
+            <div class="form-group col-12 col-lg-6 col-md-6">
                 <textarea class="form-control h-100"
                           rows="3"
                           name="t-{{$transaction->id}}-description">{{old("t-{$transaction->id}-description", $transaction->description)}}</textarea>
