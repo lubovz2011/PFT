@@ -121,6 +121,7 @@ class ReportsController extends Controller
 
         foreach ($filteredCategories->where('parent_id', '=', null) as $category)
         {
+            /** @var Category $category */
             $totalAmount = $category->getAmountForReport($transactions, $filteredCategories);
 
             if($totalAmount >= 0)
@@ -148,10 +149,12 @@ class ReportsController extends Controller
 
         $params['filter-types'] = 'expense';
         $links['expense'] = \route('reports', $params);
+        // pftracker.com/dashboard?filter-time=10
 
         $timeOptions=DataSets::getDateOptions();
         $timeFilter=$request->input('filter-times');
 
+        /* create links for previous and next months */
         if(empty($timeOptions[$timeFilter])) {
             $nextDate = Carbon::parse($timeFilter)->startOfMonth()->addMonth()->format('FY');
             $prevDate = Carbon::parse($timeFilter)->startOfMonth()->subMonth()->format('FY');
