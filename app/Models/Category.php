@@ -112,7 +112,13 @@ class Category extends Model
     {
         $totalCategoryAmount = $this->getAmountForReport($transactions, $filteredCategories);
 
-        return $totalCategoryAmount * 100 / ($totalCategoryAmount >= 0 ? $totalIncome : $totalExpense);
+        if($totalCategoryAmount >= 0) {
+            return $totalIncome ? $totalCategoryAmount * 100 /  $totalIncome : 0;
+        }
+        else {
+            return $totalExpense ? $totalCategoryAmount * 100 / $totalExpense : 0;
+        }
+
     }
 
     /**

@@ -44,6 +44,7 @@ class MonthlyReport extends Mailable
         list($accounts, $categories, $startOfMonth, $transactions) = $this->getDataForReport();
 
         //calculate all values for the report
+        /** @var Transaction $transaction */
         $totalIncome = $transactions->where('type', '=', 'income')->sum('amountInUserCurrency');
         $totalExpense = $transactions->where('type', '=', 'expense')->sum('amountInUserCurrency');
         $endBalance = $accounts->sum('balanceInUserCurrency');
@@ -83,14 +84,14 @@ class MonthlyReport extends Mailable
             /** @var Transaction[]|Collection $transactions */
             $transactions = $this->user->transactions()->whereIn('account_id', $accounts->pluck('id')->all())
                 ->whereIn('category_id', $categories->pluck('id')->all())
-                ->where('date', '>=', $month)
-                ->where('date', '<=', (clone $month)->endOfMonth())
+                ->whereDate('date', '>=', $month)
+                ->whereDate('date', '<=', (clone $month)->endOfMonth())
                 ->get();
 
             if(!$transactions->count())
                 return 0;
             else
-                $total += $transactions->sum('amount');
+                $total += $transactions->sum('amountInUserCurrency');
         }
         return $total / 3;
     }
@@ -130,8 +131,8 @@ class MonthlyReport extends Mailable
         /** @var Transaction[]|Collection $transactions */
         $transactions = $this->user->transactions()->whereIn('account_id', $accounts->pluck('id')->all())
             ->whereIn('category_id', $categories->pluck('id')->all())
-            ->where('date', '>=', $startOfMonth)
-            ->where('date', '<=', $endOfMonth)
+            ->whereDate('date', '>=', $startOfMonth)
+            ->whereDate('date', '<=', $endOfMonth)
             ->get();
 
         return [$accounts, $categories, $startOfMonth, $transactions];

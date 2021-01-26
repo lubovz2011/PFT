@@ -208,6 +208,9 @@
                     }
                     else
                         alert("Ops, something went wrong. Try again.");
+                }).fail(function() {
+                    alert("Ops, something went wrong. Try again.");
+                }).always(function(){
                     loaderStop();
                 });
             }

@@ -124,6 +124,7 @@ class Otsar extends AbstractRequest
                 $transaction->save();
             }
         }
-        $credentials->lastUpdate = Carbon::parse($txn->date)->toIso8601String();
+        if(count($txns))
+            $credentials->lastUpdate = Carbon::parse($txn->date)->toIso8601String();
     }
 }

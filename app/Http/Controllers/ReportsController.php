@@ -122,6 +122,7 @@ class ReportsController extends Controller
         foreach ($filteredCategories->where('parent_id', '=', null) as $category)
         {
             /** @var Category $category */
+            //sum amount of all transactions for each parentCategory and her subCategories
             $totalAmount = $category->getAmountForReport($transactions, $filteredCategories);
 
             if($totalAmount >= 0)
@@ -133,7 +134,7 @@ class ReportsController extends Controller
     }
 
     /**
-     * Method generate suitable link for dashboard page using chosen filters
+     * Method generate suitable link for dashboard page using chosen filters (types and arrows)
      * @param Request $request
      * @return array $links
      */

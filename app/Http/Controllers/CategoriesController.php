@@ -8,9 +8,11 @@ use App\Classes\Category\DefaultCategories;
 use App\Models\Account;
 use App\Models\Category;
 use App\Models\Icon;
+use App\Models\Transaction;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use mysql_xdevapi\Exception;
 
 /**
  * Class CategoriesController
@@ -83,7 +85,7 @@ class CategoriesController extends Controller
             'categoryId'   => 'bail|integer|required'
         ]);
 
-        $status = false;
+        $status = false; //if category was deleted
         list($category, $groupedTransactions, $accounts) = $this->getDeleteCategoryData($request->input('categoryId'));
 
         try{
@@ -117,13 +119,16 @@ class CategoriesController extends Controller
     {
         /** @var User $user */
         $user = auth()->user();
-
+        /** @var Category $category */
         $category = $user->categories()
             ->where('id', '=', $categoryId)
             ->where('lock', '=', 0)->firstOrFail();
 
+        $ids = $category->categories()->get("id")->pluck('id')->toArray();
+        $ids[] = $categoryId;
+
         /** @var Category $category get data for update account */
-        $groupedTransactions = $category->transactions->groupBy('account_id');
+        $groupedTransactions = $user->transactions()->whereIn('category_id', $ids)->get()->groupBy('account_id');
         $accounts = $user->accounts()->whereIn('id', $groupedTransactions->keys()->toArray())->get();
 
         return [
