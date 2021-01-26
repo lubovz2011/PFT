@@ -210,10 +210,7 @@ class TransactionsController extends Controller
         $accounts = $user->accounts;
         /** @var Category[] $categories */
         $categories = $user->categories()->whereNull('parent_id')
-                                         ->where('status', 1)
-                                         ->with(['categories' => function($query){
-                                             $query->where('status', 1);
-                                         }])->get();
+                                         ->with('categories')->get();
         $transactions = $user->transactions();
         $this->attachFilterTimesToQuery($transactions, $request);
         $transactions = $this->attachFiltersToQuery($transactions, $request)

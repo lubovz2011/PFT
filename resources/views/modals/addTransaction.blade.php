@@ -34,7 +34,9 @@
                         <select class="form-control @error('account') is-invalid @enderror" name="account" required>
                             @php /** @var \App\Models\Account[] $accounts */ @endphp
                             @foreach($accounts as $account)
-                                <option value="{{$account->id}}" @if(old('account') == $account->id) selected @endif>
+                                <option
+                                    value="{{$account->id}}"
+                                    @if(old('account') == $account->id) selected @endif>
                                     {{$account->title}}
                                 </option>
                             @endforeach
@@ -46,16 +48,26 @@
                         <select class="form-control @error('category') is-invalid @enderror" name="category" required>
                             @php /** @var \App\Models\Category[] $categories */ @endphp
                             @foreach($categories as $category)
-                                <optgroup label="{{$category->name}}">
-                                    <option value="{{$category->id}}" @if(old('category') == $category->id) selected @endif>
-                                        {{$category->name}}
-                                    </option>
-                                    @foreach($category->categories as $subCategory)
-                                        <option value="{{$subCategory->id}}" @if(old('category') == $subCategory->id) selected @endif>
-                                            {{$subCategory->name}}
+                                @if($category->status)
+                                    <optgroup label="{{$category->name}}">
+                                        <option
+                                                value="{{$category->id}}"
+                                                @if(old('category') == $category->id) selected @endif
+                                                @if(!$category->status) disabled @endif>
+                                            {{$category->name}}
                                         </option>
-                                    @endforeach
-                                </optgroup>
+                                        @foreach($category->categories as $subCategory)
+                                            @if($subCategory->status)
+                                                <option
+                                                        value="{{$subCategory->id}}"
+                                                        @if(old('category') == $subCategory->id) selected @endif
+                                                        @if(!$subCategory->status || !$category->status) disabled @endif>
+                                                    {{$subCategory->name}}
+                                                </option>
+                                            @endif
+                                        @endforeach
+                                    </optgroup>
+                                @endif
                             @endforeach
                         </select>
                         @include('utils.error-invalid-feedback', ["errorField" => 'category'])

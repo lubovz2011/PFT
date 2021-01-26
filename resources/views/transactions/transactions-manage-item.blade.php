@@ -33,8 +33,10 @@
         <div class="row">
             {{--update transaction account--}}
             <div class="form-group col-12 col-md-6 col-lg-6">
-                <select default-value="{{$transaction->account_id}}"
-                        class="form-control @error("t-{$transaction->id}-account") is-invalid @enderror" name="t-{{$transaction->id}}-account">
+                <select
+                        default-value="{{$transaction->account_id}}"
+                        class="form-control @error("t-{$transaction->id}-account") is-invalid @enderror"
+                        name="t-{{$transaction->id}}-account">
                     @php /** @var \App\Models\Account[] $accounts */ @endphp
                     @foreach($accounts as $account)
                         <option value="{{$account->id}}" @if(old("t-{$transaction->id}-account", $transaction->account_id) == $account->id) selected @endif>
@@ -50,15 +52,22 @@
             {{--update transaction category--}}
             <div class="form-group col">
                 <select default-value="{{$transaction->category_id}}"
-                        class="form-control @error("t-{$transaction->id}-category") is-invalid @enderror" name="t-{{$transaction->id}}-category">
+                        class="form-control @error("t-{$transaction->id}-category") is-invalid @enderror"
+                        name="t-{{$transaction->id}}-category">
                     @php /** @var \App\Models\Category[] $categories */ @endphp
                     @foreach($categories as $category)
                         <optgroup label="{{$category->name}}">
-                            <option value="{{$category->id}}" @if(old("t-{$transaction->id}-category", $transaction->category_id) == $category->id) selected @endif>
+                            <option
+                                    value="{{$category->id}}"
+                                    @if(old("t-{$transaction->id}-category", $transaction->category_id) == $category->id) selected @endif
+                                    @if(!$category->status && $category->id !== $transaction->category_id) disabled @endif>
                                 {{$category->name}}
                             </option>
                             @foreach($category->categories as $subCategory)
-                                <option value="{{$subCategory->id}}" @if(old("t-{$transaction->id}-category", $transaction->category_id) == $subCategory->id) selected @endif>
+                                <option
+                                        value="{{$subCategory->id}}"
+                                        @if(old("t-{$transaction->id}-category", $transaction->category_id) == $subCategory->id) selected @endif
+                                        @if((!$subCategory->status || !$category->status) && $subCategory->id !== $transaction->category_id) disabled @endif>
                                     {{$subCategory->name}}
                                 </option>
                             @endforeach
