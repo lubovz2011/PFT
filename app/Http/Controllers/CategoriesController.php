@@ -82,25 +82,53 @@ class CategoriesController extends Controller
         $this->validate($request, [
             'categoryId'   => 'bail|integer|required'
         ]);
+
+        $status = false;
+        list($category, $groupedTransactions, $accounts) = $this->getDeleteCategoryData($request->input('categoryId'));
+
+        try{
+            DB::beginTransaction();
+            /** @var Account $account update account */
+            foreach ($accounts as $account){
+                $account->balance -= $groupedTransactions->get($account->id)->sum('amount');
+                $account->save();
+            }
+            $status = $category->delete();
+            if($status)
+                DB::commit();
+            else
+                DB::rollBack();
+        }
+        catch(\Exception $e) {
+            DB::rollBack();
+        }
+
+        return response()->json([
+            "status" => $status ? "success" : "error"
+        ]);
+    }
+
+    /**
+     * Method get data for delete category
+     * @param $categoryId
+     * @return array
+     */
+    private function getDeleteCategoryData($categoryId)
+    {
         /** @var User $user */
         $user = auth()->user();
 
         $category = $user->categories()
-            ->where('id', '=', $request->input('categoryId'))
+            ->where('id', '=', $categoryId)
             ->where('lock', '=', 0)->firstOrFail();
 
         /** @var Category $category get data for update account */
-        $groups = $category->transactions->groupBy('account_id');
-        $accounts = $user->accounts()->whereIn('id', $groups->keys()->toArray())->get();
+        $groupedTransactions = $category->transactions->groupBy('account_id');
+        $accounts = $user->accounts()->whereIn('id', $groupedTransactions->keys()->toArray())->get();
 
-        /** @var Account $account update account */
-        foreach ($accounts as $account){
-            $account->balance -= $groups->get($account->id)->sum('amount');
-            $account->save();
-        }
-        return response()->json([
-            "status" => $category->delete() ? "success" : "error"
-        ]);
+        return [
+          $category, $groupedTransactions, $accounts
+        ];
     }
 
     /**

@@ -185,9 +185,7 @@
                 // on click we prevent 'bubbling'
                 e.preventDefault();
                 e.stopPropagation();
-                let conf = confirm('Are you sure you want to delete this category?');
-                if(conf)
-                    deleteCategory($(this).data('id'));
+                deleteCategory($(this).data('id'));
             });
 
             function deleteCategory(id){
