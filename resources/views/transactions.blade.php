@@ -140,6 +140,36 @@
             )
                 $('#add-transaction-modal').modal();
             @endif
+
+            /* reset input values to default values (values from db) */
+            $("form").on("reset", function(event)
+            {
+                event.preventDefault();
+                $(this).parent().parent().collapse('hide');
+
+                $("input[type=text], input[type=email], input[type=password]", $(this)).each(function()
+                {
+                    let value = $(this).attr("default-value");
+                    $(this).val(value);
+                    $(this).removeClass('is-invalid');
+                });
+
+                $("input[type=checkbox]", $(this)).each(function()
+                {
+                    let value = $(this).attr("default-value");
+                    $(this).prop("checked", value == "1");
+                    $(this).removeClass('is-invalid');
+                });
+
+                $("select", $(this)).each(function ()
+                {
+                    let value = $(this).attr("default-value");
+                    $(this).val(value.split(",")).promise().then(function(){
+                        $(this).trigger("change");
+                        $(this).removeClass('is-invalid');
+                    });
+                });
+            });
         });
     </script>
 @endsection

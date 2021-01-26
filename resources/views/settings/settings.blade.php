@@ -52,18 +52,21 @@
                 {
                     let value = $(this).attr("default-value");
                     $(this).val(value);
+                    $(this).removeClass('is-invalid');
                 });
 
                 $("input[type=checkbox]", $(this)).each(function()
                 {
                    let value = $(this).attr("default-value");
                    $(this).prop("checked", value == "1");
+                    $(this).removeClass('is-invalid');
                 });
 
                 $("select", $(this)).each(function ()
                 {
                     let value = $(this).attr("default-value");
                     $(this).val(value.split(",")).promise().then(function(){
+                        $(this).removeClass('is-invalid');
                         $(this).trigger("change");
                     });
                 });

@@ -33,7 +33,8 @@
         <div class="row">
             {{--update transaction account--}}
             <div class="form-group col-12 col-md-6 col-lg-6">
-                <select class="form-control" name="t-{{$transaction->id}}-account">
+                <select default-value="{{$transaction->account_id}}"
+                        class="form-control @error("t-{$transaction->id}-account") is-invalid @enderror" name="t-{{$transaction->id}}-account">
                     @php /** @var \App\Models\Account[] $accounts */ @endphp
                     @foreach($accounts as $account)
                         <option value="{{$account->id}}" @if(old("t-{$transaction->id}-account", $transaction->account_id) == $account->id) selected @endif>
@@ -41,10 +42,15 @@
                         </option>
                     @endforeach
                 </select>
+                @include('utils.error-invalid-feedback', ["errorField" => "t-{$transaction->id}-account"])
             </div>
+
+            @error("a-{$account->id}-title") is-invalid @enderror
+
             {{--update transaction category--}}
             <div class="form-group col">
-                <select class="form-control" name="t-{{$transaction->id}}-category">
+                <select default-value="{{$transaction->category_id}}"
+                        class="form-control @error("t-{$transaction->id}-category") is-invalid @enderror" name="t-{{$transaction->id}}-category">
                     @php /** @var \App\Models\Category[] $categories */ @endphp
                     @foreach($categories as $category)
                         <optgroup label="{{$category->name}}">
@@ -59,6 +65,7 @@
                         </optgroup>
                     @endforeach
                 </select>
+                @include('utils.error-invalid-feedback', ["errorField" => "t-{$transaction->id}-category"])
             </div>
         </div>
         <div class="row">
@@ -66,7 +73,8 @@
                 <div class="row">
                     {{--update transaction type--}}
                     <div class="form-group col-12 col-lg-6 col-md-6">
-                        <select class="form-control" name="t-{{$transaction->id}}-type">
+                        <select default-value="{{$transaction->type}}"
+                                class="form-control @error("t-{$transaction->id}-type") is-invalid @enderror" name="t-{{$transaction->id}}-type">
                             <option value="expense" @if(old("t-{$transaction->id}-type", $transaction->type) == "expense") selected @endif>
                                 Expense
                             </option>
@@ -74,31 +82,38 @@
                                 Income
                             </option>
                         </select>
+                        @include('utils.error-invalid-feedback', ["errorField" => "t-{$transaction->id}-type"])
                     </div>
                     {{--update transaction amount--}}
                     <div class="form-group col">
                         <input type="text"
-                               class="form-control text-right"
+                               class="form-control text-right @error("t-{$transaction->id}-amount") is-invalid @enderror"
                                name="t-{{$transaction->id}}-amount"
                                autocomplete="off"
+                               default-value="{{$transaction->amount}}"
                                value="{{old("t-{$transaction->id}-amount", $transaction->amount)}}">
+                        @include('utils.error-invalid-feedback', ["errorField" => "t-{$transaction->id}-amount"])
                     </div>
                 </div>
                 <div class="row">
                     {{--update transaction date--}}
                     <div class="form-group col-12">
                         <input type="date"
-                               class="form-control"
+                               class="form-control @error("t-{$transaction->id}-date") is-invalid @enderror"
                                name="t-{{$transaction->id}}-date"
+                               default-value="{{$transaction->getDateForInput()}}"
                                value="{{old("t-{$transaction->id}-date", $transaction->getDateForInput())}}">
+                        @include('utils.error-invalid-feedback', ["errorField" => "t-{$transaction->id}-date"])
                     </div>
                 </div>
             </div>
             {{--update transaction description--}}
             <div class="form-group col-12 col-lg-6 col-md-6">
-                <textarea class="form-control h-100"
+                <textarea class="form-control h-100 @error("t-{$transaction->id}-description") is-invalid @enderror"
                           rows="3"
+                          default-value="{{$transaction->description}}"
                           name="t-{{$transaction->id}}-description">{{old("t-{$transaction->id}-description", $transaction->description)}}</textarea>
+                @include('utils.error-invalid-feedback', ["errorField" => "t-{$transaction->id}-description"])
             </div>
         </div>
         {{--delete transaction--}}

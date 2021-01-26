@@ -164,12 +164,17 @@ class TransactionsController extends Controller
         ]);
         $id = $request->input('id');
         $this->validate($request, [
-            "t-$id-type" => 'bail|required|in:income,expense',
-            "t-$id-account" => 'bail|required|integer',
+            "t-$id-type"     => 'bail|required|in:income,expense',
+            "t-$id-account"  => 'bail|required|integer',
             "t-$id-category" => 'bail|required|integer|exists:categories,id',
-            "t-$id-date" => 'bail|required|date',
-            "t-$id-amount" => 'bail|numeric',
+            "t-$id-date"     => 'bail|required|date',
+            "t-$id-amount"   => 'bail|required|numeric|between:-999999.99,999999.99',
             "t-$id-description" => 'bail|max:1024'
+        ],
+        [
+            "between" => [
+                'numeric' => 'This field must be between :min and :max',
+                ]
         ]);
         return $id;
     }
