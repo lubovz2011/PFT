@@ -41,7 +41,9 @@
                                name="login"
                                value="{{ old('login', $login) }}"
                                default-value="{{$login}}"
-                               autocomplete="off">
+                               autocomplete="off"
+                               @if($socialLogin) disabled @endif
+                        >
                         @include('utils.error-invalid-feedback', ["errorField" => 'login'])
                     </div>
                 </div>

@@ -31,6 +31,7 @@ class UserController extends Controller
             "limit"         => $user->limit,
             "mainCurrency"  => $user->currency,
             "currencies"    => explode(',', $user->currencies ?: ""),
+            "socialLogin"   => $user->login_type !== 'email',
             "monthlyReport" => (bool)$user->monthly_report
         ];
         return view('settings.settings', $params);
@@ -45,17 +46,21 @@ class UserController extends Controller
     public function editPersonalInfo(Request $request)
     {
         $user = auth()->user();
+        $ifEmailLogin = $user->login_type === 'email';
         $additionalLoginValidation = '';
         if($user->login != $request->input('login'))
         {
             $additionalLoginValidation = '|unique:users,login';
+            if($ifEmailLogin)
+                $additionalLoginValidation = '|required';
         }
         $this->validate($request, [
             'name'  => 'string|max:255|nullable',
-            'login' => 'bail|required|email|max:255'.$additionalLoginValidation
+            'login' => 'bail|email|max:255'.$additionalLoginValidation
         ]);
         $user->name = $request->input("name");
-        $user->login = $request->input("login");
+        if($ifEmailLogin)
+            $user->login = $request->input("login");
         $user->save();
 
         return redirect()->route("settings");
