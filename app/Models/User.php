@@ -27,9 +27,9 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  * @property Transaction[]|Collection $transactions
  * @package App\Models
  */
-class User extends Authenticatable implements MustVerifyEmail
+class User extends Authenticatable /*implements MustVerifyEmail*/
 {
-    use Notifiable;
+   /* use Notifiable;*/
 
     /**
      * The attributes that are mass assignable.

@@ -20,7 +20,7 @@ Route::group(['middleware' => 'guest'], function(){
     Route::get('login/{provider}/callback', 'Auth\LoginController@handleProviderCallback')->name('social-login-callback');
 });
 
-Route::group(['middleware' => ['auth', 'verified']], function(){
+Route::group(['middleware' => ['auth'/*, 'verified'*/]], function(){
 
     /** categories page */
     Route::get('categories', 'CategoriesController@displayCategoriesPage')->name('categories');
