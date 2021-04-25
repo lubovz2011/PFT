@@ -23,7 +23,7 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        Route::pattern('provider', '^(facebook|google)$');
 
         parent::boot();
     }
